@@ -1,6 +1,3 @@
-// ============================================================
-//  CERTIFICATIONS TOGGLE
-// ============================================================
 (function () {
     const toggle = document.getElementById('certsToggle');
     const list   = document.getElementById('certList');
@@ -13,9 +10,6 @@
     });
 })();
 
-// ============================================================
-//  STICKY NAVBAR — slides down when scrolled past hero
-// ============================================================
 (function () {
     const stickyNav = document.getElementById('stickyNav');
     if (!stickyNav) return;
@@ -53,9 +47,7 @@
     updateStickyNav();
 })();
 
-// ============================================================
-//  HERO VISUAL — Interactive cursor + orb parallax
-// ============================================================
+
 (function () {
     const box = document.querySelector('.hero-visual-box');
     if (!box) return;
@@ -145,10 +137,6 @@
     tick();
 })();
 
-
-// ============================================================
-//  MOBILE MENU
-// ============================================================
 const hamburger = document.getElementById('hamburger');
 const navMenu   = document.getElementById('navMenu');
 const navLinks  = document.querySelectorAll('.nav-link');
@@ -166,9 +154,6 @@ navLinks.forEach(link => {
 });
 
 
-// ============================================================
-//  ACTIVE NAV LINK ON SCROLL
-// ============================================================
 window.addEventListener('scroll', updateActiveLink);
 
 function updateActiveLink() {
@@ -194,9 +179,6 @@ function updateActiveLink() {
 document.addEventListener('DOMContentLoaded', updateActiveLink);
 
 
-// ============================================================
-//  PROJECT FILTERING — masonry grid
-// ============================================================
 const filterBtns  = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.project-card');
 
@@ -216,10 +198,6 @@ filterBtns.forEach(btn => {
 
 function refreshCarousel() {}
 
-
-// ============================================================
-//  CONTACT FORM
-// ============================================================
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
@@ -262,10 +240,6 @@ function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-
-// ============================================================
-//  NOTIFICATION TOAST
-// ============================================================
 function showNotification(message, type = 'info') {
     const existing = document.querySelector('.notification');
     if (existing) existing.remove();
@@ -307,10 +281,6 @@ function showNotification(message, type = 'info') {
     }, 4000);
 }
 
-
-// ============================================================
-//  SCROLL REVEAL
-// ============================================================
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -335,9 +305,6 @@ document.querySelectorAll('.skill-category').forEach(cat => {
 });
 
 
-// ============================================================
-//  BUTTON RIPPLE
-// ============================================================
 if (!document.head.querySelector('style[data-ripple]')) {
     const s = document.createElement('style');
     s.setAttribute('data-ripple', 'true');
