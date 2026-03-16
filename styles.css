@@ -1,6 +1,3 @@
-/* ============================================================
-   ROOT — SF-26 Lightened: dark base, white card surfaces
-   ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap');
 
 :root {
@@ -29,9 +26,6 @@
     --shadow-red:   0 0 30px rgba(232,0,45,0.15);
 }
 
-/* ============================================================
-   RESET
-   ============================================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
@@ -51,9 +45,6 @@ body {
     z-index: 1;
 }
 
-/* ============================================================
-   HERO — dark, stays SF-26 style
-   ============================================================ */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -68,7 +59,6 @@ body {
     overflow: hidden;
 }
 
-/* Subtle carbon grid */
 .hero::before {
     content: '';
     position: absolute; inset: 0;
@@ -79,7 +69,6 @@ body {
     pointer-events: none;
 }
 
-/* Red left-edge stripe */
 .hero::after {
     content: '';
     position: absolute;
@@ -105,7 +94,6 @@ body {
     z-index: 1;
 }
 
-/* SF-26 top stripe */
 .hero-card::before {
     content: '';
     position: absolute;
@@ -189,6 +177,12 @@ body {
     border-radius: 2px;
     box-shadow: 0 0 8px var(--red-glow);
 }
+ 
+.contact {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
 
 /* ── Hamburger ── */
 .hamburger {
@@ -219,7 +213,6 @@ body {
 .hamburger.active span:nth-child(2) { opacity: 0; }
 .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* ── Hero inner ── */
 .hero-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -298,10 +291,6 @@ body {
     box-shadow: 0 0 12px var(--red-glow);
 }
 
-/* ── Hero photo ──
-   Outer wrap: corner border lines (no overflow clip).
-   Inner .hero-photo-inner: clips the photo independently.
-   ─────────────────────────────────────────────────────── */
 .hero-visual {
     display: flex;
     justify-content: center;
@@ -342,7 +331,6 @@ body {
     z-index: 3;
 }
 
-/* Inner clip container — clips photo without clipping corner lines */
 .hero-photo-inner {
     position: absolute;
     inset: 0;
@@ -382,9 +370,6 @@ body {
     50%       { border-color: rgba(255,255,255,0.2); }
 }
 
-/* ============================================================
-   BUTTONS
-   ============================================================ */
 .btn {
     padding: 11px 26px;
     border: none;
@@ -424,9 +409,6 @@ body {
     background: rgba(232,0,45,0.08);
 }
 
-/* ============================================================
-   SECTION SHARED
-   ============================================================ */
 .section-title {
     font-family: 'Syne', sans-serif;
     font-size: 2.5rem;
@@ -447,12 +429,6 @@ body {
     box-shadow: 0 0 8px var(--red-glow);
 }
 
-/* ============================================================
-   ABOUT
-   ============================================================ */
-/* ============================================================
-   ABOUT — Clean split with red accent stripe
-   ============================================================ */
 .about {
     padding: 0;
     background: var(--bg-section);
@@ -468,7 +444,6 @@ body {
     min-height: 560px;
 }
 
-/* ── LEFT: photo panel — dark bg with red glow ── */
 .about-photo {
     position: relative;
     background: #0A0406;
@@ -516,7 +491,6 @@ body {
     position: relative;
 }
 
-/* Top-left "ABOUT" label */
 .about-text::before {
     content: 'About Me';
     font-family: 'Syne', sans-serif;
@@ -551,7 +525,6 @@ body {
 }
 
 
-/* Certifications — collapsible */
 .about-certs {
     border-top: 1px solid rgba(232,0,45,0.12);
     margin-bottom: 0.5rem;
@@ -593,7 +566,6 @@ body {
     transform: rotate(180deg);
 }
 
-/* Hidden by default — JS toggles .open */
 .cert-list {
     display: flex;
     flex-direction: column;
@@ -662,9 +634,6 @@ body {
     opacity: 0.4;
 }
 
-/* ============================================================
-   EXPERIENCE — vertical timeline
-   ============================================================ */
 .experience {
     padding: 100px 0;
     background: var(--bg-section-alt);
@@ -713,7 +682,6 @@ body {
     min-height: 40px;
 }
  
-/* Right column: card */
 .exp-card {
     flex: 1;
     background: var(--bg-card);
@@ -791,9 +759,6 @@ body {
     background: transparent;
 }
 
-/* ============================================================
-   PROJECTS — dark section
-   ============================================================ */
 .projects {
     padding: 100px 0 120px;
     background: #0F0608;
@@ -852,7 +817,6 @@ body {
     box-shadow: 0 0 16px var(--red-glow);
 }
 
-/* Masonry */
 .masonry-grid {
     columns: 3;
     column-gap: 1.4rem;
@@ -950,16 +914,12 @@ body {
 
 .project-link:hover { color: var(--red); letter-spacing: 0.5px; }
 
-/* ============================================================
-   SKILLS — Horizontal groups like reference image
-   ============================================================ */
 .skills {
     padding: 80px 0;
     background: var(--bg-section-alt);
     position: relative;
 }
 
-/* Outer card wrapping all groups */
 .skills-wrap {
     border: 1px solid rgba(232,0,45,0.12);
     border-radius: 16px;
@@ -967,7 +927,6 @@ body {
     padding: 2.5rem 2.8rem;
 }
 
-/* "STACK" label at top center */
 .skills-wrap-title {
     text-align: center;
     font-family: 'Syne', sans-serif;
@@ -1033,143 +992,29 @@ body {
     background: rgba(232,0,45,0.07);
 }
 
-/* ============================================================
-   CONTACT
-   ============================================================ */
-.contact {
-    padding: 100px 0;
-    background: var(--bg-section);
-    position: relative;
-}
 
-.contact-subtitle {
-    text-align: center;
-    font-size: 1rem;
-    color: var(--text-muted);
-    margin-top: -1.5rem;
-    margin-bottom: 3rem;
-}
-
-.contact-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-}
-
-.contact-form {
-    background: var(--bg-card);
-    border: 1px solid var(--border-light);
-    border-radius: 16px;
-    padding: 2.2rem;
-    box-shadow: var(--shadow-card);
-}
-
-.form-group { margin-bottom: 1.2rem; }
-
-.form-group label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.45rem;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid var(--border-light);
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    background: var(--bg-card-dark);
-    color: var(--text-head);
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder { color: #BFBAB6; }
-
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: var(--red);
-    box-shadow: 0 0 0 3px rgba(232,0,45,0.1);
-    background: var(--bg-card);
-}
-
-.contact-form .btn { width: 100%; margin-top: 0.5rem; }
-
-.contact-info { padding-top: 0.5rem; }
-
-.contact-info h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: var(--text-head);
-    margin-bottom: 0.9rem;
-}
-
-.contact-info > p {
-    color: var(--text-body);
-    line-height: 1.75;
-    margin-bottom: 2rem;
-    font-size: 0.97rem;
-}
-
-.contact-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.contact-detail-item {
-    display: flex;
+.footer-socials { 
+    display: flex; 
+    justify-content: center;
     align-items: center;
-    gap: 1rem;
-    color: var(--text-body);
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: color 0.25s;
+    gap: 0.7rem; 
+    margin-bottom: 1rem;
 }
 
-.contact-detail-item:hover { color: var(--red); }
-
-.contact-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    background: rgba(232,0,45,0.12);
-    border: 1px solid rgba(232,0,45,0.15);
-    display: grid;
-    place-items: center;
-    color: var(--red);
-    font-size: 0.88rem;
-    flex-shrink: 0;
-}
-
-.contact-socials { display: flex; gap: 0.7rem; }
-
-.contact-socials .social-btn {
+.footer-socials .social-btn {
     border: 1.5px solid var(--border-light);
     background: var(--bg-card-dark);
     color: var(--text-muted);
     box-shadow: none;
 }
 
-.contact-socials .social-btn:hover {
+.footer-socials .social-btn:hover {
     background: var(--red);
     border-color: var(--red);
     color: #fff;
     box-shadow: 0 0 14px var(--red-glow);
 }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
 .footer {
     background: #080305;
     color: rgba(245,242,240,0.4);
@@ -1188,9 +1033,6 @@ body {
     opacity: 0.4;
 }
 
-/* ============================================================
-   STICKY NAVBAR — appears when scrolled past hero
-   ============================================================ */
 .sticky-nav {
     position: fixed;
     top: -80px;
@@ -1210,7 +1052,6 @@ body {
     transition: top 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Visible state — added by JS */
 .sticky-nav.visible { top: 20px; }
 
 .sticky-nav-link {
@@ -1237,9 +1078,7 @@ body {
     box-shadow: 0 0 12px var(--red-glow);
 }
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
+
 @media (max-width: 1024px) {
     .hero-inner { grid-template-columns: 1fr; text-align: center; }
     .hero-buttons, .social-row { justify-content: center; }
@@ -1254,7 +1093,6 @@ body {
     .skills-grid { flex-direction: column; gap: 1.5rem; }
     .skill-category { padding: 0; border-right: none; border-bottom: 1px solid rgba(232,0,45,0.1); padding-bottom: 1.2rem; }
     .skill-category:last-child { border-bottom: none; padding-bottom: 0; }
-    .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
     .exp-header { flex-direction: column; gap: 0.5rem; }
 }
 @media (max-width: 768px) {
@@ -1280,5 +1118,4 @@ body {
     .hero-card { padding: 1.5rem 1.2rem 2rem; }
     .hero-photo-wrap { width: 240px; height: 280px; }
     .section-title { font-size: 1.75rem; }
-    .contact-form { padding: 1.5rem; }
 }
