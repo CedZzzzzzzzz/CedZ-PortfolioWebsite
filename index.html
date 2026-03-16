@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcus Cedric S. Pedrosa - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ═══ STICKY NAVBAR ═══ -->
+    <nav class="sticky-nav" id="stickyNav">
+        <a href="#home"       class="sticky-nav-link" data-section="home">Home</a>
+        <a href="#about"      class="sticky-nav-link" data-section="about">About</a>
+        <a href="#experience" class="sticky-nav-link" data-section="experience">Experience</a>
+        <a href="#projects"   class="sticky-nav-link" data-section="projects">Projects</a>
+        <a href="#skills"     class="sticky-nav-link" data-section="skills">Skills</a>
+        <a href="#contact"    class="sticky-nav-link" data-section="contact">Contact</a>
+    </nav>
+
+    <!-- ═══ HERO ═══ -->
+    <section id="home" class="hero">
+        <div class="hero-card">
+
+            <header class="hero-header">
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </header>
+
+            <nav class="nav-bar">
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home"       class="nav-link active">Home</a></li>
+                    <li><a href="#about"      class="nav-link">About</a></li>
+                    <li><a href="#experience" class="nav-link">Experience</a></li>
+                    <li><a href="#projects"   class="nav-link">Projects</a></li>
+                    <li><a href="#skills"     class="nav-link">Skills</a></li>
+                    <li><a href="#contact"    class="nav-link">Contact</a></li>
+                </ul>
+                <a href="/CV/" target="_blank" class="btn-resume">
+                    <i class="fas fa-file-alt"></i> Resume
+                </a>
+            </nav>
+
+            <div class="hero-inner">
+                <div class="hero-copy">
+                    <p class="hero-eyebrow">Hi, I'm</p>
+                    <h1 class="hero-title"><span class="hero-name">Marcus Cedric<br>S. Pedrosa</span></h1>
+                    <p class="hero-subtitle">I am a <span class="hero-highlight">Computer Engineering Technology Student</span></p>
+
+                    <div class="social-row">
+                        <a href="https://github.com/CedZzzzzzzzz" class="social-btn" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/marcus-cedric-pedrosa/" class="social-btn" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/marcuscedric.pedrosa" class="social-btn" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/mar_cedz/?hl=en" class="social-btn" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-photo-wrap">
+                        <div class="hero-photo-inner">
+                            <img src="/Myself_Pics/Untitled.png" alt="Marcus Cedric S. Pedrosa"
+                                 class="hero-photo"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="hero-photo-placeholder" style="display:none">
+                                <i class="fas fa-user"></i>
+                                <span>Marcus Cedric Pedrosa - Photo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section id="about" class="about">
+        <div class="about-content">
+
+            <div class="about-photo">
+                <img src="/Myself_Pics/Untitled.png" alt="Marcus Cedric S. Pedrosa" />
+            </div>
+
+            <div class="about-text">
+                <h2>Aspiring <em>Software</em> & <em>AI</em><br>Engineer</h2>
+                <p>I'm a computer engineering technology student specializing in Machine Learning with 
+                    a passion for creating innovative digital solutions and solving real-world problems.</p>
+                <p>A Max Verstappen fan, A Mobile Gamer, A Passionate Learner, and A Tech Enthusiast.</p>
+                <p><strong>Goal:</strong> Build scalable and efficient software solutions while 
+                    continously improving.</p>
+
+                <div class="about-certs">
+                    <button class="about-certs-toggle" id="certsToggle" aria-expanded="false">
+                        <span><i class="fas fa-certificate"></i> Certifications</span>
+                        <i class="fas fa-chevron-down certs-chevron"></i>
+                    </button>
+                    <div class="cert-list" id="certList">
+                        <div class="cert-item">
+                            <div>
+                                <p class="cert-name">
+                                    <a href="https://coursera.org/share/fabf0c3097397127b88852553d8f4e47" target="_blank">Introduction to Python Programming</a>
+                                </p>
+                                <p class="cert-issuer">Coursera · November 2025</p>
+                            </div>
+                        </div>
+                        <div class="cert-item">
+                            <div>
+                                <p class="cert-name">
+                                    <a href="https://www.datacamp.com/certificate/PDA0015674515999" target="_blank">Python Data Associate</a>
+                                </p>
+                                <p class="cert-issuer">DataCamp · February 2026</p>
+                            </div>
+                        </div>
+                        <div class="cert-item">
+                            <div>
+                                <p class="cert-name">
+                                    <a href="/Certificates/CSS.pdf" target="_blank">Computer Systems Servicing NC II</a>
+                                </p>
+                                <p class="cert-issuer">TESDA · September 2024</p>
+                            </div>
+                        </div>
+                        <div class="cert-item">
+                            <div>
+                                <p class="cert-name">   
+                                    <a href="/Certificates/Mechatronics-NC.pdf" target="_blank">Mechatronics Servicing NC II</a>
+                                </p>
+                                <p class="cert-issuer">TESDA · February 2026</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="about-bottom-lines"></div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+
+            <div class="exp-timeline">
+
+                <div class="exp-item">
+                    <div class="exp-marker">
+                        <div class="exp-dot"></div>
+                        <div class="exp-line"></div>
+                    </div>
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <h3 class="exp-role"><em>Data Analyst Intern</em></h3>
+                                <p class="exp-company">Etiqa Life and General Assurance Philippines, Inc.</p>
+                            </div>
+                            <span class="exp-date"> July 2025 – September 2025</span>
+                        </div>
+                        <p class="exp-desc">Streamlined high-volume data operations by implementing automated Excel validation and a structured archival system,
+                             significantly reducing retrieval times. I ensured 100% data fidelity across complex processing pipelines by conducting rigorous 
+                             cross-validation between digital datasets and physical records.</p>
+                        <div class="exp-tags">
+                            <span class="exp-tag">MS Excel</span>
+                            <span class="exp-tag">Data Validation</span>
+                            <span class="exp-tag">Data Management</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ PROJECTS ═══ -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+
+            <div class="projects-filter">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="academic">Academic</button>
+                <button class="filter-btn" data-category="ongoing">Ongoing</button>
+                <button class="filter-btn" data-category="completed">Completed</button>
+                <button class="filter-btn" data-category="personal">Personal</button>
+            </div>
+
+            <div class="masonry-grid" id="masonryGrid">
+
+                <div class="project-card" data-category="academic">
+                    <span class="project-badge">Academic</span>
+                    <h3>E-Commerce Platform</h3>
+                    <p>A fully functional e-commerce platform with payment integration, cart management, and user authentication built with modern web technologies.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">MongoDB</span>
+                    </div>
+                    <a href="#" class="project-link">View Project →</a>
+                </div>
+
+                <div class="project-card" data-category="ongoing">
+                    <span class="project-badge">Ongoing</span>
+                    <h3>Task Management App</h3>
+                    <p>A collaborative task management application with real-time updates and team features.</p>
+                    <div class="project-tags">
+                        <span class="tag">Vue.js</span><span class="tag">Firebase</span><span class="tag">CSS</span>
+                    </div>
+                    <a href="#" class="project-link">View Project →</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SKILLS ═══ -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-wrap">
+                <p class="skills-wrap-title">Tech Stack</p>
+                <div class="skills-grid">
+
+                    <div class="skill-category">
+                        <h3>Backend Development</h3>
+                        <div class="skill-list">
+                            <span class="skill-badge">Python</span>
+                            <span class="skill-badge">Java</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Web Development</h3>
+                        <div class="skill-list">
+                            <span class="skill-badge">HTML</span>
+                            <span class="skill-badge">CSS</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Frameworks &amp; Libraries</h3>
+                        <div class="skill-list">
+                            <span class="skill-badge">Flask</span>
+                            <span class="skill-badge">NumPy</span>
+                            <span class="skill-badge">Pandas</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Databases</h3>
+                        <div class="skill-list">
+                            <span class="skill-badge">PostgreSQL</span>
+                            <span class="skill-badge">MySQL</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Tools</h3>
+                        <div class="skill-list">
+                            <span class="skill-badge">Git / GitHub</span>
+                            <span class="skill-badge">Cisco Packet Tracer</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="contact-subtitle">Have a project in mind? Let's work together!</p>
+
+            <div class="contact-wrapper">
+
+                <form class="contact-form" id="contactForm" novalidate>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" placeholder="Your Name" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" placeholder="your@email.com" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" placeholder="What's this about?" id="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea placeholder="Tell me more..." rows="5" id="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>&nbsp; Send Message
+                    </button>
+                </form>
+
+                <div class="contact-info">
+                    <h3>Let's connect</h3>
+                    <p>Feel free to reach out for collaborations, freelance work, or just a friendly hello.</p>
+
+                    <div class="contact-details">
+                        <a href="mailto:marcuscedric@email.com" class="contact-detail-item">
+                            <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                            <span>marcuscedric@email.com</span>
+                        </a>
+                        <a href="#" class="contact-detail-item">
+                            <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                            <span>Philippines</span>
+                        </a>
+                    </div>
+
+                    <div class="contact-socials">
+                        <a href="https://github.com/CedZzzzzzzzz" class="social-btn" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/marcus-cedric-pedrosa/" class="social-btn" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/marcuscedric.pedrosa" class="social-btn" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/mar_cedz/?hl=en" class="social-btn" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Marcus Cedric S. Pedrosa. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
