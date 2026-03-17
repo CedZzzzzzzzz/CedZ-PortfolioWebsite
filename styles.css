@@ -737,6 +737,7 @@ body {
 }
  
 .exp-desc {
+    text-align: justify;
     font-size: 0.9rem;
     color: var(--text-body);
     line-height: 1.75;
@@ -886,6 +887,7 @@ body {
 }
 
 .project-card p {
+    text-align: justify;
     color: rgba(245,242,240,0.6);
     font-size: 0.9rem;
     line-height: 1.7;
