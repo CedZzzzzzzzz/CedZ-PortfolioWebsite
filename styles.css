@@ -1082,6 +1082,7 @@ body {
 
 
 @media (max-width: 1024px) {
+    .about-photo{display: None;}
     .hero-inner { grid-template-columns: 1fr; text-align: center; }
     .hero-buttons, .social-row { justify-content: center; }
     .hero-card { padding: 2rem 1.8rem 2.6rem; }
