@@ -143,38 +143,64 @@
     </section>
 
     <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
+    <div class="container">
+        <h2 class="section-title">Experience</h2>
 
-            <div class="exp-timeline">
+        <div class="exp-timeline">
 
-                <div class="exp-item">
-                    <div class="exp-marker">
-                        <div class="exp-dot"></div>
-                        <div class="exp-line"></div>
+            <div class="exp-item">
+                <div class="exp-marker">
+                    <div class="exp-dot"></div>
+                    <div class="exp-line"></div>
+                </div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <h3 class="exp-role"><em>Data Analyst Intern</em></h3>
+                            <p class="exp-company">Etiqa Life and General Assurance Philippines, Inc.</p>
+                        </div>
+                        <span class="exp-date">July 2025 – September 2025</span>
                     </div>
-                    <div class="exp-card">
-                        <div class="exp-header">
-                            <div>
-                                <h3 class="exp-role"><em>Data Analyst Intern</em></h3>
-                                <p class="exp-company">Etiqa Life and General Assurance Philippines, Inc.</p>
-                            </div>
-                            <span class="exp-date"> July 2025 – September 2025</span>
-                        </div>
-                        <p class="exp-desc">Streamlined high-volume data operations by implementing automated Excel validation and a structured archival system,
-                             significantly reducing retrieval times. I ensured 100% data fidelity across complex processing pipelines by conducting rigorous 
-                             cross-validation between digital datasets and physical records.</p>
-                        <div class="exp-tags">
-                            <span class="exp-tag">MS Excel</span>
-                            <span class="exp-tag">Data Validation</span>
-                            <span class="exp-tag">Data Management</span>
-                        </div>
+                    <p class="exp-desc">Streamlined high-volume data operations by implementing automated Excel validation and a structured archival system,
+                        significantly reducing retrieval times. I ensured 100% data fidelity across complex processing pipelines by conducting rigorous
+                        cross-validation between digital datasets and physical records.</p>
+                    <div class="exp-tags">
+                        <span class="exp-tag">MS Excel</span>
+                        <span class="exp-tag">Data Validation</span>
+                        <span class="exp-tag">Data Management</span>
                     </div>
                 </div>
+            </div>
 
+            <div class="exp-item">
+                <div class="exp-marker">
+                    <div class="exp-dot"></div>
+                    <div class="exp-line"></div>
+                </div>
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <h3 class="exp-role"><em>Software Quality Assurance Intern</em></h3>
+                            <p class="exp-company">Snapp Ventures Inc. (Matchmo)</p>
+                        </div>
+                        <span class="exp-date">March 2026 – Present</span>
+                    </div>
+                    <p class="exp-desc">Ensured production-grade software quality by executing end-to-end functional testing across web and mobile platforms,
+                        identifying critical blockers in user account flows and system redirections. I optimized operational efficiency by synchronizing low-code
+                        database triggers with automated messaging workflows and conducted rigorous network latency audits to guarantee immediate data availability
+                        and site stability prior to deployment.</p>
+                    <div class="exp-tags">
+                        <span class="exp-tag">Postman</span>
+                        <span class="exp-tag">Directus</span>
+                        <span class="exp-tag">UAT</span>
+                        <span class="exp-tag">API Testing</span>
+                        <span class="exp-tag">Edge Case Analysis</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="projects" class="projects">
         <div class="container">
@@ -185,6 +211,7 @@
                 <button class="filter-btn" data-category="academic">Academic</button>
                 <button class="filter-btn" data-category="ongoing">Ongoing</button>
                 <button class="filter-btn" data-category="personal">Personal</button>
+                <button class="filter-btn" data-category="completed">Completed</button>
             </div>
 
             <div class="masonry-grid" id="masonryGrid">
@@ -233,6 +260,20 @@
                         <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
                     </div>
                     <a href="https://github.com/CedZzzzzzzzz/Portfolio-Website.git" class="project-link">View Project →</a>
+                </div>
+
+                <div class="project-card" data-category="ongoing">
+                    <span class="project-badge">Ongoing</span>
+                    <h3>F1 2026 Winner Prediction System</h3>
+                    <p>A full-stack real time championship predictor for the 2026 Formula 1 regulation reset.
+                        Live telemetry pipeline (OpenF1 -> Redis -> Websocket -> React dashboard), Monte Carlo 
+                        simulation engine and ML lap time prediction using FastF1 historical data. Full-stack: 
+                        FastAPI - React - PostgreSQL - Redis - Docker - AWS
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">React</span><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span>
+                    </div>
+                    <a href="https://github.com/CedZzzzzzzzz/F1-2026-prediction-system.git" class="project-link">View Project →</a>
                 </div>
 
             </div>
