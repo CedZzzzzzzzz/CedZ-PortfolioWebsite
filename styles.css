@@ -1099,12 +1099,14 @@ body {
     .exp-header { flex-direction: column; gap: 0.5rem; }
 }
 @media (max-width: 768px) {
+    .contact {visibility: hidden; height: 0; }
     .hamburger { display: inline-flex; }
     .nav-menu { display: none; flex-direction: column; gap: 0; margin-bottom: 1.5rem; padding: 0.75rem; border-radius: 12px; background: rgba(232,0,45,0.06); border: 1px solid rgba(232,0,45,0.15); }
     .nav-menu.active { display: flex; }
     .nav-menu li { list-style: none; }
     .nav-link { display: block; padding: 0.7rem 0.8rem; font-size: 1rem; }
     .nav-link.active::after { display: none; }
+    .sticky-nav {display: flex; flex-direction: row; gap: 0; padding: 8px 12px; } 
     .hero-title { font-size: 3.4rem; letter-spacing: -2px; }
     .hero-buttons { flex-direction: column; }
     .btn { width: 100%; text-align: center; }
