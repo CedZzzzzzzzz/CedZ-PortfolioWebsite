@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +10,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="/Myself_Pics/Untitled.png">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Prevent flash of wrong theme -->
+    <script>
+        (function(){
+            var t = localStorage.getItem('portfolio-theme');
+            if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) t = 'light';
+            document.documentElement.setAttribute('data-theme', t || 'dark');
+        })();
+    </script>
 </head>
-<body>  
+<body>
 
     <nav class="sticky-nav" id="stickyNav">
         <a href="#home"       class="sticky-nav-link" data-section="home">Home</a>
@@ -40,11 +49,31 @@
                 </ul>
 
                 <div class="contact">
+                    <!-- Theme toggle -->
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+                        <!-- Moon icon (shown in dark mode) -->
+                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        <!-- Sun icon (shown in light mode) -->
+                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
+
                     <a href="mailto:ced41974@gmail.com" class="btn-resume" aria-label="Email">
-                        <i class="fas fa-envelope"></i> Email
+                        <i class="fas fa-envelope"></i> 
                     </a>
                     <a href="/CV/CV_Pedrosa_Marcus.pdf" target="_blank" class="btn-resume">
-                        <i class="fas fa-file-alt"></i> Resume
+                        <i class="fas fa-file-alt"></i> 
                     </a>
                 </div>
             </nav>
@@ -143,64 +172,75 @@
     </section>
 
     <section id="experience" class="experience">
-    <div class="container">
-        <h2 class="section-title">Experience</h2>
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
 
-        <div class="exp-timeline">
+            <div class="exp-timeline">
 
-            <div class="exp-item">
-                <div class="exp-marker">
-                    <div class="exp-dot"></div>
-                    <div class="exp-line"></div>
-                </div>
-                <div class="exp-card">
-                    <div class="exp-header">
-                        <div>
-                            <h3 class="exp-role"><em>Data Analyst Intern</em></h3>
-                            <p class="exp-company">Etiqa Life and General Assurance Philippines, Inc.</p>
+                <div class="exp-item">
+                    <div class="exp-marker">
+                        <div class="exp-dot"></div>
+                        <div class="exp-line"></div>
+                    </div>
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <h3 class="exp-role"><em>Data Analyst Intern</em></h3>
+                                <p class="exp-company">Etiqa Life and General Assurance Philippines, Inc.</p>
+                            </div>
+                            <span class="exp-date">July 2025 – September 2025</span>
                         </div>
-                        <span class="exp-date">July 2025 – September 2025</span>
-                    </div>
-                    <p class="exp-desc">Streamlined high-volume data operations by implementing automated Excel validation and a structured archival system,
-                        significantly reducing retrieval times. I ensured 100% data fidelity across complex processing pipelines by conducting rigorous
-                        cross-validation between digital datasets and physical records.</p>
-                    <div class="exp-tags">
-                        <span class="exp-tag">MS Excel</span>
-                        <span class="exp-tag">Data Validation</span>
-                        <span class="exp-tag">Data Management</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exp-item">
-                <div class="exp-marker">
-                    <div class="exp-dot"></div>
-                    <div class="exp-line"></div>
-                </div>
-                <div class="exp-card">
-                    <div class="exp-header">
-                        <div>
-                            <h3 class="exp-role"><em>Software Quality Assurance Intern</em></h3>
-                            <p class="exp-company">Snapp Ventures Inc. (Matchmo)</p>
+                        <p class="exp-desc">
+                            Streamlined high-volume data operations by implementing automated Excel validation and a structured archival system,
+                            significantly reducing retrieval times. I ensured 100% data fidelity across complex processing pipelines by conducting rigorous
+                            cross-validation between digital datasets and physical records.
+                        </p>
+                        <div class="exp-tags">
+                            <span class="exp-tag">MS Excel</span>
+                            <span class="exp-tag">Data Validation</span>
+                            <span class="exp-tag">Data Management</span>
                         </div>
-                        <span class="exp-date">March 2026 – Present</span>
                     </div>
-                    <p class="exp-desc">Ensured production-grade software quality by executing end-to-end functional testing across web and mobile platforms,
-                        identifying critical blockers in user account flows and system redirections. I optimized operational efficiency by synchronizing low-code
-                        database triggers with automated messaging workflows and conducted rigorous network latency audits to guarantee immediate data availability
-                        and site stability prior to deployment.</p>
-                    <div class="exp-tags">
-                        <span class="exp-tag">Postman</span>
-                        <span class="exp-tag">Directus</span>
-                        <span class="exp-tag">UAT</span>
-                        <span class="exp-tag">API Testing</span>
-                        <span class="exp-tag">Edge Case Analysis</span>
+                </div>
+
+                <div class="exp-item">
+                    <div class="exp-marker">
+                        <div class="exp-dot"></div>
+                        <div class="exp-line"></div>
+                    </div>
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <h3 class="exp-role"><em>Software Quality Assurance Intern</em></h3>
+                                <p class="exp-company">Snapp Ventures Inc. (Matchmo)</p>
+                            </div>
+                            <span class="exp-date">March 2026 – Present</span>
+                        </div>
+                        <p class="exp-desc">
+                            Ensured production grade software quality by executing end-to-end testing across web, internal CRM, 
+                            and Android APK environments, identifying critical blockers in authentication and user roles. I audited 
+                            data pipelines to achieve 100% data mapping accuracy, utilizing Directus to architect database schemas 
+                            for the HR system. To guarantee system stability, enforced a strict sub-500ms to 600ms 
+                            page interactivity thresholds through network latency testing. To optimize efficiency, I transitioned manual 
+                            processes into code-driven QA by designing and containerizing parameterized web automation scripts using Playwright 
+                            and Docker across 10 consecutive weeks of fast-paced agile sprints.
+                        </p>
+                        <div class="exp-tags">
+                            <span class="exp-tag">Postman</span>
+                            <span class="exp-tag">Directus</span>
+                            <span class="exp-tag">UAT</span>
+                            <span class="exp-tag">API Testing</span>
+                            <span class="exp-tag">Edge Case Analysis</span>
+                            <span class="exp-tag">Playwright</span>
+                            <span class="exp-tag">Docker</span>
+                            <span class="exp-tag">JavaScript</span>
+                            <span class="exp-tag">Agile</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section id="projects" class="projects">
         <div class="container">
@@ -244,11 +284,11 @@
                          This project features an ESP32-monitored 1280Wh LiFePO4 battery and a 300W solar array to provide sustainable, 
                          high-speed mobile charging for public spaces.</p>
                     <div class="project-tags">
-                        <span class="tag">HTML5</span><span class="tag">Tailwind CSS</span><span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">MySQL</span>
+                        <span class="tag">HTML5</span><span class="tag">Tailwind CSS</span><span class="tag">JavaScript</span><span class="tag">React</span><span class="tag">Python</span><span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">Supabase</span><span class="tag">Resend</span>
                     </div>
                     <a href="https://github.com/Blaesei/EcoBench.git" class="project-link">View Project →</a>
                 </div>
-                
+
                 <div class="project-card" data-category="personal">
                     <span class="project-badge">Personal</span>
                     <h3>Portfolio Website</h3>
@@ -264,14 +304,14 @@
 
                 <div class="project-card" data-category="ongoing">
                     <span class="project-badge">Ongoing</span>
-                    <h3>F1 2026 Winner Prediction System</h3>
+                    <h3>Quantis-F1</h3>
                     <p>A full-stack real time championship predictor for the 2026 Formula 1 regulation reset.
                         Live telemetry pipeline (OpenF1 -> Redis -> Websocket -> React dashboard), Monte Carlo 
                         simulation engine and ML lap time prediction using FastF1 historical data. Full-stack: 
-                        FastAPI - React - PostgreSQL - Redis - Docker - AWS
+                        FastAPI - React - Supabase (PostgreSQL) - Redis - Docker 
                     </p>
                     <div class="project-tags">
-                        <span class="tag">React</span><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span>
+                        <span class="tag">React</span><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span><span class="tag">Supabase</span>
                     </div>
                     <a href="https://github.com/CedZzzzzzzzz/F1-2026-prediction-system.git" class="project-link">View Project →</a>
                 </div>

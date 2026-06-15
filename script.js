@@ -1,4 +1,38 @@
 (function () {
+    const STORAGE_KEY = 'portfolio-theme';
+    const root = document.documentElement;
+
+    function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem(STORAGE_KEY, theme);
+    }
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+        applyTheme(saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        applyTheme('light');
+    } else {
+        applyTheme('dark');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const btn = document.getElementById('themeToggle');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+            const current = root.getAttribute('data-theme');
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+    });
+
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? 'light' : 'dark');
+        }
+    });
+})();
+
+(function () {
     const toggle = document.getElementById('certsToggle');
     const list   = document.getElementById('certList');
     if (!toggle || !list) return;
@@ -23,14 +57,12 @@
     function updateStickyNav() {
         const heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
 
-        // Show/hide
         if (heroBottom < 60) {
             stickyNav.classList.add('visible');
         } else {
             stickyNav.classList.remove('visible');
         }
 
-        // Highlight active section
         let current = 'home';
         sections.forEach(sec => {
             if (sec.getBoundingClientRect().top <= 100) {
@@ -52,12 +84,10 @@
     const box = document.querySelector('.hero-visual-box');
     if (!box) return;
 
-    // Glowing cursor element
     const cursor = document.createElement('div');
     cursor.classList.add('visual-cursor');
     box.appendChild(cursor);
 
-    // Trail dots
     const TRAIL_COUNT = 10;
     const trail = [];
     for (let i = 0; i < TRAIL_COUNT; i++) {
