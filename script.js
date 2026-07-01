@@ -1,3 +1,4 @@
+/* ── Theme Toggle ── */
 (function () {
     const STORAGE_KEY = 'portfolio-theme';
     const root = document.documentElement;
@@ -32,18 +33,25 @@
     });
 })();
 
+/* ── Certifications panel ── */
 (function () {
     const toggle = document.getElementById('certsToggle');
-    const list   = document.getElementById('certList');
-    if (!toggle || !list) return;
+    const panel  = document.getElementById('certsPanel');
+    if (!toggle || !panel) return;
+
+    function setOpen(open) {
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.classList.toggle('open', open);
+        panel.classList.toggle('open', open);
+        panel.hidden = !open;
+    }
 
     toggle.addEventListener('click', () => {
-        const expanded = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', !expanded);
-        list.classList.toggle('open', !expanded);
+        setOpen(toggle.getAttribute('aria-expanded') !== 'true');
     });
 })();
 
+/* ── Sticky nav ── */
 (function () {
     const stickyNav = document.getElementById('stickyNav');
     if (!stickyNav) return;
@@ -80,6 +88,7 @@
 })();
 
 
+/* ── Hero visual parallax ── */
 (function () {
     const box = document.querySelector('.hero-visual-box');
     if (!box) return;
@@ -167,6 +176,7 @@
     tick();
 })();
 
+/* ── Hamburger menu ── */
 const hamburger = document.getElementById('hamburger');
 const navMenu   = document.getElementById('navMenu');
 const navLinks  = document.querySelectorAll('.nav-link');
@@ -183,7 +193,7 @@ navLinks.forEach(link => {
     });
 });
 
-
+/* ── Active nav link on scroll ── */
 window.addEventListener('scroll', updateActiveLink);
 
 function updateActiveLink() {
@@ -208,7 +218,7 @@ function updateActiveLink() {
 
 document.addEventListener('DOMContentLoaded', updateActiveLink);
 
-
+/* ── Project filter ── */
 const filterBtns  = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.project-card');
 
@@ -228,6 +238,7 @@ filterBtns.forEach(btn => {
 
 function refreshCarousel() {}
 
+/* ── Contact form ── */
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
@@ -311,6 +322,7 @@ function showNotification(message, type = 'info') {
     }, 4000);
 }
 
+/* ── Scroll-in animations ── */
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -334,7 +346,7 @@ document.querySelectorAll('.skill-category').forEach(cat => {
     observer.observe(cat);
 });
 
-
+/* ── Ripple effect ── */
 if (!document.head.querySelector('style[data-ripple]')) {
     const s = document.createElement('style');
     s.setAttribute('data-ripple', 'true');
@@ -366,6 +378,5 @@ document.querySelectorAll('.btn').forEach(button => {
         setTimeout(() => ripple.remove(), 600);
     });
 });
-
 
 console.log('Portfolio initialized ✓');
