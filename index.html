@@ -1,17 +1,49 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marcus Cedric S. Pedrosa - Portfolio</title>
+    <meta name="description" content="Portfolio of Marcus Cedric S. Pedrosa, a Computer Engineering Technology student focused on software, AI, and practical digital solutions.">
+    <link rel="canonical" href="https://marcuscedricpedrosa.dev/">
+    <meta name="theme-color" content="#0D0608">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://marcuscedricpedrosa.dev/">
+    <meta property="og:title" content="Marcus Cedric S. Pedrosa — Software & AI Portfolio">
+    <meta property="og:description" content="Explore Marcus Cedric S. Pedrosa's projects, experience, and skills in software and AI engineering.">
+    <meta property="og:image" content="https://marcuscedricpedrosa.dev/Myself_Pics/marcus-pedrosa-portrait-960.jpg">
+    <meta property="og:image:alt" content="Marcus Cedric S. Pedrosa">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Marcus Cedric S. Pedrosa — Software & AI Portfolio">
+    <meta name="twitter:description" content="Explore Marcus Cedric S. Pedrosa's projects, experience, and skills in software and AI engineering.">
+    <meta name="twitter:image" content="https://marcuscedricpedrosa.dev/Myself_Pics/marcus-pedrosa-portrait-960.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Marcus Cedric S. Pedrosa",
+      "url": "https://marcuscedricpedrosa.dev/",
+      "jobTitle": "Computer Engineering Technology Student",
+      "description": "Computer Engineering Technology student focused on software and AI engineering.",
+      "sameAs": [
+        "https://github.com/CedZzzzzzzzz",
+        "https://www.linkedin.com/in/marcus-cedric-pedrosa/"
+      ]
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="/Myself_Pics/Untitled.png">
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <link rel="icon" type="image/webp" sizes="480x480" href="./Myself_Pics/marcus-pedrosa-portrait-480.webp">
+    <link rel="apple-touch-icon" href="./Myself_Pics/marcus-pedrosa-portrait-480.webp">
+    <link rel="sitemap" type="application/xml" href="./sitemap.xml">
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Prevent flash of wrong theme -->
     <script>
         (function(){
             var t = localStorage.getItem('portfolio-theme');
@@ -22,7 +54,7 @@
 </head>
 <body>
 
-    <nav class="sticky-nav" id="stickyNav">
+    <nav class="sticky-nav" id="stickyNav" aria-label="Section navigation">
         <a href="#home"       class="sticky-nav-link" data-section="home">Home</a>
         <a href="#about"      class="sticky-nav-link" data-section="about">About</a>
         <a href="#experience" class="sticky-nav-link" data-section="experience">Experience</a>
@@ -30,16 +62,31 @@
         <a href="#skills"     class="sticky-nav-link" data-section="skills">Skills</a>
     </nav>
 
+    <button class="theme-toggle mobile-theme-toggle" id="themeToggleMobile" type="button" aria-label="Toggle light/dark mode">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.79"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
     <section id="home" class="hero">
         <div class="hero-card">
 
-            <header class="hero-header">
-                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <nav class="nav-bar" aria-label="Primary">
+                <button class="hamburger" id="hamburger" type="button" aria-label="Toggle menu" aria-controls="navMenu" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
-            </header>
 
-            <nav class="nav-bar">
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="#home"       class="nav-link active">Home</a></li>
                     <li><a href="#about"      class="nav-link">About</a></li>
@@ -49,13 +96,10 @@
                 </ul>
 
                 <div class="contact">
-                    <!-- Theme toggle -->
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
-                        <!-- Moon icon (shown in dark mode) -->
+                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark mode">
                         <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                         </svg>
-                        <!-- Sun icon (shown in light mode) -->
                         <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="5"></circle>
                             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -72,7 +116,7 @@
                     <a href="mailto:ced41974@gmail.com" class="btn-resume" aria-label="Email">
                         <i class="fas fa-envelope"></i> 
                     </a>
-                    <a href="/CV/CV_Pedrosa_Marcus.pdf" target="_blank" class="btn-resume">
+                    <a href="/CV/PedrosaMarcusCedric_CV.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf" class="btn-resume" aria-label="View CV PDF">
                         <i class="fas fa-file-alt"></i> 
                     </a>
                 </div>
@@ -95,9 +139,26 @@
                 <div class="hero-visual">
                     <div class="hero-photo-wrap">
                         <div class="hero-photo-inner">
-                            <img src="/Myself_Pics/Untitled.png" alt="Marcus Cedric S. Pedrosa"
-                                 class="hero-photo"
-                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <picture>
+                                <source
+                                    type="image/avif"
+                                    srcset="./Myself_Pics/marcus-pedrosa-portrait-480.avif 480w,
+                                            ./Myself_Pics/marcus-pedrosa-portrait-960.avif 960w"
+                                    sizes="(max-width: 480px) 240px, (max-width: 1024px) 280px, 300px">
+                                <source
+                                    type="image/webp"
+                                    srcset="./Myself_Pics/marcus-pedrosa-portrait-480.webp 480w,
+                                            ./Myself_Pics/marcus-pedrosa-portrait-960.webp 960w"
+                                    sizes="(max-width: 480px) 240px, (max-width: 1024px) 280px, 300px">
+                                <img src="./Myself_Pics/marcus-pedrosa-portrait-960.jpg"
+                                         alt="Marcus Cedric S. Pedrosa"
+                                     class="hero-photo"
+                                     width="960"
+                                     height="960"
+                                     decoding="async"
+                                     fetchpriority="high"
+                                     onerror="this.closest('picture').style.display='none';this.closest('.hero-photo-inner').querySelector('.hero-photo-placeholder').style.display='flex'">
+                            </picture>
                             <div class="hero-photo-placeholder" style="display:none">
                                 <i class="fas fa-user"></i>
                                 <span>Marcus Cedric Pedrosa - Photo</span>
@@ -114,7 +175,24 @@
         <div class="about-content">
 
             <div class="about-photo">
-                <img src="/Myself_Pics/Untitled.png" alt="Marcus Cedric S. Pedrosa" />
+                <picture>
+                    <source
+                        type="image/avif"
+                        srcset="./Myself_Pics/marcus-pedrosa-portrait-480.avif 480w,
+                                ./Myself_Pics/marcus-pedrosa-portrait-960.avif 960w"
+                        sizes="280px">
+                    <source
+                        type="image/webp"
+                        srcset="./Myself_Pics/marcus-pedrosa-portrait-480.webp 480w,
+                                ./Myself_Pics/marcus-pedrosa-portrait-960.webp 960w"
+                        sizes="280px">
+                    <img src="./Myself_Pics/marcus-pedrosa-portrait-960.jpg"
+                         alt="Marcus Cedric S. Pedrosa"
+                         width="960"
+                         height="960"
+                         loading="lazy"
+                         decoding="async">
+                </picture>
             </div>
 
             <div class="about-text">
@@ -126,7 +204,7 @@
                     continously improving.</p>
 
                 <div class="about-certs">
-                    <button class="about-certs-toggle" id="certsToggle" aria-expanded="false" aria-controls="certsPanel">
+                    <button class="about-certs-toggle" id="certsToggle" type="button" aria-expanded="false" aria-controls="certsPanel">
                         <span><i class="fas fa-certificate"></i> Certifications</span>
                         <i class="fas fa-chevron-down certs-chevron"></i>
                     </button>
@@ -257,16 +335,50 @@
             <div class="masonry-grid" id="masonryGrid">
 
                 <div class="project-card" data-category="personal">
+                    <figure class="project-media">
+                        <picture>
+                            <source type="image/avif" srcset="./Project_Screenshots/budget-tracker-card.avif">
+                            <source type="image/webp" srcset="./Project_Screenshots/budget-tracker-card.webp">
+                            <img src="./Project_Screenshots/budget-tracker.png"
+                                 alt="Budget Tracker application interface"
+                                 class="project-screenshot"
+                                 width="1200"
+                                 height="600"
+                                 loading="lazy"
+                                 decoding="async">
+                        </picture>
+                        <figcaption class="project-screenshot-fallback" aria-hidden="true">
+                            <i class="fas fa-wallet"></i>
+                            <span>Add budget-tracker.png</span>
+                        </figcaption>
+                    </figure>
                     <span class="project-badge">Personal</span>
                     <h3>Budget-Tracker</h3>
                     <p>A personal budget tracker website featuring weekly and monthly expense tracking with AI-generated spending insights via Gemini during PDF export.</p>
                     <div class="project-tags">
                         <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">React</span><span class="tag">PostgreSQL</span>
                     </div>
-                    <a href="https://github.com/CedZzzzzzzzz/budget-tracker.git" class="project-link">View Project →</a>
+                    <a href="https://balaze.netlify.app/" class="project-link">View Project →</a>
                 </div>
 
                 <div class="project-card" data-category="academic">
+                    <figure class="project-media">
+                        <picture>
+                            <source type="image/avif" srcset="./Project_Screenshots/crime-detection-system-card.avif">
+                            <source type="image/webp" srcset="./Project_Screenshots/crime-detection-system-card.webp">
+                            <img src="./Project_Screenshots/crime-detection-system.png"
+                                 alt="Crime Detection System application interface"
+                                 class="project-screenshot"
+                                 width="1200"
+                                 height="600"
+                                 loading="lazy"
+                                 decoding="async">
+                        </picture>
+                        <figcaption class="project-screenshot-fallback" aria-hidden="true">
+                            <i class="fas fa-shield-halved"></i>
+                            <span>Add crime-detection-system.png</span>
+                        </figcaption>
+                    </figure>
                     <span class="project-badge">Academic</span>
                     <h3>Crime Detection System</h3>
                     <p>AI-powered crime scene analysis system that detects weapons and threats using YOLOv8 object detection, 
@@ -277,8 +389,25 @@
                     <a href="https://github.com/CedZzzzzzzzz?tab=repositories&q=crime-detection" class="project-link">View Project →</a>
                 </div>
 
-                <div class="project-card" data-category="ongoing">
-                    <span class="project-badge">Ongoing</span>
+                <div class="project-card" data-category="completed">
+                    <figure class="project-media">
+                        <picture>
+                            <source type="image/avif" srcset="./Project_Screenshots/ecobench-card.avif">
+                            <source type="image/webp" srcset="./Project_Screenshots/ecobench-card.webp">
+                            <img src="./Project_Screenshots/ecobench.png"
+                                 alt="EcoBench project interface"
+                                 class="project-screenshot"
+                                 width="1200"
+                                 height="600"
+                                 loading="lazy"
+                                 decoding="async">
+                        </picture>
+                        <figcaption class="project-screenshot-fallback" aria-hidden="true">
+                            <i class="fas fa-solar-panel"></i>
+                            <span>Add ecobench.png</span>
+                        </figcaption>
+                    </figure>
+                    <span class="project-badge">Completed</span>
                     <h3>EcoBench</h3>
                     <p>An ergonomic, solar-powered charging station that integrates a custom-geared hand crank to convert human kinetic energy into stored electricity.
                          This project features an ESP32-monitored 1280Wh LiFePO4 battery and a 300W solar array to provide sustainable, 
@@ -286,10 +415,27 @@
                     <div class="project-tags">
                         <span class="tag">HTML5</span><span class="tag">Tailwind CSS</span><span class="tag">JavaScript</span><span class="tag">React</span><span class="tag">Python</span><span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">Supabase</span><span class="tag">Resend</span>
                     </div>
-                    <a href="https://github.com/Blaesei/EcoBench.git" class="project-link">View Project →</a>
+                    <a href="https://pupitech-ecobench.vercel.app/" class="project-link">View Project →</a>
                 </div>
 
                 <div class="project-card" data-category="personal">
+                    <figure class="project-media">
+                        <picture>
+                            <source type="image/avif" srcset="./Project_Screenshots/portfolio-website-card.avif">
+                            <source type="image/webp" srcset="./Project_Screenshots/portfolio-website-card.webp">
+                            <img src="./Project_Screenshots/portfolio-website.png"
+                                 alt="Portfolio Website interface"
+                                 class="project-screenshot"
+                                 width="1200"
+                                 height="600"
+                                 loading="lazy"
+                                 decoding="async">
+                        </picture>
+                        <figcaption class="project-screenshot-fallback" aria-hidden="true">
+                            <i class="fas fa-laptop-code"></i>
+                            <span>Add portfolio-website.png</span>
+                        </figcaption>
+                    </figure>
                     <span class="project-badge">Personal</span>
                     <h3>Portfolio Website</h3>
                     <p>A portfolio website showcasing my projects and skills. Also, introduces my background and experience so far.
@@ -299,10 +445,27 @@
                     <div class="project-tags">
                         <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
                     </div>
-                    <a href="https://github.com/CedZzzzzzzzz/Portfolio-Website.git" class="project-link">View Project →</a>
+                    <a href="https://marcuscedricpedrosa.dev" class="project-link">View Project →</a>
                 </div>
 
                 <div class="project-card" data-category="ongoing">
+                    <figure class="project-media">
+                        <picture>
+                            <source type="image/avif" srcset="./Project_Screenshots/quantis-f1-card.avif">
+                            <source type="image/webp" srcset="./Project_Screenshots/quantis-f1-card.webp">
+                            <img src="./Project_Screenshots/quantis-f1.png"
+                                 alt="Quantis-F1 prediction dashboard interface"
+                                 class="project-screenshot"
+                                 width="1200"
+                                 height="600"
+                                 loading="lazy"
+                                 decoding="async">
+                        </picture>
+                        <figcaption class="project-screenshot-fallback" aria-hidden="true">
+                            <i class="fas fa-flag-checkered"></i>
+                            <span>Add quantis-f1.png</span>
+                        </figcaption>
+                    </figure>
                     <span class="project-badge">Ongoing</span>
                     <h3>Quantis-F1</h3>
                     <p>A full-stack real time championship predictor for the 2026 Formula 1 regulation reset.
@@ -313,7 +476,7 @@
                     <div class="project-tags">
                         <span class="tag">React</span><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span><span class="tag">Supabase</span>
                     </div>
-                    <a href="https://github.com/CedZzzzzzzzz/F1-2026-prediction-system.git" class="project-link">View Project →</a>
+                    <a href="https://quantis-f1.tech" class="project-link">View Project →</a>
                 </div>
 
             </div>
@@ -340,6 +503,8 @@
                         <div class="skill-list">
                             <span class="skill-badge">HTML</span>
                             <span class="skill-badge">CSS</span>
+                            <span class="skill-badge">JavaScript</span>
+                            <span class="skill-badge">React</span>
                         </div>
                     </div>
 
