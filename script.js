@@ -116,7 +116,9 @@ filterBtns.forEach(button => button.addEventListener('click', () => {
         filter.setAttribute('aria-pressed', String(selected));
     });
     projectCards.forEach(card => {
-        card.classList.toggle('hidden', category !== 'all' && card.dataset.category !== category);
+        const categories = (card.dataset.category || '').split(/\s+/).filter(Boolean);
+        const matches = category === 'all' || categories.includes(category);
+        card.classList.toggle('hidden', !matches);
     });
 }));
 
