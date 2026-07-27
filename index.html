@@ -543,6 +543,64 @@
         </div>
     </footer>
 
+    <!-- Chat Widget -->
+    <button class="chat-launcher" id="chatLauncher" type="button" aria-label="Open portfolio assistant" aria-expanded="false" aria-controls="chatPanel">
+        <svg class="chat-launcher-icon chat-icon-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <svg class="chat-launcher-icon chat-icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </button>
+
+    <div class="chat-panel" id="chatPanel" aria-hidden="true" role="dialog" aria-label="Portfolio assistant">
+        <div class="chat-panel-header">
+            <div class="chat-panel-header-info">
+                <div>
+                    <p class="chat-panel-name">Cedric's Assistant </p>
+                </div>
+            </div>
+            <button class="chat-panel-close" id="chatPanelClose" type="button" aria-label="Close chat">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-suggested-wrap" id="chatSuggestedWrap">
+                <button class="chat-suggested-toggle" id="chatSuggestedToggle" type="button">
+                    <span>Quick questions</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="chat-suggested" id="chatSuggested">
+                    <button class="chat-suggested-btn" type="button">What's his tech stack?</button>
+                    <button class="chat-suggested-btn" type="button">What's he currently looking for?</button>
+                    <button class="chat-suggested-btn" type="button">What's his biggest project so far?</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <textarea
+                class="chat-input"
+                id="chatInput"
+                placeholder="Ask something about Marcus..."
+                rows="1"
+                maxlength="1000"
+                aria-label="Your message"
+            ></textarea>
+            <button class="chat-send" id="chatSend" type="button" aria-label="Send message" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

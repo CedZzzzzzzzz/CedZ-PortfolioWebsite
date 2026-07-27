@@ -1,4 +1,6 @@
 PORTFOLIO_AUDIT_CHECKLIST.md
+features.md
+/plans
 
 .env
 .env.*
@@ -29,3 +31,6 @@ test-results/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Local Netlify folder
+.netlify
