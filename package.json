@@ -4,6 +4,7 @@
   "description": "A lightweight static portfolio website built with semantic HTML, CSS, and vanilla JavaScript. It includes responsive project cards, dark/light themes, keyboard-friendly navigation, project filtering, and optimized portrait/project imagery.",
   "main": "script.js",
   "dependencies": {
+    "@atlexus/sdk": "file:../admin-dashboard/packages/sdk",
     "@google/genai": "^2.13.0",
     "@netlify/functions": "^5.3.0",
     "detect-libc": "^2.1.2",
