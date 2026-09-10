@@ -636,10 +636,18 @@
     </div>
 
     <script src="script.js"></script>
-    <script 
-        defer 
-        src="http://localhost:3000/sdk.js" 
-        data-site-id="d2535e24-ef46-4879-a28d-102dc60c1742"
-    ></script>
+    <script>
+        (function() {
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const sdkHost = isLocal 
+            ? 'http://localhost:3000' 
+            : 'https://admin-dashboard-487w.onrender.com';
+            const script = document.createElement('script');
+            script.defer = true;
+            script.src = `${sdkHost}/sdk.js`;
+            script.setAttribute('data-site-id', 'd2535e24-ef46-4879-a28d-102dc60c1742');
+            document.head.appendChild(script);
+        })();
+    </script>
 </body>
 </html>
