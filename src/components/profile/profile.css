@@ -1,0 +1,76 @@
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.profile-avatar {
+  width: 84px;
+  height: 84px;
+  border: 2px solid var(--ac);
+  border-radius: 14px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: var(--ac);
+  font-size: 26px;
+  background: var(--bg);
+}
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-content h1 {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.profile-focus,
+.profile-hint {
+  color: var(--mut);
+}
+.profile-hint {
+  font-size: 11px;
+}
+.profile-socials,
+.profile-actions,
+.theme-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.profile-socials a,
+.profile-actions button,
+.theme-options button {
+  border: 1px solid var(--bd);
+  border-radius: 5px;
+  padding: 4px 7px;
+  cursor: pointer;
+}
+.profile-content :focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 3px;
+}
+.theme-options button[aria-checked='true'],
+.profile-actions button[aria-pressed='true'] {
+  border-color: var(--ac);
+  color: var(--ac);
+  background: var(--bg);
+}
+.profile-themes > p {
+  margin-bottom: 7px;
+}
+.profile-photo-button {
+  cursor: pointer;
+  border-radius: 14px;
+}
+.profile-photo-upload > button:not(.profile-photo-button) {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.profile-photo-upload [role='status'] {
+  font-size: 11px;
+}
+.profile-photo-upload button:disabled {
+  cursor: wait;
+}

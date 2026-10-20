@@ -1,36 +1,49 @@
 {
-  "name": "portfoliowebsite",
+  "name": "cedz-portfolio",
   "version": "1.0.0",
-  "description": "A lightweight static portfolio website built with semantic HTML, CSS, and vanilla JavaScript. It includes responsive project cards, dark/light themes, keyboard-friendly navigation, project filtering, and optimized portrait/project imagery.",
-  "main": "script.js",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
+    "lint": "eslint .",
+    "format": "prettier --write index.html package.json vite.config.ts eslint.config.js src",
+    "format:check": "prettier --check index.html package.json vite.config.ts eslint.config.js src",
+    "test": "vitest run"
+  },
   "dependencies": {
     "@atlexus/sdk": "file:../admin-dashboard/packages/sdk",
     "@google/genai": "^2.13.0",
     "@netlify/functions": "^5.3.0",
     "detect-libc": "^2.1.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "semver": "^7.8.5",
     "sharp": "^0.35.3",
     "tslib": "^2.8.1",
     "zod": "^4.4.3"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CedZzzzzzzzz/CedZ-PortfolioWebsite.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/CedZzzzzzzzz/CedZ-PortfolioWebsite/issues"
-  },
-  "homepage": "https://github.com/CedZzzzzzzzz/CedZ-PortfolioWebsite#readme",
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@tailwindcss/vite": "^4.0.0",
     "@types/node": "^26.1.1",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.0",
+    "framer-motion": "^12.0.0",
+    "globals": "^16.0.0",
+    "jsdom": "^30.1.2",
     "netlify-cli": "^27.0.0",
-    "typescript": "^5.9.3"
+    "prettier": "^3.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.0.0",
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0"
   }
 }

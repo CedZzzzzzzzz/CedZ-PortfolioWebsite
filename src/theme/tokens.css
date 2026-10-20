@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+
+:root,
+:root[data-theme='dark'] {
+  --bg: #000;
+  --fg: #e8e8e8;
+  color-scheme: dark;
+  --mut: #797979;
+  --ac: #f2f2f2;
+  --ac2: #9a9a9a;
+  --bd: #2a2a2a;
+  --card: #0b0b0b;
+  --ok: #8be28b;
+  --warn: #f5c542;
+}
+
+:root[data-theme='blue'] {
+  --bg: #070d1f;
+  --fg: #d4e4ff;
+  --mut: #6c81a8;
+  --ac: #4da3ff;
+  --ac2: #7ee0ff;
+  --bd: #1f2f55;
+  --card: #0b1430;
+  --ok: #5ee6a8;
+  --warn: #ffd479;
+}
+
+:root[data-theme='tokyo'] {
+  --bg: #09090d;
+  --fg: #ece3e3;
+  --mut: #93707b;
+  --ac: #ff2e4d;
+  --ac2: #ff7a8a;
+  --bd: #3a1a22;
+  --card: #110a0d;
+  --ok: #ff9f68;
+  --warn: #ffd166;
+}
+
+:root[data-theme='fire'] {
+  --bg: #110500;
+  --fg: #ffead2;
+  --mut: #b16b34;
+  --ac: #ff6a00;
+  --ac2: #ffc400;
+  --bd: #4d2008;
+  --card: #1b0902;
+  --ok: #ffd23f;
+  --warn: #ff3d00;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  overscroll-behavior-x: none;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font:
+    13px/1.5 'JetBrains Mono',
+    ui-monospace,
+    monospace;
+}

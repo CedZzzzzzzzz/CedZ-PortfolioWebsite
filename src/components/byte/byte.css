@@ -1,0 +1,314 @@
+.byte-panel {
+  position: fixed;
+  z-index: 20;
+  right: 18px;
+  bottom: 18px;
+  width: 330px;
+  max-height: calc(100dvh - 36px);
+  border: 2px solid var(--ac);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--fg);
+  box-shadow: 0 8px 30px #0008;
+  display: flex;
+  flex-direction: column;
+  animation: byte-enter 180ms ease-out;
+}
+.byte-panel[hidden],
+.byte-handle-row[hidden] {
+  display: none;
+}
+.byte-panel header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 1px solid var(--bd);
+}
+.byte-panel h2 {
+  flex: 1;
+  font-size: 12px;
+}
+.byte-panel button,
+.byte-handle {
+  cursor: pointer;
+}
+.byte-panel-body {
+  padding: 12px;
+  overflow-y: auto;
+  min-height: 0;
+}
+.byte-panel :focus-visible,
+.byte-handle:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 3px;
+}
+.byte-handle {
+  position: fixed;
+  z-index: 19;
+  right: 0;
+  top: 50%;
+  padding: 8px 5px;
+  background: var(--card);
+  color: var(--ac);
+  border: 1px solid var(--ac);
+  border-radius: 6px 0 0 6px;
+}
+.byte-handle span {
+  display: none;
+}
+.byte-bubble {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--bd);
+  border-radius: 9px;
+  padding: 10px;
+  min-height: 70px;
+  overflow-wrap: anywhere;
+}
+.byte-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 34px;
+  width: 10px;
+  height: 10px;
+  background: var(--bg);
+  border-right: 1px solid var(--bd);
+  border-bottom: 1px solid var(--bd);
+  transform: rotate(45deg);
+}
+.byte-room {
+  height: 150px;
+  position: relative;
+  overflow: hidden;
+}
+.byte-travel {
+  position: absolute;
+  width: 130px;
+  bottom: 15px;
+  transition: left 1.1s ease;
+}
+.byte-pet {
+  display: block;
+  width: 130px;
+  padding: 6px;
+  text-align: left;
+  border-radius: 8px;
+}
+.byte-sprite {
+  font:
+    11px/1.05 'JetBrains Mono',
+    ui-monospace,
+    monospace;
+  margin: 0;
+}
+.byte-sprite-line {
+  display: block;
+  white-space: pre;
+}
+.byte-tone-accent {
+  color: var(--ac);
+}
+.byte-tone-foreground {
+  color: var(--fg);
+}
+.byte-tone-outline {
+  color: var(--ac2);
+}
+.byte-scarf {
+  display: inline-block;
+  transform-origin: left;
+  animation: byte-sway 1.2s ease-in-out infinite alternate;
+}
+.byte-bob {
+  display: block;
+  animation: byte-bob 1.8s ease-in-out infinite;
+}
+.byte-flip {
+  display: block;
+  animation: byte-flip 1.1s ease;
+}
+.byte-floor {
+  position: absolute;
+  bottom: 7px;
+  left: 0;
+  right: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--mut);
+  pointer-events: none;
+}
+.byte-particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  color: var(--ac);
+}
+.byte-particles span {
+  position: absolute;
+  animation: byte-particle 600ms ease-out forwards;
+}
+.byte-chips {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+.byte-chips button,
+.byte-input button {
+  border: 1px solid var(--bd);
+  border-radius: 5px;
+  padding: 3px 6px;
+}
+.byte-panel button:disabled {
+  color: var(--mut);
+  cursor: default;
+}
+.byte-chat-note,
+.byte-history {
+  color: var(--mut);
+  font-size: 11px;
+}
+.byte-input {
+  display: flex;
+  gap: 6px;
+}
+.byte-chat-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--bd);
+  border-radius: 5px;
+  margin-top: 8px;
+  padding: 7px;
+}
+.byte-chat-card strong,
+.byte-chat-card span {
+  display: block;
+}
+.byte-chat-card strong {
+  color: var(--ac);
+}
+.byte-opened {
+  color: var(--mut);
+  margin-top: 8px;
+  font-size: 11px;
+}
+.byte-history li + li {
+  border-top: 1px solid var(--bd);
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.byte-history {
+  overflow-wrap: anywhere;
+}
+.byte-input input {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg);
+  border: 1px solid var(--bd);
+  border-radius: 5px;
+  padding: 5px;
+}
+.byte-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.byte-panel[data-paused='true'],
+.byte-panel[data-paused='true'] * {
+  animation-play-state: paused;
+}
+.byte-panel[data-reduced='true'],
+.byte-panel[data-reduced='true'] * {
+  animation: none;
+  transition: none;
+}
+@keyframes byte-enter {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes byte-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes byte-sway {
+  from {
+    transform: rotate(-8deg);
+  }
+  to {
+    transform: rotate(8deg);
+  }
+}
+@keyframes byte-flip {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: translateY(-20px) rotate(-180deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes byte-particle {
+  from {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--particle-x), var(--particle-y)) rotate(180deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .byte-panel,
+  .byte-panel * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media (width < 760px) {
+  .byte-panel {
+    left: max(10px, env(safe-area-inset-left));
+    right: max(10px, env(safe-area-inset-right));
+    bottom: max(10px, env(safe-area-inset-bottom));
+    width: auto;
+    max-height: calc(
+      100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    );
+  }
+  .byte-handle-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px max(10px, env(safe-area-inset-right))
+      max(10px, env(safe-area-inset-bottom));
+  }
+  .byte-handle {
+    position: static;
+    border-radius: 6px;
+    padding: 8px 12px;
+  }
+  .byte-handle span {
+    display: inline;
+  }
+}

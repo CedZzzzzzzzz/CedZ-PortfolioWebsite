@@ -1,0 +1,194 @@
+.workspace-shell {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.ide-hidden {
+  display: none;
+}
+.top-bar {
+  height: 34px;
+  flex: 0 0 34px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--bd);
+  background: var(--card);
+}
+.bar-start,
+.bar-end {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.bar-end {
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+.top-bar button {
+  border: 1px solid var(--bd);
+  border-radius: 4px;
+  padding: 1px 5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.top-bar button:disabled {
+  cursor: default;
+  color: var(--mut);
+}
+.top-bar button[aria-pressed='true'] {
+  border-color: var(--ac);
+}
+.file-path {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--mut);
+}
+.shortcut-hint {
+  color: var(--mut);
+  font-size: 11px;
+}
+.workspace-area {
+  flex: 1;
+  min-height: 0;
+  padding: 10px;
+}
+.workspace-grid {
+  --lw: 210px;
+  --rw: 250px;
+  --rn: 0.5;
+  height: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--lw) minmax(0, 1fr) var(--rw);
+  grid-template-rows: calc((100% - 10px) * var(--rn)) minmax(0, 1fr);
+  grid-template-areas: 'a b d' 'a c d';
+  gap: 10px;
+}
+.pane {
+  min-width: 0;
+  min-height: 0;
+  border: 2px solid var(--bd);
+  border-radius: 10px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+}
+.pane-explorer {
+  grid-area: a;
+}
+.pane-editor {
+  grid-area: b;
+}
+.pane-terminal {
+  grid-area: c;
+}
+.pane-profile {
+  grid-area: d;
+}
+.pane-active {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(135deg, var(--ac), var(--ac2)) border-box;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--ac) 16%, transparent);
+}
+.pane-title {
+  flex: none;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--bd);
+  color: var(--mut);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.pane-content {
+  padding: 12px;
+  overflow: auto;
+  min-height: 0;
+  overflow-wrap: anywhere;
+}
+.placeholder {
+  color: var(--mut);
+}
+.resize-gutter {
+  position: absolute;
+  z-index: 2;
+  border-radius: 4px;
+  touch-action: none;
+  user-select: none;
+}
+.gutter-left,
+.gutter-right {
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  cursor: col-resize;
+}
+.gutter-left {
+  left: calc(var(--lw) + 1px);
+}
+.gutter-right {
+  right: calc(var(--rw) + 1px);
+}
+.gutter-rowRatio {
+  height: 8px;
+  cursor: row-resize;
+  left: calc(var(--lw) + 10px);
+  right: calc(var(--rw) + 10px);
+  top: calc((100% - 10px) * var(--rn) + 1px);
+}
+.resize-gutter:hover,
+.resize-gutter.dragging {
+  background: color-mix(in srgb, var(--ac) 35%, transparent);
+}
+.workspace-shell :focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 2px;
+}
+@media (width < 760px) {
+  .workspace-shell {
+    height: auto;
+    min-height: 100dvh;
+    overflow: clip;
+  }
+  .top-bar {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 6px;
+  }
+  .desktop-label {
+    display: none;
+  }
+  .workspace-area {
+    flex: none;
+  }
+  .workspace-grid {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .pane {
+    min-height: 250px;
+  }
+  .pane-editor {
+    order: 1;
+    min-height: 340px;
+  }
+  .pane-terminal {
+    order: 2;
+  }
+  .pane-explorer {
+    order: 3;
+  }
+  .pane-profile {
+    order: 4;
+  }
+  .resize-gutter {
+    display: none;
+  }
+}

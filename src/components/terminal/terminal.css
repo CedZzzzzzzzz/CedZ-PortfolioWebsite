@@ -1,0 +1,94 @@
+.pane-terminal .pane-content {
+  flex: 1;
+  padding: 0;
+  overflow: hidden;
+}
+.terminal {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.terminal-output {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+  overflow-wrap: anywhere;
+}
+.terminal-banner {
+  font-size: clamp(8px, 1vw, 11px);
+  line-height: 1.1;
+  color: var(--ac);
+  margin: 0 0 14px;
+  white-space: pre;
+}
+.terminal-entry {
+  margin-top: 12px;
+}
+.terminal-line {
+  white-space: pre-wrap;
+  min-height: 1.5em;
+}
+.terminal-line button,
+.terminal-line a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.terminal .tone-normal {
+  color: var(--fg);
+}
+.terminal .tone-muted {
+  color: var(--mut);
+}
+.terminal .tone-accent {
+  color: var(--ac);
+}
+.terminal .tone-ok {
+  color: var(--ok);
+}
+.terminal .tone-warn,
+.terminal .tone-error {
+  color: var(--warn);
+}
+.terminal-prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--bd);
+  padding: 8px 12px;
+}
+.terminal-prompt label {
+  color: var(--ac);
+}
+.terminal-prompt input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  color: var(--fg);
+  border: 0;
+}
+.terminal-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 12px 10px;
+}
+.terminal-chips button,
+.terminal-prompt button {
+  padding: 1px 7px;
+  border: 1px solid var(--bd);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.terminal-chips button:hover,
+.terminal-prompt button:hover {
+  border-color: var(--ac);
+}
+@media (width < 760px) {
+  .pane-terminal .pane-content {
+    flex: auto;
+    height: 380px;
+  }
+}
