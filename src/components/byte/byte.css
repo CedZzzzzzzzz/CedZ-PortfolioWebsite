@@ -4,6 +4,7 @@
   right: 18px;
   bottom: 18px;
   width: 330px;
+  max-height: calc(100vh - 36px);
   max-height: calc(100dvh - 36px);
   border: 2px solid var(--ac);
   border-radius: 10px;
@@ -40,7 +41,7 @@
 }
 .byte-panel :focus-visible,
 .byte-handle:focus-visible {
-  outline: 2px solid var(--ac);
+  outline: 2px solid var(--bd-strong);
   outline-offset: 3px;
 }
 .byte-handle {
@@ -158,7 +159,7 @@
 }
 .byte-chips button,
 .byte-input button {
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   border-radius: 5px;
   padding: 3px 6px;
 }
@@ -179,7 +180,7 @@
   display: block;
   width: 100%;
   text-align: left;
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   border-radius: 5px;
   margin-top: 8px;
   padding: 7px;
@@ -208,9 +209,13 @@
   flex: 1;
   min-width: 0;
   background: var(--bg);
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   border-radius: 5px;
   padding: 5px;
+}
+.byte-input input::placeholder {
+  color: var(--mut);
+  opacity: 1;
 }
 .byte-sr-only {
   position: absolute;
@@ -280,19 +285,13 @@
     transform: translate(var(--particle-x), var(--particle-y)) rotate(180deg);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .byte-panel,
-  .byte-panel * {
-    animation: none !important;
-    transition: none !important;
-  }
-}
 @media (width < 760px) {
   .byte-panel {
     left: max(10px, env(safe-area-inset-left));
     right: max(10px, env(safe-area-inset-right));
     bottom: max(10px, env(safe-area-inset-bottom));
     width: auto;
+    max-height: calc(100vh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     max-height: calc(
       100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
     );

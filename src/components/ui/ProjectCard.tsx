@@ -1,17 +1,22 @@
 import type { Project } from '../../types/content'
-import { resolveProjectImage } from '../../lib/projectImage'
-import { useWorkspaceState } from '../../state/useWorkspaceState'
+import { m } from 'framer-motion'
 import { useNavigation } from '../../hooks/useNavigation'
+import { useWorkspaceState } from '../../state/useWorkspaceState'
+import { useMotionEnabled } from '../motion/useMotionEnabled'
+import { resolveProjectImage } from '../../lib/projectImage'
 
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({
+  project,
+  order = 0,
+}: {
+  project: Project
+  order?: number
+}) {
   const { projectImages } = useWorkspaceState()
   const { openFile } = useNavigation()
-  return (
-    <button
-      type="button"
-      className="project-card"
-      onClick={() => openFile(project.id)}
-    >
+  const animate = useMotionEnabled()
+  const card = (
+    <>
       <img
         src={resolveProjectImage(project, projectImages[project.id])}
         alt={project.n}
@@ -30,6 +35,24 @@ export function ProjectCard({ project }: { project: Project }) {
           ))}
         </span>
       </span>
-    </button>
+    </>
+  )
+  const props = {
+    type: 'button' as const,
+    className: 'project-card',
+    onClick: () => openFile(project.id),
+  }
+  return animate ? (
+    <m.button
+      {...props}
+      initial={{ opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.18, delay: Math.min(order * 0.08, 0.3) }}
+      whileHover={{ y: -2 }}
+    >
+      {card}
+    </m.button>
+  ) : (
+    <button {...props}>{card}</button>
   )
 }

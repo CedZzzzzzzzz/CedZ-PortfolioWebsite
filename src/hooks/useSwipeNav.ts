@@ -24,14 +24,17 @@ export function useSwipeNav() {
   const dispatch = useWorkspaceDispatch()
   const last = useRef(-1000)
   const touch = useRef<readonly [number, number][]>([])
-  const move = useCallback((direction: -1 | 1) => {
-    if (plainView || !activeFileId) return false
-    const index = tabs.indexOf(activeFileId),
-      next = tabs[index + direction]
-    if (!next) return false
-    dispatch({ type: 'set-active-tab', fileId: next })
-    return true
-  }, [activeFileId, dispatch, plainView, tabs])
+  const move = useCallback(
+    (direction: -1 | 1) => {
+      if (plainView || !activeFileId) return false
+      const index = tabs.indexOf(activeFileId),
+        next = tabs[index + direction]
+      if (!next) return false
+      dispatch({ type: 'set-active-tab', fileId: next })
+      return true
+    },
+    [activeFileId, dispatch, plainView, tabs],
+  )
   useEffect(() => {
     const wheel = (event: WheelEvent) => {
       if (blocked(event.target)) return

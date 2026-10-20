@@ -144,7 +144,7 @@ export function ByteProvider({
           ? quips[Math.floor(Math.random() * quips.length)]
           : action === 'feed'
             ? 'nom nom 🍙'
-            : 'hiyah! ⚔️'
+            : 'hiyah! '
       setMessage((previous) => ({ id: previous.id + 1, text }))
     }
     send({ type: action })

@@ -17,12 +17,16 @@
   padding: 12px;
   box-shadow: 0 15px 50px #000b;
 }
+.launcher-backdrop :focus-visible {
+  outline: 2px solid var(--bd-strong);
+  outline-offset: 2px;
+}
 .launcher-backdrop input {
   width: 100%;
   padding: 8px;
   background: var(--bg);
   color: var(--fg);
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   border-radius: 5px;
 }
 .launcher-backdrop [role='listbox'] {
@@ -38,6 +42,9 @@
   border-bottom: 1px solid var(--bd);
   color: var(--fg);
   cursor: pointer;
+}
+.launcher-backdrop [role='option']:hover {
+  border-color: var(--ac);
 }
 .launcher-backdrop [aria-selected='true'] {
   background: var(--bg);

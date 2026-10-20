@@ -9,7 +9,7 @@ function answer(query: string, activeFileId: string | null): ChatReply {
     return { text: 'nom nom 🍙', petAction: 'feed' }
   }
   if (/\b(play|backflip|hiyah)\b/.test(q)) {
-    return { text: 'hiyah! ⚔️', petAction: 'play' }
+    return { text: 'hiyah! ', petAction: 'play' }
   }
   if (/\b(plain|simple|simpler)\b/.test(q)) {
     return { text: 'Switching to the plain view.', switchToPlain: true }

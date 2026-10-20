@@ -110,7 +110,9 @@ it('captures visitor information once even in Strict Mode, renders landing, and 
   const gather = vi.spyOn(visitor, 'getVisitorInfo')
   await mount()
   expect(gather).toHaveBeenCalledTimes(1)
+  expect(log().getAttribute('aria-live')).toBe('off')
   expect(log().textContent).toContain('booting cedz.portfolio ...')
+  expect(log().querySelector('.terminal-banner')?.textContent).toContain('██████')
   expect(log().textContent).toContain('3 projects · 4 skill groups · 4 themes')
   await act(async () =>
     container
@@ -119,6 +121,7 @@ it('captures visitor information once even in Strict Mode, renders landing, and 
   )
   expect(document.activeElement).toBe(input())
   await run('theme blue')
+  expect(log().getAttribute('aria-live')).toBe('polite')
   expect(document.documentElement.dataset.theme).toBe('blue')
   expect(gather).toHaveBeenCalledTimes(1)
 })
@@ -315,8 +318,8 @@ it('keeps concurrent replies in their original entries while synchronous command
     (entry) => entry.textContent,
   )
   expect(entries).toEqual([
-    '❯ ask firstfirst answer',
-    '❯ ask secondsecond answer',
-    '❯ nowimmediate',
+    'ask firstfirst answer',
+    'ask secondsecond answer',
+    'nowimmediate',
   ])
 })

@@ -19,8 +19,15 @@ export function ContactView() {
         {socials.map((social) => (
           <li key={social.label}>
             <strong>{social.label}</strong>
-            <a href={social.url} target="_blank" rel="noopener noreferrer">
+            <a
+              href={social.url}
+              target={social.url.startsWith('mailto:') ? undefined : '_blank'}
+              rel="noopener noreferrer"
+            >
               {social.display}
+              {!social.url.startsWith('mailto:') && (
+                <span className="visually-hidden"> (opens in a new tab)</span>
+              )}
             </a>
             {social.url.startsWith('mailto:') && (
               <button

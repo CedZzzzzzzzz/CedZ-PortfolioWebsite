@@ -1,4 +1,5 @@
 import { useTerminalFocus } from '../../hooks/useTerminalFocus'
+import { Icon } from '../ui/Icon'
 
 interface Props {
   input: string
@@ -23,8 +24,8 @@ export function TerminalPrompt({
         run(input)
       }}
     >
-      <label htmlFor="terminal-input" aria-label="Terminal command">
-        ❯
+      <label htmlFor="terminal-input">
+        <Icon name="prompt" />
       </label>
       <input
         id="terminal-input"

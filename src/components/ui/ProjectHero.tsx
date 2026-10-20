@@ -1,9 +1,12 @@
-import { useCallback, useState } from 'react'
+import { lazy, Suspense, useCallback, useState } from 'react'
 import type { Project } from '../../types/content'
 import { resolveProjectImage } from '../../lib/projectImage'
 import { useWorkspaceState } from '../../state/useWorkspaceState'
-import { ImageViewer } from './ImageViewer'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+
+const ImageViewer = lazy(() =>
+  import('./ImageViewer').then((module) => ({ default: module.ImageViewer })),
+)
 
 export function ProjectHero({ project }: { project: Project }) {
   const reducedMotion = useReducedMotion()
@@ -50,7 +53,11 @@ export function ProjectHero({ project }: { project: Project }) {
           loading="lazy"
         />
       </button>
-      {expanded && <ImageViewer src={src} name={project.n} onClose={close} />}
+      {expanded && (
+        <Suspense fallback={null}>
+          <ImageViewer src={src} name={project.n} onClose={close} />
+        </Suspense>
+      )}
     </>
   )
 }

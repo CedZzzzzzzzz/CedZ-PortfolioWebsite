@@ -192,11 +192,15 @@ describe('explorer and editor', () => {
     expect(image.height).toBe(650)
     expect(image.src).toMatch(/^data:image\/svg/)
     expect(container.querySelector('input[type="file"]')).toBeNull()
-    await click(button('Bifrost Gateway →'))
+    const next = [...container.querySelectorAll<HTMLButtonElement>('button')]
+      .find((item) => item.textContent?.includes('Bifrost Gateway'))!
+    await click(next)
     expect(container.querySelector('[role="tabpanel"] h3')?.textContent).toBe(
       'Bifrost Gateway',
     )
-    await click(button('← ECOBENCH'))
+    const previous = [...container.querySelectorAll<HTMLButtonElement>('button')]
+      .find((item) => item.textContent?.includes('ECOBENCH'))!
+    await click(previous)
     expect(container.querySelector('[role="tabpanel"] h3')?.textContent).toBe(
       'ECOBENCH',
     )

@@ -8,6 +8,7 @@ import { useWorkspaceState } from '../../state/useWorkspaceState'
 import { useWorkspaceDispatch } from '../../state/useWorkspaceDispatch'
 import { useNavigation } from '../../hooks/useNavigation'
 import { ProfileAvatar } from '../profile/ProfileAvatar'
+import { Icon } from '../ui/Icon'
 import { resolveProjectImage } from '../../lib/projectImage'
 import './plain.css'
 
@@ -102,7 +103,7 @@ export function PlainView() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {label} ↗
+                        {label} <Icon name="external" /><span className="visually-hidden"> (opens in a new tab)</span>
                       </a>
                     ))}
                 </div>
@@ -128,8 +129,6 @@ export function PlainView() {
             <a
               href={resumeUrl || profile.resume}
               download="resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Download resume.pdf
             </a>
@@ -150,6 +149,9 @@ export function PlainView() {
                     rel="noopener noreferrer"
                   >
                     {s.display}
+                    {!s.url.startsWith('mailto:') && (
+                      <span className="visually-hidden"> (opens in a new tab)</span>
+                    )}
                   </a>
                 </li>
               ))}

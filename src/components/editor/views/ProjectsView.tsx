@@ -6,8 +6,8 @@ export function ProjectsView() {
     <article className="content-view">
       <h3>projects/</h3>
       <div className="project-grid">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+        {projects.map((project, index) => (
+          <ProjectCard key={project.id} project={project} order={index} />
         ))}
       </div>
     </article>

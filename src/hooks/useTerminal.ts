@@ -117,7 +117,8 @@ export function useTerminal(registry: CommandRegistry = commandRegistry) {
         timer: null,
         remaining: 10000,
         started: 0,
-        onTimeout: () => finish(errorResult('Command timed out. Please try again.')),
+        onTimeout: () =>
+          finish(errorResult('Command timed out. Please try again.')),
       }
       pending.current.set(id, pendingCommand)
       if (timersActive) {

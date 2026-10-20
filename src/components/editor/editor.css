@@ -29,6 +29,7 @@
 }
 .editor-tab.selected {
   border-bottom-color: var(--ac);
+  background: var(--bg);
   background: color-mix(in srgb, var(--ac) 6%, transparent);
 }
 .editor-tab [role='tab'] {
@@ -36,12 +37,15 @@
   cursor: pointer;
   white-space: nowrap;
 }
-.editor-tab [role='tab'] span {
+.editor-tab [role='tab'] .portfolio-icon {
+  vertical-align: -3px;
   color: var(--mut);
 }
 .close-tab {
   padding: 4px 8px;
   color: var(--mut);
+  border: 0;
+  background: transparent;
   cursor: pointer;
 }
 .close-tab:hover {
@@ -87,7 +91,7 @@
   display: inline-block;
   width: fit-content;
   padding: 5px 10px;
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   border-radius: 5px;
   color: var(--fg);
   cursor: pointer;
@@ -97,7 +101,8 @@
 }
 .view-button:disabled {
   cursor: wait;
-  opacity: 0.6;
+  color: var(--mut);
+  border-color: var(--bd-strong);
 }
 .view-button.primary {
   background: var(--ac);
@@ -140,7 +145,7 @@
 }
 .skill-tag {
   display: inline-block;
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   border-radius: 4px;
   padding: 3px 7px;
   font-size: 11px;
@@ -152,6 +157,7 @@ button.skill-tag {
 button.skill-tag:hover {
   border-color: var(--ac);
   color: var(--ac);
+  background: var(--bg);
   background: color-mix(in srgb, var(--ac) 8%, transparent);
 }
 .project-grid {
@@ -161,14 +167,18 @@ button.skill-tag:hover {
 }
 .project-card {
   text-align: left;
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
   min-width: 0;
   background: var(--card);
+  will-change: transform, opacity;
 }
 .project-card:hover {
+  border-color: var(--ac);
+}
+.project-card:active {
   border-color: var(--ac);
 }
 .project-card > img {
@@ -192,7 +202,7 @@ button.skill-tag:hover {
   flex: none;
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   cursor: zoom-in;
 }
 .project-hero img {
@@ -280,16 +290,10 @@ button.skill-tag:hover {
   object-fit: contain;
 }
 .image-viewer :focus-visible {
-  outline: 2px solid var(--ac);
+  outline: 2px solid var(--bd-strong);
   outline-offset: 2px;
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .project-card {
-    transition: transform 0.15s;
-  }
-  .project-card:hover {
-    transform: translateY(-2px);
-  }
   .project-hero {
     transform: perspective(700px) rotateX(var(--tilt-x, 0deg))
       rotateY(var(--tilt-y, 0deg));

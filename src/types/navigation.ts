@@ -13,6 +13,5 @@ export interface PortfolioFile {
   id: string
   name: string
   kind: FileKind
-  icon: string
   parentId?: string
 }

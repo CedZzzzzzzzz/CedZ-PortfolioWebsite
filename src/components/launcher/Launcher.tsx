@@ -8,6 +8,7 @@ import { useWorkspaceState } from '../../state/useWorkspaceState'
 import { useNavigation } from '../../hooks/useNavigation'
 import { useTerminalFocus } from '../../hooks/useTerminalFocus'
 import { useByte } from '../../hooks/useByte'
+import './launcher.css'
 
 export function Launcher() {
   const launcher = useLauncher()

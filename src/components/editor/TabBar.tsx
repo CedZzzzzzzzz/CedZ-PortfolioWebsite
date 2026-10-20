@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { files } from '../../content/files'
 import { useWorkspaceState } from '../../state/useWorkspaceState'
 import { useWorkspaceDispatch } from '../../state/useWorkspaceDispatch'
+import { Icon } from '../ui/Icon'
 
 export function TabBar() {
   const { tabs, activeFileId } = useWorkspaceState()
@@ -61,7 +62,8 @@ export function TabBar() {
                 }
               }}
             >
-              <span aria-hidden="true">{file.icon}</span> {file.name}
+              <Icon name={file.kind === 'projects' ? 'folder' : 'file'} />{' '}
+              {file.name}
             </button>
             <button
               type="button"

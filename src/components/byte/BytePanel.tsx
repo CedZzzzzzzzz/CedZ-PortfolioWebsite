@@ -5,6 +5,7 @@ import { ByteBubble } from './ByteBubble'
 import { ByteRoom } from './ByteRoom'
 import { ByteHistory } from './ByteHistory'
 import './byte.css'
+import { Icon } from '../ui/Icon'
 
 export function BytePanel() {
   const { byteOpen } = useWorkspaceState()
@@ -34,10 +35,10 @@ export function BytePanel() {
           aria-pressed={history}
           onClick={() => setHistory((previous) => !previous)}
         >
-          ☰
+          <Icon name="menu" />
         </button>
         <button aria-label="Close Byte" onClick={close}>
-          ▶
+          <Icon name="chevron-right" />
         </button>
       </header>
       <div className="byte-panel-body">

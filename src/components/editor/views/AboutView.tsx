@@ -1,11 +1,14 @@
 import { about } from '../../../content/about'
 import { useNavigation } from '../../../hooks/useNavigation'
+import { DecryptedText } from '../../ui/DecryptedText'
 
 export function AboutView() {
   const { openFile } = useNavigation()
   return (
     <article className="content-view">
-      <h3># hi, i build things end to end.</h3>
+      <h3>
+        <DecryptedText text="# hi, i build things end to end." />
+      </h3>
       <p>{about}</p>
       <div className="view-actions">
         {['projects', 'experience', 'skills', 'resume', 'contact'].map((id) => (

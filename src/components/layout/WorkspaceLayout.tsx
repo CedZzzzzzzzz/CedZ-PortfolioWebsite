@@ -30,14 +30,16 @@ export function WorkspaceLayout() {
     <div className="workspace-shell">
       <TopBar />
       <main className="workspace-area" aria-label="Portfolio workspace">
+        <h1 className="visually-hidden">Marcus Cedric Pedrosa portfolio</h1>
         <div className="workspace-grid" ref={gridRef} style={style}>
-          {['explorer', 'editor', 'terminal', 'profile'].map((id) => (
+          {['explorer', 'editor', 'terminal', 'profile'].map((id, index) => (
             <Pane
               key={id}
               id={id}
               title={id}
               active={activePane === id}
               onActivate={() => setActivePane(id)}
+              entranceIndex={index}
             >
               {id === 'explorer' ? (
                 <Explorer />

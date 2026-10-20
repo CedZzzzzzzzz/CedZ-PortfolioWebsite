@@ -1,4 +1,5 @@
 .workspace-shell {
+  height: 100vh;
   height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -30,11 +31,12 @@
   white-space: nowrap;
 }
 .top-bar button {
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   border-radius: 4px;
   padding: 1px 5px;
   cursor: pointer;
   white-space: nowrap;
+  min-width: 24px;
 }
 .top-bar button:disabled {
   cursor: default;
@@ -96,6 +98,7 @@
   background:
     linear-gradient(var(--card), var(--card)) padding-box,
     linear-gradient(135deg, var(--ac), var(--ac2)) border-box;
+  box-shadow: 0 0 14px var(--bd);
   box-shadow: 0 0 14px color-mix(in srgb, var(--ac) 16%, transparent);
 }
 .pane-title {
@@ -145,19 +148,30 @@
 }
 .resize-gutter:hover,
 .resize-gutter.dragging {
+  background: var(--bd);
   background: color-mix(in srgb, var(--ac) 35%, transparent);
 }
 .workspace-shell :focus-visible {
-  outline: 2px solid var(--ac);
+  outline: 2px solid var(--bd-strong);
   outline-offset: 2px;
+}
+@media (hover: none) {
+  .pane:active {
+    border-color: var(--ac);
+  }
 }
 @media (width < 760px) {
   .workspace-shell {
     height: auto;
+    min-height: 100vh;
     min-height: 100dvh;
     overflow: clip;
+    padding-top: env(safe-area-inset-top);
   }
   .top-bar {
+    height: auto;
+    min-height: 44px;
+    flex-basis: 44px;
     grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 6px;
   }
@@ -171,6 +185,11 @@
     height: auto;
     display: flex;
     flex-direction: column;
+  }
+  .workspace-area {
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
   }
   .pane {
     min-height: 250px;
@@ -190,5 +209,20 @@
   }
   .resize-gutter {
     display: none;
+  }
+  .workspace-shell button,
+  .workspace-shell a,
+  .byte-panel button,
+  .byte-panel input,
+  .launcher-backdrop button,
+  .launcher-backdrop input,
+  .plain-page button,
+  .plain-page a {
+    min-height: 44px;
+  }
+  .workspace-shell a,
+  .plain-page a {
+    display: inline-flex;
+    align-items: center;
   }
 }

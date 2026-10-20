@@ -31,7 +31,12 @@ export function buildLauncherItems(args: {
     { id: 'plain', label: 'Toggle plain view', run: args.togglePlain },
     { id: 'byte', label: 'Ask Byte', run: args.askByte },
     { id: 'terminal', label: 'Focus terminal', run: args.focusTerminal },
-    { id: 'github', label: 'Open GitHub', run: args.openGithub },
+    {
+      id: 'github',
+      label: 'Open GitHub',
+      hint: 'opens in a new tab',
+      run: args.openGithub,
+    },
   ]
   return items
 }

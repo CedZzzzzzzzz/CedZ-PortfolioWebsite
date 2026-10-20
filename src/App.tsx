@@ -1,19 +1,33 @@
+import { lazy, Suspense, useEffect } from 'react'
 import { WorkspaceLayout } from './components/layout/WorkspaceLayout'
 import { TerminalFocusProvider } from './state/TerminalFocusProvider'
 import { ByteProvider } from './state/ByteProvider'
 import { ByteHandle } from './components/byte/ByteHandle'
-import { BytePanel } from './components/byte/BytePanel'
 import { useWorkspaceState } from './state/useWorkspaceState'
 import { LauncherProvider } from './state/LauncherProvider'
 import { useLauncher } from './state/useLauncher'
-import { Launcher } from './components/launcher/Launcher'
-import './components/launcher/launcher.css'
-import { PlainView } from './components/plain/PlainView'
 import { useShortcuts } from './hooks/useShortcuts'
 import { useSwipeNav } from './hooks/useSwipeNav'
 import { useTerminalFocus } from './hooks/useTerminalFocus'
 import { useByte } from './hooks/useByte'
 import { useWorkspaceDispatch } from './state/useWorkspaceDispatch'
+import { MotionProvider } from './components/motion/MotionProvider'
+
+const BytePanel = lazy(() =>
+  import('./components/byte/BytePanel').then((module) => ({
+    default: module.BytePanel,
+  })),
+)
+const Launcher = lazy(() =>
+  import('./components/launcher/Launcher').then((module) => ({
+    default: module.Launcher,
+  })),
+)
+const PlainView = lazy(() =>
+  import('./components/plain/PlainView').then((module) => ({
+    default: module.PlainView,
+  })),
+)
 
 function Application() {
   const { plainView, tabs, activeFileId } = useWorkspaceState()
@@ -21,6 +35,24 @@ function Application() {
   const launcher = useLauncher()
   const terminal = useTerminalFocus()
   const byte = useByte()
+  useEffect(() => {
+    const browser = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number
+      cancelIdleCallback?: (id: number) => void
+    }
+    const prefetch = () => {
+      void import('./components/byte/BytePanel')
+      void import('./components/plain/PlainView')
+      void import('./components/launcher/Launcher')
+      void import('./components/ui/ImageViewer')
+    }
+    if (browser.requestIdleCallback) {
+      const id = browser.requestIdleCallback(prefetch, { timeout: 2000 })
+      return () => browser.cancelIdleCallback?.(id)
+    }
+    const id = window.setTimeout(prefetch, 500)
+    return () => window.clearTimeout(id)
+  }, [])
   useSwipeNav()
   function switchTab(direction: -1 | 1) {
     if (plainView) return true
@@ -59,10 +91,16 @@ function Application() {
       >
         <WorkspaceLayout />
       </div>
-      {plainView && <PlainView />}
+      {plainView && (
+        <Suspense fallback={null}>
+          <PlainView />
+        </Suspense>
+      )}
       <ByteHandle />
-      <BytePanel />
-      <Launcher />
+      <Suspense fallback={null}>
+        <BytePanel />
+        <Launcher />
+      </Suspense>
     </>
   )
 }
@@ -72,7 +110,9 @@ function App() {
     <TerminalFocusProvider>
       <LauncherProvider>
         <ByteProvider>
-          <Application />
+          <MotionProvider>
+            <Application />
+          </MotionProvider>
         </ByteProvider>
       </LauncherProvider>
     </TerminalFocusProvider>

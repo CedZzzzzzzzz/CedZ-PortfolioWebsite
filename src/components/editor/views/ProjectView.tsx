@@ -4,6 +4,7 @@ import { useNavigation } from '../../../hooks/useNavigation'
 import { demoUploadsEnabled } from '../../../config'
 import { ProjectHero } from '../../ui/ProjectHero'
 import { ProjectImageUpload } from '../../ui/ProjectImageUpload'
+import { Icon } from '../../ui/Icon'
 
 export function ProjectView({ project }: { project: Project }) {
   const { openFile, openSkill } = useNavigation()
@@ -58,7 +59,7 @@ export function ProjectView({ project }: { project: Project }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {label} ↗
+            {label} <Icon name="external" /><span className="visually-hidden"> (opens in a new tab)</span>
           </a>
         ))}
       </div>
@@ -68,14 +69,14 @@ export function ProjectView({ project }: { project: Project }) {
           className="view-button"
           onClick={() => openFile(previous.id)}
         >
-          ← {previous.n}
+          <Icon name="chevron-left" /> {previous.n}
         </button>
         <button
           type="button"
           className="view-button"
           onClick={() => openFile(next.id)}
         >
-          {next.n} →
+          {next.n} <Icon name="chevron-right" />
         </button>
       </nav>
     </article>

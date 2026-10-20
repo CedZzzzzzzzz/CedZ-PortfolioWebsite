@@ -1,4 +1,5 @@
 .plain-page {
+  min-height: 100vh;
   min-height: 100dvh;
   max-width: 760px;
   margin: auto;
@@ -7,6 +8,10 @@
   font-family: system-ui, sans-serif;
   color: var(--fg);
   background: var(--bg);
+}
+.plain-page :focus-visible {
+  outline: 2px solid var(--bd-strong);
+  outline-offset: 3px;
 }
 .plain-page section {
   scroll-margin-top: 16px;
@@ -41,7 +46,7 @@
 }
 .plain-project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 12px;
 }
 .plain-project-grid article {

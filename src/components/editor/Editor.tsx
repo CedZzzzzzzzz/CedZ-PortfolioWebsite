@@ -10,34 +10,54 @@ import { ProjectView } from './views/ProjectView'
 import { ResumeView } from './views/ResumeView'
 import { ContactView } from './views/ContactView'
 import './editor.css'
+import { m } from 'framer-motion'
+import { useMotionEnabled } from '../motion/useMotionEnabled'
 
 export function Editor() {
   const file = useActiveFile()
+  const animate = useMotionEnabled()
   const project = projects.find((item) => item.id === file?.id)
+  const view = file ? (
+    <>
+      {file.kind === 'about' && <AboutView />}
+      {file.kind === 'experience' && <ExperienceView />}
+      {file.kind === 'skills' && <SkillsView />}
+      {file.kind === 'projects' && <ProjectsView />}
+      {file.kind === 'project' && project && <ProjectView project={project} />}
+      {file.kind === 'resume' && <ResumeView />}
+      {file.kind === 'contact' && <ContactView />}
+    </>
+  ) : (
+    <EmptyEditor />
+  )
+  const panelProps = file
+    ? {
+        className: 'editor-view',
+        role: 'tabpanel' as const,
+        id: 'view-' + file.id,
+        'aria-labelledby': 'tab-' + file.id,
+        tabIndex: 0,
+      }
+    : null
   return (
     <div className="editor">
       <TabBar />
-      {file ? (
-        <div
-          className="editor-view"
-          key={file.id}
-          role="tabpanel"
-          id={'view-' + file.id}
-          aria-labelledby={'tab-' + file.id}
-          tabIndex={0}
-        >
-          {file.kind === 'about' && <AboutView />}
-          {file.kind === 'experience' && <ExperienceView />}
-          {file.kind === 'skills' && <SkillsView />}
-          {file.kind === 'projects' && <ProjectsView />}
-          {file.kind === 'project' && project && (
-            <ProjectView project={project} />
-          )}
-          {file.kind === 'resume' && <ResumeView />}
-          {file.kind === 'contact' && <ContactView />}
-        </div>
-      ) : (
+      {!file ? (
         <EmptyEditor />
+      ) : animate ? (
+        <m.div
+          key={file.id}
+          {...panelProps!}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.18, ease: 'easeOut' }}
+        >
+          {view}
+        </m.div>
+      ) : (
+        <div key={file.id} {...panelProps!}>
+          {view}
+        </div>
       )}
     </div>
   )

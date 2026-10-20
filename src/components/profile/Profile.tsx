@@ -22,7 +22,7 @@ export function Profile() {
       ) : (
         avatar
       )}
-      <h1>{profile.name}</h1>
+      <h3>{profile.name}</h3>
       <p>{profile.role}</p>
       <p className="profile-focus">{profile.focus}</p>
       <nav aria-label="Social links" className="profile-socials">
@@ -36,6 +36,9 @@ export function Profile() {
               rel="noopener noreferrer"
             >
               {social.label}
+              {!social.url.startsWith('mailto:') && (
+                <span className="visually-hidden"> (opens in a new tab)</span>
+              )}
             </a>
           ))}
       </nav>

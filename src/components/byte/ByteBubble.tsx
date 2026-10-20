@@ -3,6 +3,7 @@ import { useByte } from '../../hooks/useByte'
 import { useTypewriter } from '../../hooks/useTypewriter'
 import { useNavigation } from '../../hooks/useNavigation'
 import { files } from '../../content/files'
+import { Icon } from '../ui/Icon'
 
 export function ByteBubble({
   historyVisible = false,
@@ -41,7 +42,7 @@ export function ByteBubble({
                 <span>{card.description}</span>
               </button>
             ))}
-            {file && <p className="byte-opened">↳ opened {file.name}</p>}
+            {file && <p className="byte-opened"><Icon name="return" /> opened {file.name}</p>}
           </div>
         )}
       </div>

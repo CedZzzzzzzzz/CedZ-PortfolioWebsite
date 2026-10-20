@@ -6,6 +6,7 @@ import { useTerminalFocus } from '../../hooks/useTerminalFocus'
 import { themeNames } from '../../theme/themes'
 import { useLauncher } from '../../state/useLauncher'
 import { shortcuts, shortcutText } from '../../lib/shortcuts/registry'
+import { Icon } from '../ui/Icon'
 
 export function TopBar() {
   const { focusTerminal } = useTerminalFocus()
@@ -26,13 +27,9 @@ export function TopBar() {
           aria-label="Launcher"
           onClick={(event) => launcher.show(event.currentTarget)}
         >
-          ◆
+          <Icon name="diamond" />
         </button>
-        <button
-          type="button"
-          aria-label="Focus terminal"
-          onClick={focusTerminal}
-        >
+        <button type="button" aria-label="Focus terminal" onClick={focusTerminal}>
           &gt;_
         </button>
         <span
@@ -53,7 +50,8 @@ export function TopBar() {
             dispatch({ type: 'set-plain-view', enabled: !plainView })
           }
         >
-          {plainView ? '◆ interactive view' : '☰ plain view'}
+          <Icon name={plainView ? 'diamond' : 'menu'} />{' '}
+          {plainView ? 'interactive view' : 'plain view'}
         </button>
         <span className="desktop-label">{themeNames[theme]}</span>
         <span className="desktop-label shortcut-hint">

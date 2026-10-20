@@ -1,5 +1,6 @@
 import { useByte } from '../../hooks/useByte'
 import { useWorkspaceState } from '../../state/useWorkspaceState'
+import { Icon } from '../ui/Icon'
 
 export function ByteHandle() {
   const { byteOpen } = useWorkspaceState()
@@ -14,7 +15,7 @@ export function ByteHandle() {
         aria-controls="byte-panel"
         onClick={(event) => open(event.currentTarget)}
       >
-        ◀ <span>Byte</span>
+        <Icon name="chevron-left" /> <span>Byte</span>
       </button>
     </div>
   )

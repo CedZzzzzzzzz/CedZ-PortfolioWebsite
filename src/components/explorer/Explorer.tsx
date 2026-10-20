@@ -3,6 +3,7 @@ import { files } from '../../content/files'
 import { useNavigation } from '../../hooks/useNavigation'
 import { useWorkspaceState } from '../../state/useWorkspaceState'
 import './explorer.css'
+import { Icon } from '../ui/Icon'
 
 export function Explorer() {
   const [expanded, setExpanded] = useState(true)
@@ -10,7 +11,9 @@ export function Explorer() {
   const { openFile } = useNavigation()
   return (
     <nav aria-label="Portfolio files" className="explorer">
-      <p className="tree-root">▾ cedz-portfolio</p>
+      <p className="tree-root">
+        <Icon name="chevron-down" /> cedz-portfolio
+      </p>
       <ul className="file-tree">
         {files
           .filter((file) => !file.parentId)
@@ -28,7 +31,7 @@ export function Explorer() {
                     }
                     onClick={() => setExpanded(!expanded)}
                   >
-                    {expanded ? '▾' : '▸'}
+                    <Icon name={expanded ? 'chevron-down' : 'chevron-right'} />
                   </button>
                 )}
                 <button
@@ -37,7 +40,8 @@ export function Explorer() {
                   aria-current={activeFileId === file.id ? 'page' : undefined}
                   onClick={() => openFile(file.id)}
                 >
-                  <span aria-hidden="true">{file.icon}</span> {file.name}
+                  <Icon name={file.kind === 'projects' ? 'folder' : 'file'} />{' '}
+                  {file.name}
                 </button>
               </div>
               {file.kind === 'projects' && (
@@ -54,8 +58,7 @@ export function Explorer() {
                           }
                           onClick={() => openFile(child.id)}
                         >
-                          <span aria-hidden="true">{child.icon}</span>{' '}
-                          {child.name}
+                          <Icon name="file" /> {child.name}
                         </button>
                       </li>
                     ))}

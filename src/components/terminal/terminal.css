@@ -69,6 +69,10 @@
   color: var(--fg);
   border: 0;
 }
+.terminal-prompt input::placeholder {
+  color: var(--mut);
+  opacity: 1;
+}
 .terminal-chips {
   display: flex;
   flex-wrap: wrap;
@@ -78,7 +82,7 @@
 .terminal-chips button,
 .terminal-prompt button {
   padding: 1px 7px;
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd-strong);
   border-radius: 4px;
   cursor: pointer;
 }
