@@ -45,9 +45,15 @@ function isStoredImages(value: unknown): value is StoredImages {
   )
 }
 
-export function loadInitialState(storage: JsonStorage | null): WorkspaceState {
+export function loadInitialState(
+  storage: JsonStorage | null,
+  pathname?: string,
+): WorkspaceState {
   const state = createInitialState()
-  if (!storage) return state
+  if (!storage) {
+    if (pathname !== undefined) state.plainView = pathname !== '/terminal'
+    return state
+  }
 
   state.theme = readStoredJson(storage, themeKey, state.theme, isTheme)
   state.plainView = readStoredJson(
@@ -56,6 +62,7 @@ export function loadInitialState(storage: JsonStorage | null): WorkspaceState {
     state.plainView,
     isBoolean,
   )
+  if (pathname !== undefined) state.plainView = pathname !== '/terminal'
   const images = readStoredJson<StoredImages>(
     storage,
     imagesKey,

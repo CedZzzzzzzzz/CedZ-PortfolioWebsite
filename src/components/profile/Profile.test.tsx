@@ -86,7 +86,9 @@ it('shows profile content, safe social attributes, fallback, and no default demo
   expect(container.textContent).toContain(profile.name)
   expect(container.textContent).toContain(profile.role)
   expect(container.textContent).toContain(profile.focus)
-  expect(container.querySelector('.profile-avatar')!.textContent).toBe('MP')
+  expect(
+    container.querySelector('.profile-avatar img')?.getAttribute('src'),
+  ).toBe(profile.photo)
   expect(container.querySelector('input[type="file"]')).toBeNull()
   for (const link of container.querySelectorAll('a')) {
     expect(link.rel).toBe('noopener noreferrer')
@@ -105,6 +107,7 @@ it('uses the photo path, falls back on error, and retries when its source change
   await act(async () => image.dispatchEvent(new Event('error')))
   expect(container.querySelector('img')).toBeNull()
   expect(container.textContent).toBe('MP')
+  expect(container.textContent).toBe('MP')
   await act(async () =>
     root.render(<ProfileAvatar src="/new.jpg" name={profile.name} />),
   )
@@ -121,12 +124,12 @@ it('shares theme state with terminal, supports wrapping keyboard selection, and 
       new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
     ),
   )
-  expect(document.activeElement).toBe(radios[3])
-  expect(radios[3].getAttribute('aria-checked')).toBe('true')
-  expect(meta.content).toBe('#110500')
+  expect(document.activeElement).toBe(radios[4])
+  expect(radios[4].getAttribute('aria-checked')).toBe('true')
+  expect(meta.content).toBe('#0d0508')
   expect(document.documentElement.style.colorScheme).toBe('dark')
   await act(async () =>
-    radios[3].dispatchEvent(
+    radios[4].dispatchEvent(
       new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
     ),
   )
@@ -166,7 +169,9 @@ it('uploads, persists, removes, and reports failed demo photos', async () => {
     'data:image/jpeg;base64,photo',
   )
   await click(button('remove photo'))
-  expect(container.querySelector('img')).toBeNull()
+  expect(container.querySelector('img')?.getAttribute('src')).toBe(
+    profile.photo,
+  )
   vi.mocked(downscaleImage).mockRejectedValueOnce(new Error('bad image'))
   const input = container.querySelector('input')!
   Object.defineProperty(input, 'files', { value: [file] })

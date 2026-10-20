@@ -12,7 +12,7 @@ export interface Project {
   n: string
   d: string
   img: string
-  year: string
+  year?: string
   role: string
   overview: string
   highlights: string[]

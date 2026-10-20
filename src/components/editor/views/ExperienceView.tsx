@@ -1,4 +1,4 @@
-import { experience } from '../../../content/experience'
+import { portfolioExperience } from '../../../content/portfolioExperience'
 import { m } from 'framer-motion'
 import { useMotionEnabled } from '../../motion/useMotionEnabled'
 
@@ -8,7 +8,7 @@ export function ExperienceView() {
     <article className="content-view">
       <h3>experience</h3>
       <ol className="timeline">
-        {experience.map((entry, index) => {
+        {portfolioExperience.map((entry, index) => {
           const content = (
             <>
               <p className="view-muted">

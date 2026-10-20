@@ -1,2 +1,2 @@
 export const about =
-  'I work from firmware to frontend: embedded systems, full-stack web, and AI/ML. Currently a 3rd-year Computer Engineering Technology student at PUP Sta. Mesa, aiming for software and AI engineering.'
+  'I am a Computer Engineering Technology student specializing in Machine Learning. I build practical software and AI tools, and I am looking for opportunities to keep learning while contributing to real-world problems.'

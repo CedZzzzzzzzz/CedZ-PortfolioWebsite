@@ -12,7 +12,7 @@ import { parseCommand } from './parseCommand'
 
 const context = {
   content: { about, experience, files, profile, projects, skills, socials },
-  themes: ['dark', 'blue', 'tokyo', 'fire'] as const,
+  themes: ['dark', 'blue', 'tokyo', 'fire', 'scar'] as const,
   activeFileId: null,
 }
 

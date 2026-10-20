@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#070d1f" />
+      <stop offset="1" stop-color="#000000" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#4da3ff" />
+      <stop offset="1" stop-color="#7ee0ff" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)" />
+  <path d="M72 500h1056M72 540h1056M72 580h1056" stroke="#1f2f55" opacity=".55" />
+  <rect x="70" y="70" width="1060" height="490" rx="18" fill="none" stroke="url(#accent)" stroke-width="3" />
+  <circle cx="112" cy="112" r="9" fill="#4da3ff" />
+  <text x="140" y="120" fill="#8ca6cc" font-family="Consolas" font-size="22">cedz-portfolio / profile</text>
+  <text x="110" y="290" fill="#f1f5ff" font-family="Consolas" font-size="58" font-weight="700">MARCUS CEDRIC S. PEDROSA</text>
+  <rect x="110" y="330" width="660" height="4" fill="url(#accent)" />
+  <text x="110" y="405" fill="#d4e4ff" font-family="Consolas" font-size="31">SOFTWARE · AI · ENGINEERING</text>
+  <text x="110" y="465" fill="#9aaccc" font-family="Consolas" font-size="23">Building practical tools from data to interface.</text>
+  <text x="110" y="520" fill="#6e83a8" font-family="Consolas" font-size="19">marcuscedricpedrosa.dev</text>
+</svg>

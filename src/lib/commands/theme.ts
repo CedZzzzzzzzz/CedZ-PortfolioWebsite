@@ -3,7 +3,7 @@ import { plainTextLine } from './line'
 
 export const themeCommand: Command = {
   name: 'theme',
-  description: 'Set dark, blue, tokyo, or fire',
+  description: 'Set dark, blue, tokyo, fire, or scar',
   run(args, ctx) {
     const theme = ctx.themes.find((theme) => theme === args[0]?.toLowerCase())
     return theme && args.length === 1

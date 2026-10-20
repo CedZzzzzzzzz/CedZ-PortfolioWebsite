@@ -7,6 +7,7 @@ import { experience } from '../../content/experience'
 import { Editor } from './Editor'
 import { Explorer } from '../explorer/Explorer'
 import { downscaleImage } from '../../lib/image'
+import { profile } from '../../content/profile'
 
 const flags = vi.hoisted(() => ({ enabled: false }))
 vi.mock('../../config', () => ({
@@ -119,7 +120,7 @@ describe('explorer and editor', () => {
     expect(
       container.querySelector('[aria-current="page"]')?.textContent,
     ).toContain('projects/')
-    expect(container.querySelectorAll('.project-card')).toHaveLength(3)
+    expect(container.querySelectorAll('.project-card')).toHaveLength(5)
     expect(
       container.querySelector('#project-files')?.hasAttribute('hidden'),
     ).toBe(true)
@@ -170,12 +171,12 @@ describe('explorer and editor', () => {
     await click(button('React'))
     expect(container.textContent).not.toContain('Projects using React')
     await click(button('React'))
-    await openFile('f1.md')
+    await openFile('quantis-f1.md')
     await click(button('React'))
     expect(button('React').getAttribute('aria-pressed')).toBe('true')
-    await click(button('F1 2026 Predictor'))
+    await click(button('Quantis-F1'))
     expect(container.querySelector('[role="tabpanel"] h3')?.textContent).toBe(
-      'F1 2026 Predictor',
+      'Quantis-F1',
     )
   })
 
@@ -190,26 +191,30 @@ describe('explorer and editor', () => {
     expect(image.getAttribute('loading')).toBe('lazy')
     expect(image.width).toBe(1000)
     expect(image.height).toBe(650)
-    expect(image.src).toMatch(/^data:image\/svg/)
+    expect(image.getAttribute('src')).toBe('/projects/ecobench.webp')
     expect(container.querySelector('input[type="file"]')).toBeNull()
-    const next = [...container.querySelectorAll<HTMLButtonElement>('button')]
-      .find((item) => item.textContent?.includes('Bifrost Gateway'))!
+    const next = [
+      ...container.querySelectorAll<HTMLButtonElement>('button'),
+    ].find((item) => item.textContent?.includes('Quantis-F1'))!
     await click(next)
     expect(container.querySelector('[role="tabpanel"] h3')?.textContent).toBe(
-      'Bifrost Gateway',
+      'Quantis-F1',
     )
-    const previous = [...container.querySelectorAll<HTMLButtonElement>('button')]
-      .find((item) => item.textContent?.includes('ECOBENCH'))!
+    const previous = [
+      ...container.querySelectorAll<HTMLButtonElement>('button'),
+    ].find((item) => item.textContent?.includes('EcoBench'))!
     await click(previous)
     expect(container.querySelector('[role="tabpanel"] h3')?.textContent).toBe(
-      'ECOBENCH',
+      'EcoBench',
     )
   })
 
-  it('shows the unattached resume state and announces copied email', async () => {
+  it('shows the attached resume and announces copied email', async () => {
     await openFile('resume.pdf')
-    expect(container.textContent).toContain('no PDF attached yet')
-    expect(container.querySelector('a[download]')).toBeNull()
+    expect(container.textContent).not.toContain('no PDF attached yet')
+    expect(container.querySelector('a[download]')?.getAttribute('href')).toBe(
+      profile.resume,
+    )
     expect(container.querySelector('input[type="file"]')).toBeNull()
     await openFile('contact.txt')
     const writeText = vi.fn(async () => undefined)
@@ -218,7 +223,7 @@ describe('explorer and editor', () => {
       value: { writeText },
     })
     await click(button('Copy email'))
-    expect(writeText).toHaveBeenCalledWith('your@email.com')
+    expect(writeText).toHaveBeenCalledWith('ced41974@gmail.com')
     expect(container.querySelector('[aria-live="polite"]')?.textContent).toBe(
       'copied',
     )
@@ -241,7 +246,7 @@ describe('explorer and editor', () => {
     await click(button('Remove uploaded image'))
     expect(
       container.querySelector<HTMLImageElement>('.project-hero img')?.src,
-    ).toMatch(/^data:image\/svg/)
+    ).toBe('http://localhost:3000/projects/ecobench.webp')
   })
 
   it('attaches and removes a demo PDF through workspace state', async () => {
@@ -267,7 +272,11 @@ describe('explorer and editor', () => {
           ?.getAttribute('href'),
       ).toBe('blob:resume-demo')
       await click(button('Remove attached PDF'))
-      expect(container.querySelector('a[download]')).toBeNull()
+      expect(
+        container
+          .querySelector<HTMLAnchorElement>('a[download]')
+          ?.getAttribute('href'),
+      ).toBe(profile.resume)
       expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:resume-demo')
     } finally {
       URL.createObjectURL = originalCreate

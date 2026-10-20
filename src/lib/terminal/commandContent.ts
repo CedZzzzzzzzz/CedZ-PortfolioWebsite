@@ -1,5 +1,5 @@
 import { about } from '../../content/about'
-import { experience } from '../../content/experience'
+import { portfolioExperience } from '../../content/portfolioExperience'
 import { files } from '../../content/files'
 import { profile } from '../../content/profile'
 import { projects } from '../../content/projects'
@@ -9,7 +9,7 @@ import type { CommandContent } from '../../types/command'
 
 export const commandContent: CommandContent = {
   about,
-  experience,
+  experience: portfolioExperience,
   files,
   profile,
   projects,

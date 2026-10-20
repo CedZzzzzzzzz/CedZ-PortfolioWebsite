@@ -1,169 +1,689 @@
+import { useEffect, useState, type MouseEvent } from 'react'
 import { profile } from '../../content/profile'
 import { about } from '../../content/about'
-import { experience } from '../../content/experience'
+import { portfolioExperience } from '../../content/portfolioExperience'
 import { projects } from '../../content/projects'
 import { skills } from '../../content/skills'
 import { socials } from '../../content/socials'
+import { certifications } from '../../content/certifications'
 import { useWorkspaceState } from '../../state/useWorkspaceState'
 import { useWorkspaceDispatch } from '../../state/useWorkspaceDispatch'
 import { useNavigation } from '../../hooks/useNavigation'
-import { ProfileAvatar } from '../profile/ProfileAvatar'
+import { ThemeModal } from './ThemeModal'
 import { Icon } from '../ui/Icon'
 import { resolveProjectImage } from '../../lib/projectImage'
-import './plain.css'
+import deployedStyles from './deployed.css?raw'
+
+const themeAliases = `
+:root {
+  --red: var(--ac);
+  --red-deep: var(--ac2);
+  --red-glow: rgba(var(--ac-rgb), 0.25);
+  --bg-hero: var(--bg);
+  --bg-section: var(--bg);
+  --bg-section-alt: var(--card);
+  --bg-card: var(--card);
+  --bg-card-dark: var(--bg);
+  --text-head: var(--fg);
+  --text-body: var(--fg);
+  --text-muted: var(--mut);
+  --text-hero: var(--fg);
+  --text-hero-dim: var(--mut);
+  --white: var(--fg);
+  --border-light: var(--bd);
+  --border-red: var(--bd-strong);
+  --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.35);
+  --shadow-red: 0 0 30px rgba(var(--ac-rgb), 0.15);
+  --hero-card-bg: var(--card);
+  --hero-card-border: var(--bd-strong);
+  --hero-card-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
+  --about-photo-bg: var(--bg);
+  --project-card-bg: var(--card);
+  --project-card-hover: var(--card);
+  --sticky-nav-bg: var(--bg);
+  --footer-bg: var(--bg);
+}
+
+.exp-date {
+  color: var(--fg);
+}
+
+.plain-page .plain-interactive-toggle {
+  width: 44px;
+  gap: 8px;
+  padding: 0;
+  overflow: hidden;
+  justify-content: center;
+  font: 600 0.8rem 'DM Sans', sans-serif;
+  white-space: nowrap;
+  transition: width 0.2s ease, padding 0.2s ease;
+}
+
+.plain-page .plain-interactive-toggle:hover,
+.plain-page .plain-interactive-toggle:focus-visible {
+  width: 164px;
+  padding: 0 12px;
+  justify-content: flex-start;
+}
+
+.plain-control-label {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.2s ease, opacity 0.15s ease;
+}
+
+.plain-interactive-toggle:hover .plain-control-label,
+.plain-interactive-toggle:focus-visible .plain-control-label {
+  max-width: 110px;
+  opacity: 1;
+}
+
+.plain-theme-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(380px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100vh - 32px);
+  padding: 22px;
+  border: 1px solid var(--border-red);
+  border-radius: 16px;
+  color: var(--text-body);
+  background: var(--bg-card);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+
+.plain-theme-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(5px);
+}
+
+.plain-theme-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.plain-theme-dialog-header h2 {
+  margin: 0;
+  color: var(--text-head);
+  font-family: Syne, sans-serif;
+  font-size: 1.25rem;
+}
+
+.plain-theme-dialog-close {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-light);
+  border-radius: 9px;
+  color: var(--text-body);
+  background: transparent;
+  cursor: pointer;
+}
+
+.plain-theme-dialog .profile-themes > p {
+  margin: 0 0 10px;
+  color: var(--text-muted);
+}
+
+.plain-theme-dialog .theme-options {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plain-theme-dialog .theme-options button {
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  color: var(--text-body);
+  background: transparent;
+  font: 600 0.8rem 'DM Sans', sans-serif;
+  cursor: pointer;
+}
+
+.plain-theme-dialog .theme-options button[aria-checked='true'] {
+  border-color: var(--red);
+  color: var(--text-head);
+  background: rgba(var(--ac-rgb), 0.12);
+}
+
+.cert-list[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+`
+
+const sectionLinks = [
+  ['about', 'About'],
+  ['experience', 'Experience'],
+  ['projects', 'Projects'],
+  ['skills', 'Skills'],
+  ['contact', 'Contact'],
+] as const
+
+const projectOrder = [
+  'budget-tracker',
+  'crime-detection',
+  'ecobench',
+  'portfolio-website',
+  'quantis-f1',
+]
+
+const socialIcons: Record<string, string> = {
+  GitHub: 'fab fa-github',
+  LinkedIn: 'fab fa-linkedin-in',
+  Facebook: 'fab fa-facebook-f',
+  Instagram: 'fab fa-instagram',
+}
+
+function useDeployedStyles() {
+  useEffect(() => {
+    const style = document.createElement('style')
+    const icons = document.createElement('link')
+    style.dataset.plainDesign = 'deployed'
+    icons.rel = 'stylesheet'
+    icons.href =
+      'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'
+    style.textContent = deployedStyles
+      .replaceAll('rgba(232,0,45,', 'rgba(var(--ac-rgb),')
+      .replaceAll('rgba(232, 0, 45,', 'rgba(var(--ac-rgb),')
+      .replaceAll('rgba(184,0,30,', 'rgba(var(--ac2-rgb),')
+      .replaceAll('rgba(180,0,30,', 'rgba(var(--ac2-rgb),')
+      .replaceAll('rgba(182,0,45,', 'rgba(var(--ac-rgb),')
+      .replaceAll('rgba(91,184,232,', 'rgba(var(--ac-rgb),')
+      .replaceAll('rgba(18,5,8,0.78)', 'var(--card)')
+      .replaceAll('rgba(13,6,8,0.88)', 'var(--bg)')
+      .replaceAll('#E8002D', 'var(--ac)')
+      .replaceAll('#B8001E', 'var(--ac2)')
+      .replaceAll('#8C0016', 'var(--ac2)')
+      .replaceAll('#3a9fcc', 'var(--ac)')
+      .replaceAll('#1A0000', 'var(--bg)')
+      .replaceAll('#5C0A0A', 'var(--ac)')
+      .replaceAll('#8B0000', 'var(--ac2)')
+      .replaceAll('rgba(13,6,8,0.82)', 'var(--card)')
+      .concat(themeAliases)
+    document.head.append(style)
+    document.head.append(icons)
+    return () => {
+      style.remove()
+      icons.remove()
+    }
+  }, [])
+}
 
 export function PlainView() {
   const { resumeUrl, profileImage, projectImages } = useWorkspaceState()
   const dispatch = useWorkspaceDispatch()
   const nav = useNavigation()
+  const [showStickyNav, setShowStickyNav] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [failedPhoto, setFailedPhoto] = useState('')
+  const [certificatesOpen, setCertificatesOpen] = useState(false)
+  useDeployedStyles()
+
+  const photoSrc = profileImage || profile.photo
+
+  useEffect(() => {
+    function updateStickyNav() {
+      setShowStickyNav(window.scrollY > 280)
+    }
+    updateStickyNav()
+    window.addEventListener('scroll', updateStickyNav, { passive: true })
+    return () => window.removeEventListener('scroll', updateStickyNav)
+  }, [])
+
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', mobileMenuOpen)
+    return () => document.body.classList.remove('menu-open')
+  }, [mobileMenuOpen])
+
+  function openSection(event: MouseEvent<HTMLAnchorElement>, id: string) {
+    setMobileMenuOpen(false)
+    if (id === 'home') return
+    event.preventDefault()
+    if (id === 'contact') {
+      document.getElementById('plain-contact')?.scrollIntoView({
+        behavior: 'smooth',
+      })
+      return
+    }
+    nav.openFile(id)
+  }
+
+  const orderedProjects = projectOrder
+    .map((id) => projects.find((project) => project.id === id))
+    .filter((project) => project !== undefined)
+
   return (
-    <div className="plain-page">
-      <a className="skip-link" href="#plain-main">
-        Skip to content
-      </a>
-      <header className="plain-header">
-        <ProfileAvatar
-          src={profileImage || profile.photo}
-          name={profile.name}
-        />
-        <h1>{profile.name}</h1>
-        <p>{profile.role}</p>
-        <p>{profile.focus}</p>
-        <nav aria-label="Plain view navigation">
-          {[
-            'about',
-            'experience',
-            'projects',
-            'skills',
-            'resume',
-            'contact',
-          ].map((id) => (
-            <a
-              key={id}
-              href={`#plain-${id}`}
-              onClick={(e) => {
-                e.preventDefault()
-                nav.openFile(id)
-              }}
+    <div className="plain-page" id="plain-home">
+      <nav
+        className={`sticky-nav${showStickyNav ? ' visible' : ''}`}
+        aria-label="Section navigation"
+      >
+        {[
+          ['home', 'Home'],
+          ...sectionLinks.filter(([id]) => id !== 'contact'),
+        ].map(([id, label]) => (
+          <a
+            key={id}
+            href={`#${id === 'home' ? 'plain-home' : `plain-${id}`}`}
+            className="sticky-nav-link"
+            onClick={(event) => openSection(event, id)}
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+
+      <section className="hero">
+        <div className="hero-card">
+          <nav className="nav-bar" aria-label="Primary">
+            <button
+              className="hamburger"
+              type="button"
+              aria-label="Toggle menu"
+              aria-controls="plain-nav-menu"
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen((open) => !open)}
             >
-              {id}
-            </a>
-          ))}
-        </nav>
-      </header>
-      <main id="plain-main">
-        <section id="plain-about" tabIndex={-1}>
-          <h2 tabIndex={-1}>About</h2>
-          <p>{about}</p>
-        </section>
-        <section id="plain-experience" tabIndex={-1}>
-          <h2 tabIndex={-1}>Experience</h2>
-          <ol className="timeline">
-            {experience.map((entry, i) => (
-              <li key={i}>
-                <p>
-                  {entry.w} · {entry.k}
-                </p>
-                <h3 tabIndex={-1}>{entry.t}</h3>
-                <p>{entry.o}</p>
-                <p>{entry.d}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-        <section id="plain-projects" tabIndex={-1}>
-          <h2 tabIndex={-1}>Projects</h2>
-          <div className="plain-project-grid">
-            {projects.map((project) => (
-              <article key={project.id} id={`plain-project-${project.id}`}>
-                <img
-                  src={resolveProjectImage(project, projectImages[project.id])}
-                  alt={project.n}
-                  width={1000}
-                  height={650}
-                  loading="lazy"
-                />
-                <h3 id={`plain-${project.id}`} tabIndex={-1}>
-                  {project.n}
-                </h3>
-                <p>{project.overview}</p>
-                <ul>
-                  {project.highlights.map((highlight) => (
-                    <li key={highlight}>{highlight}</li>
+              <span />
+              <span />
+              <span />
+            </button>
+            <ul
+              className={`nav-menu${mobileMenuOpen ? ' active' : ''}`}
+              id="plain-nav-menu"
+            >
+              {[
+                ['home', 'Home'],
+                ...sectionLinks.filter(([id]) => id !== 'contact'),
+              ].map(([id, label]) => (
+                <li key={id}>
+                  <a
+                    href={`#${id === 'home' ? 'plain-home' : `plain-${id}`}`}
+                    className="nav-link"
+                    onClick={(event) => openSection(event, id)}
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="contact">
+              <a
+                href={socials.find((social) => social.label === 'Email')?.url}
+                className="btn-resume"
+                aria-label="Email"
+              >
+                <i className="fas fa-envelope" aria-hidden="true" />
+              </a>
+              <a
+                href={resumeUrl || profile.resume}
+                target={resumeUrl || profile.resume ? '_blank' : undefined}
+                rel={
+                  resumeUrl || profile.resume
+                    ? 'noopener noreferrer'
+                    : undefined
+                }
+                className="btn-resume"
+                aria-label="View CV PDF"
+              >
+                <i className="fas fa-file-alt" aria-hidden="true" />
+              </a>
+              <ThemeModal />
+              <button
+                className="btn-resume plain-interactive-toggle"
+                type="button"
+                aria-label="Back to interactive view"
+                title="Back to interactive view"
+                onClick={() =>
+                  dispatch({ type: 'set-plain-view', enabled: false })
+                }
+              >
+                <i className="fas fa-arrow-left" aria-hidden="true" />
+                <span className="plain-control-label">Interactive view</span>
+              </button>
+            </div>
+          </nav>
+
+          <div className="hero-inner">
+            <div className="hero-copy">
+              <p className="hero-eyebrow">Hi, I&apos;m</p>
+              <h1 className="hero-title">
+                <span className="hero-name">{profile.name}</span>
+              </h1>
+              <p className="hero-subtitle">
+                I am a <span className="hero-highlight">{profile.role}</span>
+              </p>
+              <div className="social-row" aria-label="Social links">
+                {socials
+                  .filter(
+                    (social) => social.label !== 'Email' && social.url.trim(),
+                  )
+                  .map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.url}
+                      className="social-btn"
+                      aria-label={social.label}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i
+                        className={socialIcons[social.label] || 'fas fa-link'}
+                        aria-hidden="true"
+                      />
+                      <span className="visually-hidden">{social.label}</span>
+                    </a>
                   ))}
-                </ul>
-                <p>{project.t.join(' · ')}</p>
-                <div>
+              </div>
+            </div>
+
+            <div className="hero-visual">
+              <div className="hero-photo-wrap">
+                <div className="hero-photo-inner">
+                  <picture>
+                    {!profileImage && (
+                      <>
+                        <source
+                          type="image/avif"
+                          srcSet="/Myself_Pics/marcus-pedrosa-portrait-480.avif 480w, /Myself_Pics/marcus-pedrosa-portrait-960.avif 960w"
+                          sizes="(max-width: 480px) 240px, (max-width: 1024px) 280px, 300px"
+                        />
+                        <source
+                          type="image/webp"
+                          srcSet="/Myself_Pics/marcus-pedrosa-portrait-480.webp 480w, /Myself_Pics/marcus-pedrosa-portrait-960.webp 960w"
+                          sizes="(max-width: 480px) 240px, (max-width: 1024px) 280px, 300px"
+                        />
+                      </>
+                    )}
+                    <img
+                      src={photoSrc}
+                      alt={profile.name}
+                      className="hero-photo"
+                      width="960"
+                      height="1080"
+                      decoding="async"
+                      fetchPriority="high"
+                      style={{
+                        display: failedPhoto === photoSrc ? 'none' : undefined,
+                      }}
+                      onError={() => setFailedPhoto(photoSrc)}
+                    />
+                  </picture>
+                  <div
+                    className="hero-photo-placeholder"
+                    aria-hidden="true"
+                    style={{
+                      display: failedPhoto === photoSrc ? 'flex' : 'none',
+                    }}
+                  >
+                    MP
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main id="plain-main">
+        <section id="plain-about" className="about" tabIndex={-1}>
+          <div className="about-content">
+            <div className="about-text">
+              <h2>
+                Aspiring <em>Software</em> &amp; <em>AI</em>
+                <br />
+                Engineer
+              </h2>
+              <p>{about}</p>
+              <div className="about-cards" aria-label="About highlights">
+                <div className="about-card">
+                  <span>Current focus</span>
+                  <strong>{profile.focus}</strong>
+                </div>
+                <div className="about-card">
+                  <span>What I enjoy</span>
+                  <strong>
+                    Tech events, learning from other builders, and improving my
+                    work.
+                  </strong>
+                </div>
+                <div className="about-card">
+                  <span>Goal</span>
+                  <strong>
+                    Build software that feels useful, reliable, and worth
+                    sharing.
+                  </strong>
+                </div>
+              </div>
+              <p>
+                I&apos;m also a big fan of technology and I like going to tech
+                events where I can meet new people and learn from what
+                they&apos;re building. Right now, I&apos;m focusing on building
+                my skills and portfolio so I can keep up with the software and
+                AI space. One project I&apos;m proud of is the{' '}
+                <a
+                  href="https://quantis-f1.tech"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Quantis-F1
+                </a>{' '}
+                project, a real-time championship predictor for the 2026 Formula
+                1 regulation reset.
+              </p>
+              <div className="about-certs">
+                <button
+                  className={`about-certs-toggle${certificatesOpen ? ' open' : ''}`}
+                  type="button"
+                  aria-expanded={certificatesOpen}
+                  aria-controls="plain-certifications"
+                  onClick={() => setCertificatesOpen((open) => !open)}
+                >
+                  <span>Certifications</span>
+                  <i
+                    className="fas fa-chevron-down certs-chevron"
+                    aria-hidden="true"
+                  />
+                </button>
+                <div
+                  className={`cert-list${certificatesOpen ? ' open' : ''}`}
+                  id="plain-certifications"
+                  hidden={!certificatesOpen}
+                >
+                  <div className="cert-list-scroll">
+                    {certifications.map((certification) => (
+                      <article className="cert-item" key={certification.name}>
+                        <p className="cert-name">
+                          <a
+                            href={certification.url}
+                            target={
+                              certification.url.startsWith('http')
+                                ? '_blank'
+                                : undefined
+                            }
+                            rel={
+                              certification.url.startsWith('http')
+                                ? 'noopener noreferrer'
+                                : undefined
+                            }
+                          >
+                            {certification.name}
+                          </a>
+                        </p>
+                        <p className="cert-issuer">
+                          {certification.issuer} · {certification.date}
+                        </p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="about-bottom-lines" />
+        </section>
+
+        <section id="plain-experience" className="experience" tabIndex={-1}>
+          <div className="container">
+            <h2 className="section-title">Experience</h2>
+            <div className="exp-timeline">
+              {portfolioExperience.map((entry, index) => (
+                <div className="exp-item" key={`${entry.t}-${entry.o}`}>
+                  <div className="exp-marker" aria-hidden="true">
+                    <div className="exp-dot" />
+                    {index < portfolioExperience.length - 1 && (
+                      <div className="exp-line" />
+                    )}
+                  </div>
+                  <article className="exp-card">
+                    <div className="exp-header">
+                      <div>
+                        <h3 className="exp-role">
+                          <em>{entry.t}</em>
+                        </h3>
+                        <p className="exp-company">{entry.o}</p>
+                      </div>
+                      <span className="exp-date" style={{ color: 'var(--fg)' }}>
+                        {entry.w}
+                      </span>
+                    </div>
+                    <p className="exp-desc">{entry.d}</p>
+                    <div className="exp-tags">
+                      <span className="exp-tag">{entry.k}</span>
+                    </div>
+                  </article>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="plain-projects" className="projects" tabIndex={-1}>
+          <div className="container">
+            <h2 className="section-title">Featured Projects</h2>
+            <div className="masonry-grid">
+              {orderedProjects.map((project) => (
+                <article className="project-card" key={project.id}>
+                  <figure className="project-media">
+                    <picture>
+                      <source
+                        type="image/avif"
+                        srcSet={`/projects/${project.id}.avif`}
+                      />
+                      <img
+                        src={resolveProjectImage(
+                          project,
+                          projectImages[project.id],
+                        )}
+                        alt={`${project.n} project preview`}
+                        className="project-screenshot"
+                        width="1200"
+                        height="600"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </figure>
+                  <span className="project-badge">{project.role}</span>
+                  <h3>{project.n}</h3>
+                  <p>{project.overview}</p>
+                  <div className="project-tags">
+                    {project.t.map((tag) => (
+                      <span className="tag" key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                   {project.links
                     .filter(([, url]) => url.trim())
                     .map(([label, url]) => (
                       <a
                         key={label}
                         href={url}
+                        className="project-link"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {label} <Icon name="external" /><span className="visually-hidden"> (opens in a new tab)</span>
+                        {label} <Icon name="external" />
+                        <span className="visually-hidden">
+                          {' '}
+                          (opens in a new tab)
+                        </span>
                       </a>
                     ))}
-                </div>
-                <button onClick={() => nav.openFile(project.id)}>
-                  Open project
-                </button>
-              </article>
-            ))}
+                </article>
+              ))}
+            </div>
           </div>
         </section>
-        <section id="plain-skills" tabIndex={-1}>
-          <h2 tabIndex={-1}>Skills</h2>
-          {skills.map((group) => (
-            <div key={group.name}>
-              <h3 tabIndex={-1}>{group.name}</h3>
-              <p>{group.tags.join(' · ')}</p>
+
+        <section id="plain-skills" className="skills" tabIndex={-1}>
+          <div className="container">
+            <h2 className="section-title">Skills</h2>
+            <div className="skills-wrap">
+              <p className="skills-wrap-title">Tech Stack</p>
+              <div className="skills-grid">
+                {skills.map((group) => (
+                  <div className="skill-category" key={group.name}>
+                    <h3>{group.name}</h3>
+                    <div className="skill-list">
+                      {group.tags.map((tag) => (
+                        <span className="skill-badge" key={tag}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
-        </section>
-        <section id="plain-resume" tabIndex={-1}>
-          <h2 tabIndex={-1}>Resume</h2>
-          {resumeUrl || profile.resume ? (
-            <a
-              href={resumeUrl || profile.resume}
-              download="resume.pdf"
-            >
-              Download resume.pdf
-            </a>
-          ) : (
-            <p>not attached yet</p>
-          )}
-        </section>
-        <section id="plain-contact" tabIndex={-1}>
-          <h2 tabIndex={-1}>Contact</h2>
-          <ul>
-            {socials
-              .filter((s) => s.url.trim())
-              .map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.url}
-                    target={s.url.startsWith('mailto:') ? undefined : '_blank'}
-                    rel="noopener noreferrer"
-                  >
-                    {s.display}
-                    {!s.url.startsWith('mailto:') && (
-                      <span className="visually-hidden"> (opens in a new tab)</span>
-                    )}
-                  </a>
-                </li>
-              ))}
-          </ul>
+          </div>
         </section>
       </main>
-      <footer>
-        <button
-          onClick={() => dispatch({ type: 'set-plain-view', enabled: false })}
-        >
-          back to the interactive view
-        </button>
+
+      <footer id="plain-contact" className="footer" tabIndex={-1}>
+        <div className="container">
+          <h2 className="visually-hidden">Contact</h2>
+          <div className="footer-socials">
+            {socials
+              .filter((social) => social.url.trim())
+              .map((social) => (
+                <a
+                  key={social.label}
+                  href={social.url}
+                  className="social-btn"
+                  aria-label={social.label}
+                  target={
+                    social.url.startsWith('mailto:') ? undefined : '_blank'
+                  }
+                  rel="noopener noreferrer"
+                >
+                  <i
+                    className={socialIcons[social.label] || 'fas fa-envelope'}
+                    aria-hidden="true"
+                  />
+                  <span className="visually-hidden">{social.label}</span>
+                </a>
+              ))}
+          </div>
+          <p>&copy; {profile.name}</p>
+        </div>
       </footer>
     </div>
   )

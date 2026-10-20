@@ -12,12 +12,24 @@ function browserStorage(): JsonStorage | null {
   }
 }
 
-export function WorkspaceProvider({ children }: { children: ReactNode }) {
+export function WorkspaceProvider({
+  children,
+  routeAware = false,
+}: {
+  children: ReactNode
+  routeAware?: boolean
+}) {
   const [storage] = useState(browserStorage)
   const [state, dispatch] = useReducer(
     workspaceReducer,
     storage,
-    loadInitialState,
+    (currentStorage) =>
+      loadInitialState(
+        currentStorage,
+        !routeAware || typeof window === 'undefined'
+          ? undefined
+          : window.location.pathname,
+      ),
   )
   const previous = useRef(state)
 

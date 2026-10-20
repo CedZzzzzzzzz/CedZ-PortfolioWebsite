@@ -1,5 +1,5 @@
 import { profile } from '../../../content/profile'
-import { experience } from '../../../content/experience'
+import { portfolioExperience } from '../../../content/portfolioExperience'
 import { skills } from '../../../content/skills'
 import { projects } from '../../../content/projects'
 import { useWorkspaceState } from '../../../state/useWorkspaceState'
@@ -18,7 +18,7 @@ export function ResumeView() {
           {profile.role} · {profile.focus}
         </p>
         <h4>Education</h4>
-        {experience
+        {portfolioExperience
           .filter((entry) => entry.k === 'education')
           .map((entry, i) => (
             <p key={i}>

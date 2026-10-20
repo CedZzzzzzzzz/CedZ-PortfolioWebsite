@@ -6,7 +6,9 @@
   font-weight: 400;
   font-display: swap;
   src: url('/fonts/jetbrains-mono-2.304-400.woff2') format('woff2');
-  unicode-range: U+0020-007E, U+00B7, U+00D7, U+2013-2014, U+2019, U+2026, U+2191, U+2193, U+254C, U+2588;
+  unicode-range:
+    U+0020-007E, U+00B7, U+00D7, U+2013-2014, U+2019, U+2026, U+2191, U+2193,
+    U+254C, U+2588;
 }
 
 @font-face {
@@ -15,7 +17,9 @@
   font-weight: 700;
   font-display: swap;
   src: url('/fonts/jetbrains-mono-2.304-700.woff2') format('woff2');
-  unicode-range: U+0020-007E, U+00B7, U+00D7, U+2013-2014, U+2019, U+2026, U+2191, U+2193, U+254C, U+2588;
+  unicode-range:
+    U+0020-007E, U+00B7, U+00D7, U+2013-2014, U+2019, U+2026, U+2191, U+2193,
+    U+254C, U+2588;
 }
 
 :root,
@@ -25,7 +29,9 @@
   color-scheme: dark;
   --mut: #797979;
   --ac: #f2f2f2;
+  --ac-rgb: 242, 242, 242;
   --ac2: #9a9a9a;
+  --ac2-rgb: 154, 154, 154;
   --bd: #2a2a2a;
   --bd-strong: #5e5e5e;
   --card: #0b0b0b;
@@ -38,7 +44,9 @@
   --fg: #d4e4ff;
   --mut: #6c81a8;
   --ac: #4da3ff;
+  --ac-rgb: 77, 163, 255;
   --ac2: #7ee0ff;
+  --ac2-rgb: 126, 224, 255;
   --bd: #1f2f55;
   --bd-strong: #3f60ad;
   --card: #0b1430;
@@ -51,7 +59,9 @@
   --fg: #ece3e3;
   --mut: #93707b;
   --ac: #ff2e4d;
+  --ac-rgb: 255, 46, 77;
   --ac2: #ff7a8a;
+  --ac2-rgb: 255, 122, 138;
   --bd: #3a1a22;
   --bd-strong: #954358;
   --card: #110a0d;
@@ -64,12 +74,29 @@
   --fg: #ffead2;
   --mut: #b16b34;
   --ac: #ff6a00;
+  --ac-rgb: 255, 106, 0;
   --ac2: #ffc400;
+  --ac2-rgb: 255, 196, 0;
   --bd: #4d2008;
   --bd-strong: #9f4211;
   --card: #1b0902;
   --ok: #ffd23f;
   --warn: #ff3d00;
+}
+
+:root[data-theme='scar'] {
+  --bg: #0d0508;
+  --fg: #f2e8ea;
+  --mut: #a88d92;
+  --ac: #ff3158;
+  --ac-rgb: 255, 49, 88;
+  --ac2: #ff6b81;
+  --ac2-rgb: 255, 107, 129;
+  --bd: #45101a;
+  --bd-strong: #c22e4d;
+  --card: #16090c;
+  --ok: #ff9b9b;
+  --warn: #ffc1a8;
 }
 
 html,

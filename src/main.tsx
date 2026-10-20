@@ -12,7 +12,7 @@ if (!root) {
 
 createRoot(root).render(
   <StrictMode>
-    <WorkspaceProvider>
+    <WorkspaceProvider routeAware>
       <App />
     </WorkspaceProvider>
   </StrictMode>,

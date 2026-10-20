@@ -3,9 +3,17 @@
   publish = "dist"
   functions = "netlify/functions"
 
+[context.dev]
+  command = "npm run build:dev"
+
 [[redirects]]
   from = "/api/chat"
   to = "/.netlify/functions/chat"
+  status = 200
+
+[[redirects]]
+  from = "/terminal"
+  to = "/index.html"
   status = 200
 
 [[headers]]

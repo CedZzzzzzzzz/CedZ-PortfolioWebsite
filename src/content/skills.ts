@@ -1,11 +1,57 @@
 import type { SkillGroup } from '../types/content'
 
 export const skills: SkillGroup[] = [
-  { name: 'embedded/', tags: ['ESP32', 'C++', 'firmware'] },
   {
-    name: 'web/',
-    tags: ['React', 'Framer Motion', 'React Bits', 'backend APIs'],
+    name: 'Backend Development',
+    tags: ['Python', 'Java'],
   },
-  { name: 'ai-ml/', tags: ['Python', 'ML models', 'AI middleware'] },
-  { name: 'tools/', tags: ['Git', 'ripgrep', 'Linux CLI'] },
+  {
+    name: 'Web Development',
+    tags: [
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+    ],
+  },
+  {
+    name: 'Frameworks & Libraries',
+    tags: [
+      'Flask',
+      'FastAPI',
+      'Framer Motion',
+      'React Bits',
+      'YOLOv8',
+      'LangChain',
+      'FAISS',
+      'NumPy',
+      'Pandas',
+    ],
+  },
+  {
+    name: 'Databases',
+    tags: ['PostgreSQL', 'MySQL', 'Supabase', 'Redis'],
+  },
+  {
+    name: 'Tools',
+    tags: [
+      'ESP32',
+      'C++',
+      'WebSocket',
+      'OpenF1',
+      'FastF1',
+      'Resend',
+      'Gemini API',
+      'Netlify Functions',
+      'Docker',
+      'Git',
+      'GitHub',
+      'Cisco Packet Tracer',
+      'Playwright',
+      'Postman',
+      'Directus',
+    ],
+  },
 ]

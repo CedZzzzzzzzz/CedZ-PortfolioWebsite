@@ -20,7 +20,7 @@ describe('keywordBackend', () => {
           activeFileId: 'ecobench',
         })
       ).text,
-    ).toContain('ECOBENCH')
+      ).toContain('EcoBench')
     expect((await keywordBackend.reply('this page', noPage)).text).toContain(
       'No file',
     )
@@ -41,8 +41,10 @@ describe('keywordBackend', () => {
     const reply = await keywordBackend.reply('projects', noPage)
     expect(reply.cards?.map((card) => card.fileId)).toEqual([
       'ecobench',
-      'bifrost',
-      'f1',
+      'quantis-f1',
+      'crime-detection',
+      'budget-tracker',
+      'portfolio-website',
     ])
   })
 

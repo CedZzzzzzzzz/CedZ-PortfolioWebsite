@@ -50,7 +50,7 @@ describe('remaining commands', () => {
       ['byte', { kind: 'byte', open: true }],
       ['feed', { kind: 'pet', action: 'feed' }],
       ['play', { kind: 'pet', action: 'play' }],
-      ['github', { kind: 'external', href: 'https://github.com/MarcusCedric' }],
+      ['github', { kind: 'external', href: 'https://github.com/CedZzzzzzzzz' }],
     ] as const)
       expect((await commandRegistry.execute(input, context)).effects).toEqual([
         effect,

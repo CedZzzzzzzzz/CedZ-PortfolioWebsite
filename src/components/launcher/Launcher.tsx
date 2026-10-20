@@ -31,7 +31,7 @@ export function Launcher() {
         focusTerminal: () => terminal.focusTerminal(),
         openGithub: () =>
           window.open(
-            'https://github.com/MarcusCedric',
+            'https://github.com/CedZzzzzzzzz',
             '_blank',
             'noopener,noreferrer',
           ),

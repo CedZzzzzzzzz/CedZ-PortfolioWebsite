@@ -26,7 +26,8 @@ export function ProjectView({ project }: { project: Project }) {
       </p>
       <h3>{project.n}</h3>
       <p className="view-muted">
-        {project.year} · {project.role}
+        {project.year ? `${project.year} · ` : ''}
+        {project.role}
       </p>
       <ProjectHero project={project} />
       {demoUploadsEnabled && <ProjectImageUpload projectId={project.id} />}
@@ -59,7 +60,8 @@ export function ProjectView({ project }: { project: Project }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {label} <Icon name="external" /><span className="visually-hidden"> (opens in a new tab)</span>
+            {label} <Icon name="external" />
+            <span className="visually-hidden"> (opens in a new tab)</span>
           </a>
         ))}
       </div>

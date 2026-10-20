@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { experience } from './experience'
 import { files } from './files'
+import { profile } from './profile'
 import { projects } from './projects'
 import { skills } from './skills'
+import { socials } from './socials'
+import { portfolioExperience } from './portfolioExperience'
 
 describe('content integrity', () => {
   it('has unique project and file IDs', () => {
@@ -30,7 +33,29 @@ describe('content integrity', () => {
     }
   })
 
-  it('starts experience with education', () => {
-    expect(experience[0]?.k).toBe('education')
+  it('contains confirmed work experience without the removed education entry', () => {
+    expect(experience.map(({ t }) => t)).toContain(
+      'Software Quality Assurance Intern',
+    )
+    expect(experience.some(({ k }) => k === 'education')).toBe(false)
+    expect(experience.map(({ o }) => o)).not.toContain(
+      'Polyechnic University of the Philippines',
+    )
+  })
+
+  it('uses the confirmed profile and contact details without placeholders', () => {
+    expect(profile.name).toBe('Marcus Cedric S. Pedrosa')
+    expect(socials.map(({ label }) => label)).toContain('Instagram')
+    expect(socials.every(({ url }) => !url.includes('your-'))).toBe(true)
+    expect(portfolioExperience.map(({ t }) => t)).toContain(
+      'Software Quality Assurance Intern',
+    )
+    expect(projects.map(({ id }) => id)).toEqual([
+      'ecobench',
+      'quantis-f1',
+      'crime-detection',
+      'budget-tracker',
+      'portfolio-website',
+    ])
   })
 })

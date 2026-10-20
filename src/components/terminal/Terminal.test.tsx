@@ -112,8 +112,10 @@ it('captures visitor information once even in Strict Mode, renders landing, and 
   expect(gather).toHaveBeenCalledTimes(1)
   expect(log().getAttribute('aria-live')).toBe('off')
   expect(log().textContent).toContain('booting cedz.portfolio ...')
-  expect(log().querySelector('.terminal-banner')?.textContent).toContain('██████')
-  expect(log().textContent).toContain('3 projects · 4 skill groups · 4 themes')
+  expect(log().querySelector('.terminal-banner')?.textContent).toContain(
+    '██████',
+  )
+  expect(log().textContent).toContain('5 projects · 5 skill groups · 5 themes')
   await act(async () =>
     container
       .querySelector<HTMLButtonElement>('[aria-label="Focus terminal"]')!

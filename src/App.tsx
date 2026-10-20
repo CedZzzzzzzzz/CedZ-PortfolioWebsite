@@ -36,8 +36,27 @@ function Application() {
   const terminal = useTerminalFocus()
   const byte = useByte()
   useEffect(() => {
+    const path = plainView ? '/' : '/terminal'
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path)
+    }
+  }, [plainView])
+  useEffect(() => {
+    function syncViewFromPath() {
+      dispatch({
+        type: 'set-plain-view',
+        enabled: window.location.pathname !== '/terminal',
+      })
+    }
+    window.addEventListener('popstate', syncViewFromPath)
+    return () => window.removeEventListener('popstate', syncViewFromPath)
+  }, [dispatch])
+  useEffect(() => {
     const browser = window as Window & {
-      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number
+      requestIdleCallback?: (
+        callback: () => void,
+        options?: { timeout: number },
+      ) => number
       cancelIdleCallback?: (id: number) => void
     }
     const prefetch = () => {

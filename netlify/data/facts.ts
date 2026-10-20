@@ -1,14 +1,14 @@
 export const facts = {
     person: {
         name: 'Marcus Cedric S. Pedrosa',
-        role: 'Computer Engineering Technology Student',
-        year: '3rd year, specializing in Machine Learning',
+        role: '4th-year Computer Engineering Technology Student',
+        year: '4th year, specializing in Machine Learning',
         focus: [
             'Software Development',
             'Artificial Intelligence',
             'Internship Opportunities & Experience'
         ],
-        bio: 'A 3rd year computer engineering technology student specializing in Machine Learning with a passion for creating useful digital solutions and solving real-world problems.',
+        bio: 'A Computer Engineering Technology student specializing in Machine Learning, passionate about building useful digital solutions and solving real-world problems.',
         github: 'https://github.com/CedZzzzzzzzz',
         linkedin: 'https://www.linkedin.com/in/marcus-cedric-pedrosa/',
         facebook: 'https://www.facebook.com/marcuscedric.pedrosa',

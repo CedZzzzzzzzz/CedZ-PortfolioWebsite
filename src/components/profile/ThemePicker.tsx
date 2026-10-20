@@ -7,6 +7,7 @@ export function ThemePicker() {
   const { theme } = useWorkspaceState()
   const dispatch = useWorkspaceDispatch()
   const buttons = useRef<Array<HTMLButtonElement | null>>([])
+
   return (
     <section className="profile-themes">
       <p id="profile-theme-label">Theme · {themeNames[theme]}</p>
