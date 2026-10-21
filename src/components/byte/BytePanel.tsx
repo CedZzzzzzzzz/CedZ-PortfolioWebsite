@@ -29,24 +29,29 @@ export function BytePanel() {
       data-reduced={reducedMotion}
     >
       <header>
-        <h2 id="byte-heading">~/byte · mascot</h2>
-        <button
-          aria-label="Toggle Byte history"
-          aria-pressed={history}
-          onClick={() => setHistory((previous) => !previous)}
-        >
-          <Icon name="menu" />
-        </button>
-        <button aria-label="Close Byte" onClick={close}>
-          <Icon name="chevron-right" />
-        </button>
+        <h2 id="byte-heading">
+          <span className="byte-gem" aria-hidden="true" />
+          ~/byte · pet
+        </h2>
+        <div className="byte-panel-actions">
+          <button
+            aria-label="Toggle Byte history"
+            aria-pressed={history}
+            onClick={() => setHistory((previous) => !previous)}
+          >
+            <Icon name="menu" />
+          </button>
+          <button aria-label="Close Byte" onClick={close}>
+            <Icon name="chevron-right" />
+          </button>
+        </div>
       </header>
       <div className="byte-panel-body">
         <ByteBubble historyVisible={history} />
         {history && <ByteHistory />}
         <ByteRoom />
         <div className="byte-chips" aria-label="Ask Byte about">
-          {['projects', 'experience', 'resume', 'contact', 'this page'].map(
+          {['about', 'projects', 'experience', 'resume', 'contact'].map(
             (chip) => (
               <button key={chip} onClick={() => submit(chip)}>
                 {chip}

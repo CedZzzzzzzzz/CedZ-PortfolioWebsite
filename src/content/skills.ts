@@ -11,6 +11,7 @@ export const skills: SkillGroup[] = [
       'JavaScript',
       'React',
       'TypeScript',
+      'Vite',
       'Tailwind CSS',
     ],
   },

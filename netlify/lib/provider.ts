@@ -1,3 +1,14 @@
+import type { ChatReply, ChatTurn } from '../../src/types/chat'
+
+export interface ChatRequest {
+  message: string
+  activeFileId: string | null
+  history: ChatTurn[]
+}
+
 export interface Chatprovider {
-    generateResponse (message: string, context: string): Promise<string>;
+  generateResponse(
+    request: ChatRequest,
+    context: string,
+  ): Promise<ChatReply>
 }

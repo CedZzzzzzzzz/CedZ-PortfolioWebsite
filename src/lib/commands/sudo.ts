@@ -7,7 +7,7 @@ export const sudoCommand: Command = {
   run: () => ({
     lines: [
       plainTextLine(
-        'Permission denied. Even tiny dragon ninjas need a break.',
+        'Permission denied. Even tiny ice dragons need a break.',
         'warn',
       ),
     ],

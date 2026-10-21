@@ -1,5 +1,11 @@
 export interface ChatContext {
   activeFileId: string | null
+  history?: ChatTurn[]
+}
+
+export interface ChatTurn {
+  question: string
+  answer: string
 }
 
 export interface ChatCard {
@@ -17,5 +23,9 @@ export interface ChatReply {
 }
 
 export interface ChatBackend {
-  reply(query: string, context: ChatContext): Promise<ChatReply>
+  reply(
+    query: string,
+    context: ChatContext,
+    onText?: (text: string) => void,
+  ): Promise<ChatReply>
 }

@@ -8,6 +8,7 @@ export function ByteRoom() {
   const [position, setPosition] = useState({ percent: 50, direction: 1 })
   const [particleEvent, setParticleEvent] = useState(0)
   const [particles, setParticles] = useState(false)
+
   useEffect(() => {
     if (!active || reducedMotion) return
     const timer = setInterval(
@@ -20,14 +21,19 @@ export function ByteRoom() {
     )
     return () => clearInterval(timer)
   }, [active, reducedMotion])
+
   usePausableTimeout(
     () => setParticles(false),
     600,
     active && particles,
     particleEvent,
   )
+
   return (
-    <div className="byte-room">
+    <div className="byte-room" data-mode={pet.mode}>
+      <span className="byte-twinkle byte-twinkle-one" aria-hidden="true" />
+      <span className="byte-twinkle byte-twinkle-two" aria-hidden="true" />
+      <span className="byte-twinkle byte-twinkle-three" aria-hidden="true" />
       <div
         className="byte-travel"
         style={{
@@ -55,6 +61,7 @@ export function ByteRoom() {
               className={pet.gesture === 'play' ? 'byte-flip' : 'byte-bob'}
             >
               <ByteSprite />
+              <span className="byte-glint" aria-hidden="true" />
             </span>
           </button>
         </div>
@@ -70,15 +77,11 @@ export function ByteRoom() {
                   '--particle-y': `${-25 - (index % 2) * 25}px`,
                 } as CSSProperties
               }
-            >
-              ✦
-            </span>
+            />
           ))}
         </div>
       )}
-      <div className="byte-floor" aria-hidden="true">
-        ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
-      </div>
+      <div className="byte-floor" aria-hidden="true" />
     </div>
   )
 }

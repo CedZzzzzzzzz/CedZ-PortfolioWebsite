@@ -19,8 +19,8 @@ export function createLanding(
       'Byte is awake (press b)',
       `visitor  guest · ${visitor.browser} on ${visitor.os} · ${visitor.screen}`,
       `session  started ${visitor.sessionTime} (your local time)`,
-      `where    ${visitor.city} (guessed from your time zone; nothing is sent)`,
-      'ip       127.0.0.1 (home sweet home, no tracking here)',
+      `where    ${visitor.city} (based on your time zone)`,
+      'ip       127.0.0.1 (localhost)',
     ].map((text) => plainTextLine(`[ ok ] ${text}`, 'ok')),
     plainTextLine('welcome. click a command, or type help:'),
     [

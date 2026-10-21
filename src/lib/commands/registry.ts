@@ -9,7 +9,7 @@ import { helpCommand } from './help'
 import { plainTextLine } from './line'
 import { lsCommand } from './ls'
 import { parseCommand } from './parseCommand'
-import { keywordBackend } from '../chat/keywordBackend'
+import { byteBackend } from '../chat/byteBackend'
 import { createAskCommand } from './ask'
 import { openCommand } from './open'
 import { aboutCommand } from './about'
@@ -104,7 +104,7 @@ export const commandRegistry = createCommandRegistry([
   feedCommand,
   playCommand,
   byteCommand,
-  createAskCommand(keywordBackend),
+  createAskCommand(byteBackend),
   ipCommand,
   githubCommand,
   keysCommand,

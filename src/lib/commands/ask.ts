@@ -29,6 +29,14 @@ export function createAskCommand(backend: ChatBackend): Command {
             effects: replyEffects(reply),
           }
         })
+        .catch(() => ({
+          lines: [
+            plainTextLine(
+              'Byte AI is unavailable right now. Please try again in a moment.',
+              'error',
+            ),
+          ],
+        }))
     },
   }
 }

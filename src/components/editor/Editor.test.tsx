@@ -225,9 +225,7 @@ describe('explorer and editor', () => {
     expect(
       container.querySelector<HTMLIFrameElement>('.resume-preview')?.src,
     ).toBe(`http://localhost:3000${profile.resume}`)
-    expect(container.querySelector('a[download]')?.getAttribute('href')).toBe(
-      profile.resume,
-    )
+    expect(container.querySelector('a[download]')).toBeNull()
     expect(container.querySelector('input[type="file"]')).toBeNull()
     await openFile('contact.txt')
     const writeText = vi.fn(async () => undefined)

@@ -62,7 +62,7 @@ test('opening resume displays the actual PDF in the editor', async ({
   await expect(preview).toHaveAttribute('src', '/CV/CV_PedrosaMarcus.pdf')
   await expect(
     page.getByRole('link', { name: 'Open or download resume.pdf' }),
-  ).toHaveAttribute('href', '/CV/CV_PedrosaMarcus.pdf')
+  ).toHaveCount(0)
 })
 
 test('certifications open PDFs and verification links inside the workspace', async ({

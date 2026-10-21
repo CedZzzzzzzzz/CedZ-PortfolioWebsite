@@ -17,15 +17,6 @@ export function ResumeView() {
             src={url}
             title={`${profile.name} resume PDF`}
           />
-          <a
-            className="view-button primary"
-            href={url}
-            download="resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open or download resume.pdf
-          </a>
         </>
       ) : (
         <p>no PDF attached yet</p>

@@ -40,7 +40,7 @@ export function executeEffects(
           handlers.byte.interact(instruction.action)
           feedback.push(
             plainTextLine(
-              instruction.action === 'feed' ? 'nom nom 🍙' : 'hiyah! ',
+              instruction.action === 'feed' ? 'nom nom 🍙' : 'Whoosh!',
             ),
           )
           break
