@@ -1,6 +1,7 @@
 import { useRef, type MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { ThemePicker } from '../profile/ThemePicker'
+import { Icon } from '../ui/Icon'
 
 export function ThemeModal() {
   const dialog = useRef<HTMLDialogElement>(null)
@@ -18,7 +19,7 @@ export function ThemeModal() {
         title="Choose theme"
         onClick={() => dialog.current?.showModal()}
       >
-        <i className="fas fa-palette" aria-hidden="true" />
+        <Icon name="theme" size={18} />
       </button>
       {createPortal(
         <dialog

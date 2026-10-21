@@ -28,7 +28,7 @@ export function buildLauncherItems(args: {
       hint: 'theme',
       run: () => args.setTheme(theme),
     })),
-    { id: 'plain', label: 'Toggle plain view', run: args.togglePlain },
+    { id: 'plain', label: 'Toggle portfolio view', run: args.togglePlain },
     { id: 'byte', label: 'Ask Byte', run: args.askByte },
     { id: 'terminal', label: 'Focus terminal', run: args.focusTerminal },
     {

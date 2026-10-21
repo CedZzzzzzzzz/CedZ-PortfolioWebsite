@@ -87,7 +87,7 @@ export const facts = {
         {
             role: 'Software Quality Assurance Intern',
             company: 'Snapp Ventures Inc. (Matchmo)',
-            period: 'March 2026 – July 2026',
+            period: 'March 2026 – May 2026',
             description: 'Ensured production-grade software quality by executing end-to-end testing across web, internal CRM, and Android APK environments. Audited data pipelines to achieve 100% data mapping accuracy. Enforced sub-500ms to 600ms page interactivity thresholds through network latency testing. Designed and containerized parameterized web automation scripts using Playwright and Docker across 10 consecutive weeks of agile sprints.',
             skills: ['Postman', 'Directus', 'UAT', 'API Testing', 'Playwright', 'Docker', 'JavaScript', 'Agile']
         },

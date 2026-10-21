@@ -31,6 +31,9 @@
   white-space: nowrap;
 }
 .top-bar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   border: 1px solid var(--bd-strong);
   border-radius: 4px;
   padding: 1px 5px;

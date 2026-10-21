@@ -8,6 +8,8 @@ import { ProfilePhotoUpload } from './ProfilePhotoUpload'
 import { ThemePicker } from './ThemePicker'
 import './profile.css'
 import { useByte } from '../../hooks/useByte'
+import { SocialIcon } from '../ui/SocialIcon'
+import { Icon } from '../ui/Icon'
 
 export function Profile() {
   const byte = useByte()
@@ -27,36 +29,47 @@ export function Profile() {
       <p className="profile-focus">{profile.focus}</p>
       <nav aria-label="Social links" className="profile-socials">
         {socials
-          .filter((social) => social.url.trim())
+          .filter((social) => social.label !== 'Email' && social.url.trim())
           .map((social) => (
             <a
               key={social.label}
               href={social.url}
+              aria-label={`${social.label}${social.url.startsWith('mailto:') ? '' : ' (opens in a new tab)'}`}
+              title={social.label}
               target={social.url.startsWith('mailto:') ? undefined : '_blank'}
               rel="noopener noreferrer"
             >
-              {social.label}
-              {!social.url.startsWith('mailto:') && (
-                <span className="visually-hidden"> (opens in a new tab)</span>
-              )}
+              <SocialIcon label={social.label} />
+              <span className="visually-hidden">
+                {social.label}
+                {!social.url.startsWith('mailto:') && ' (opens in a new tab)'}
+              </span>
             </a>
           ))}
       </nav>
       <ThemePicker />
       <div className="profile-actions">
         <button
+          type="button"
           aria-pressed={byteOpen}
+          aria-label="ask Byte"
+          title="ask Byte"
           onClick={(event) => byte.open(event.currentTarget)}
         >
-          ask Byte
+          <Icon name="chat" />
+          <span>ask Byte</span>
         </button>
         <button
+          type="button"
           aria-pressed={plainView}
+          aria-label="Portfolio view"
+          title="Portfolio view"
           onClick={() =>
             dispatch({ type: 'set-plain-view', enabled: !plainView })
           }
         >
-          plain view
+          <Icon name="menu" />
+          <span>Portfolio view</span>
         </button>
       </div>
       <p className="profile-hint">

@@ -29,8 +29,12 @@ export function TopBar() {
         >
           <Icon name="diamond" />
         </button>
-        <button type="button" aria-label="Focus terminal" onClick={focusTerminal}>
-          &gt;_
+        <button
+          type="button"
+          aria-label="Focus terminal"
+          onClick={focusTerminal}
+        >
+          <Icon name="prompt" />
         </button>
         <span
           className="file-path"
@@ -50,8 +54,8 @@ export function TopBar() {
             dispatch({ type: 'set-plain-view', enabled: !plainView })
           }
         >
-          <Icon name={plainView ? 'diamond' : 'menu'} />{' '}
-          {plainView ? 'interactive view' : 'plain view'}
+          <Icon name={plainView ? 'return' : 'menu'} />{' '}
+          {plainView ? 'Terminal' : 'Portfolio view'}
         </button>
         <span className="desktop-label">{themeNames[theme]}</span>
         <span className="desktop-label shortcut-hint">

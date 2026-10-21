@@ -44,6 +44,49 @@ const themeAliases = `
   --footer-bg: var(--bg);
 }
 
+.skills .skills-wrap .skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.skills .skills-wrap .skill-category {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-card) 92%, var(--fg));
+}
+
+.skills .skills-wrap .skill-category:last-child {
+  grid-column: 1 / -1;
+}
+
+.skills .skills-wrap .skill-category h3 {
+  margin-bottom: 12px;
+}
+
+.skills .skills-wrap .skill-list {
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .skills .skills-wrap .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .skills .skills-wrap .skills-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .skills .skills-wrap .skill-category:last-child {
+    grid-column: auto;
+  }
+}
+
 :root[data-theme='scar'] {
   --red: #E8002D;
   --red-deep: #B8001E;
@@ -78,7 +121,7 @@ const themeAliases = `
 
 .plain-page .plain-interactive-toggle {
   width: 44px;
-  gap: 8px;
+  gap: 6px;
   padding: 0;
   overflow: hidden;
   justify-content: center;
@@ -89,9 +132,9 @@ const themeAliases = `
 
 .plain-page .plain-interactive-toggle:hover,
 .plain-page .plain-interactive-toggle:focus-visible {
-  width: 164px;
-  padding: 0 12px;
-  justify-content: flex-start;
+  width: 118px;
+  padding: 0 10px;
+  justify-content: center;
 }
 
 .plain-control-label {
@@ -375,14 +418,14 @@ export function PlainView() {
               <button
                 className="btn-resume plain-interactive-toggle"
                 type="button"
-                aria-label="Back to interactive view"
-                title="Back to interactive view"
+                aria-label="Back to terminal view"
+                title="Back to terminal view"
                 onClick={() =>
                   dispatch({ type: 'set-plain-view', enabled: false })
                 }
               >
-                <i className="fas fa-arrow-left" aria-hidden="true" />
-                <span className="plain-control-label">Interactive view</span>
+                <i className="fas fa-terminal" aria-hidden="true" />
+                <span className="plain-control-label">Terminal</span>
               </button>
             </div>
           </nav>

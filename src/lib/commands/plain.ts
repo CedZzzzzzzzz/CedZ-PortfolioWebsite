@@ -3,11 +3,11 @@ import { plainTextLine } from './line'
 
 export const plainCommand: Command = {
   name: 'plain',
-  description: 'Enable plain view',
+  description: 'Enable portfolio view',
   run: () => ({
     lines: [
       plainTextLine(
-        'Plain view enabled; the scrolling page arrives in Phase 9.',
+        'Portfolio view enabled.',
       ),
     ],
     effects: [{ kind: 'plain', enabled: true }],

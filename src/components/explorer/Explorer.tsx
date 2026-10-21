@@ -84,7 +84,6 @@ export function Explorer() {
             )
           })}
       </ul>
-      <p className="explorer-hint">click a file to open it in a tab</p>
     </nav>
   )
 }

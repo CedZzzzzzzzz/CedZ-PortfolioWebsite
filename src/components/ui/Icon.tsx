@@ -7,6 +7,8 @@ export type IconName =
   | 'menu'
   | 'diamond'
   | 'prompt'
+  | 'chat'
+  | 'theme'
   | 'external'
   | 'return'
 
@@ -76,6 +78,24 @@ export function Icon({ name, size = 16, 'aria-label': label }: IconProps) {
     return (
       <svg {...common}>
         <path d="m3 3.5 4.5 4.5L3 12.5M9 12.5h4" />
+      </svg>
+    )
+  if (name === 'chat')
+    return (
+      <svg {...common}>
+        <path d="M2 3h12v9H7l-4 2v-2H2z" />
+        <path d="M5 6h6M5 9h4" />
+      </svg>
+    )
+  if (name === 'theme')
+    return (
+      <svg
+        {...common}
+        fill="currentColor"
+        stroke="none"
+        viewBox="0 0 16 16"
+      >
+        <path d="M3 1.5h5.5V8H1.5V3A1.5 1.5 0 0 1 3 1.5ZM10 1.5h3A1.5 1.5 0 0 1 14.5 3v3.5H10ZM1.5 10h7V14.5H3A1.5 1.5 0 0 1 1.5 13ZM10 8.5h4.5V13a1.5 1.5 0 0 1-1.5 1.5h-3Z" />
       </svg>
     )
   if (name === 'external')

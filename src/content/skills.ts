@@ -2,12 +2,10 @@ import type { SkillGroup } from '../types/content'
 
 export const skills: SkillGroup[] = [
   {
-    name: 'Backend Development',
-    tags: ['Python', 'Java'],
-  },
-  {
-    name: 'Web Development',
+    name: 'Development Stack',
     tags: [
+      'Python',
+      'Java',
       'HTML',
       'CSS',
       'JavaScript',
@@ -33,7 +31,7 @@ export const skills: SkillGroup[] = [
     tags: ['PostgreSQL', 'MySQL', 'Supabase', 'Redis'],
   },
   {
-    name: 'Tools',
+    name: 'Tools & Practices',
     tags: [
       'ESP32',
       'C++',
@@ -50,6 +48,7 @@ export const skills: SkillGroup[] = [
       'Playwright',
       'Postman',
       'Directus',
+      'Agile',
     ],
   },
 ]

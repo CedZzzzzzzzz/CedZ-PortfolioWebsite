@@ -12,7 +12,7 @@ function answer(query: string, activeFileId: string | null): ChatReply {
     return { text: 'hiyah! ', petAction: 'play' }
   }
   if (/\b(plain|simple|simpler)\b/.test(q)) {
-    return { text: 'Switching to the plain view.', switchToPlain: true }
+    return { text: 'Switching to the portfolio view.', switchToPlain: true }
   }
   if (/this page|current (page|file)/.test(q)) {
     const file = files.find(({ id }) => id === activeFileId)

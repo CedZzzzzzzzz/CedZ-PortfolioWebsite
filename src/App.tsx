@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect } from 'react'
 import { WorkspaceLayout } from './components/layout/WorkspaceLayout'
 import { TerminalFocusProvider } from './state/TerminalFocusProvider'
 import { ByteProvider } from './state/ByteProvider'
-import { ByteHandle } from './components/byte/ByteHandle'
 import { useWorkspaceState } from './state/useWorkspaceState'
 import { LauncherProvider } from './state/LauncherProvider'
 import { useLauncher } from './state/useLauncher'
@@ -115,7 +114,6 @@ function Application() {
           <PlainView />
         </Suspense>
       )}
-      <ByteHandle />
       <Suspense fallback={null}>
         <BytePanel />
         <Launcher />

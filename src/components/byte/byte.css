@@ -49,6 +49,12 @@
   z-index: 19;
   right: 0;
   top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  min-height: 44px;
   padding: 8px 5px;
   background: var(--card);
   color: var(--ac);
@@ -304,6 +310,9 @@
   }
   .byte-handle {
     position: static;
+    transform: none;
+    width: auto;
+    min-height: 0;
     border-radius: 6px;
     padding: 8px 12px;
   }

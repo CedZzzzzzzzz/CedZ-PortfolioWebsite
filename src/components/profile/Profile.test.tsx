@@ -141,16 +141,16 @@ it('shares theme state with terminal, supports wrapping keyboard selection, and 
   expect(container.textContent).toContain('Theme · Fire')
   expect(JSON.parse(localStorage.getItem('cedz-theme')!)).toBe('fire')
 })
-it('opens Byte and toggles plain view through existing actions', async () => {
+it('opens Byte and toggles portfolio view through existing actions', async () => {
   await mount()
   await click(button('ask Byte'))
-  await click(button('plain view'))
+  await click(button('Portfolio view'))
   expect(container.querySelector('output')!.textContent).toContain(
     '"byteOpen":true',
   )
-  expect(button('plain view').getAttribute('aria-pressed')).toBe('true')
-  await click(button('plain view'))
-  expect(button('plain view').getAttribute('aria-pressed')).toBe('false')
+  expect(button('Portfolio view').getAttribute('aria-pressed')).toBe('true')
+  await click(button('Portfolio view'))
+  expect(button('Portfolio view').getAttribute('aria-pressed')).toBe('false')
 })
 it('uploads, persists, removes, and reports failed demo photos', async () => {
   flags.enabled = true
