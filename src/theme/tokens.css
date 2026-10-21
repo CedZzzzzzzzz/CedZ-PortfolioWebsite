@@ -22,6 +22,12 @@
     U+254C, U+2588;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root,
 :root[data-theme='dark'] {
   --bg: #000;

@@ -39,6 +39,10 @@
   flex-wrap: wrap;
   gap: 6px;
 }
+.profile-socials {
+  width: 100%;
+  min-width: 0;
+}
 .profile-actions {
   display: grid;
   gap: 6px;
@@ -57,10 +61,16 @@
 }
 .profile-socials a {
   display: inline-grid;
+  box-sizing: border-box;
+  flex: 0 0 34px;
   width: 34px;
   height: 34px;
   place-items: center;
   padding: 0;
+}
+.workspace-shell .profile-socials a {
+  display: grid;
+  place-items: center;
 }
 .profile-actions button {
   display: flex;
@@ -137,4 +147,11 @@
 }
 .profile-photo-upload button:disabled {
   cursor: wait;
+}
+@media (width < 820px) {
+  .profile-socials a {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
 }
