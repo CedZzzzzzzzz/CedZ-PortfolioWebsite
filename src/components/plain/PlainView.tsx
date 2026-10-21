@@ -13,6 +13,7 @@ import { useNavigation } from '../../hooks/useNavigation'
 import { ThemeModal } from './ThemeModal'
 import { Icon } from '../ui/Icon'
 import { resolveProjectImage } from '../../lib/projectImage'
+import { gmailComposeUrl } from '../../lib/gmail'
 import deployedStyles from './deployed.css?raw'
 
 const themeAliases = `
@@ -304,6 +305,7 @@ export function PlainView() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [failedPhoto, setFailedPhoto] = useState('')
   const [certificatesOpen, setCertificatesOpen] = useState(false)
+  const emailUrl = socials.find((social) => social.label === 'Email')?.url
   const [projectFilter, setProjectFilter] = useState<ProjectCategory | 'All'>(
     'All',
   )
@@ -410,9 +412,11 @@ export function PlainView() {
             </ul>
             <div className="contact">
               <a
-                href={socials.find((social) => social.label === 'Email')?.url}
+                href={emailUrl ? gmailComposeUrl(emailUrl) : undefined}
                 className="btn-resume"
-                aria-label="Email"
+                aria-label="Email (opens Gmail in a new tab)"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <i className="fas fa-envelope" aria-hidden="true" />
               </a>
@@ -759,12 +763,14 @@ export function PlainView() {
               .map((social) => (
                 <a
                   key={social.label}
-                  href={social.url}
-                  className="social-btn"
-                  aria-label={social.label}
-                  target={
-                    social.url.startsWith('mailto:') ? undefined : '_blank'
+                  href={
+                    social.url.startsWith('mailto:')
+                      ? gmailComposeUrl(social.url)
+                      : social.url
                   }
+                  className="social-btn"
+                  aria-label={`${social.label} (opens in a new tab)`}
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   <i

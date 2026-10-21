@@ -56,14 +56,14 @@ describe('remaining commands', () => {
         effect,
       ])
   })
-  it('provides static IP, portfolio counts, shortcut help, and sudo feedback', async () => {
+  it('provides a random example IP, portfolio counts, shortcut help, and sudo feedback', async () => {
     for (const input of ['ip', 'fastfetch', 'neofetch', 'keys', 'sudo'])
       expect(
         (await commandRegistry.execute(input, context)).lines.length,
       ).toBeGreaterThan(0)
-    expect(
-      JSON.stringify(await commandRegistry.execute('ip', context)),
-    ).toContain('127.0.0.1')
+    expect(JSON.stringify(await commandRegistry.execute('ip', context))).toMatch(
+      /(?:10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)/
+    )
     expect(await commandRegistry.execute('neofetch', context)).toEqual(
       await commandRegistry.execute('fastfetch', context),
     )

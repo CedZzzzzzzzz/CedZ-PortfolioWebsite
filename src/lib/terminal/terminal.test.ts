@@ -85,7 +85,9 @@ describe('terminal pure helpers', () => {
     expect(text).toContain('Firefox on Linux · 800×600')
     expect(text).toContain('09:30')
     expect(text).toContain('Manila')
-    expect(text).toContain('127.0.0.1')
+    expect(text).toMatch(
+      /ip\s+(?:10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)/
+    )
     expect(lines.at(-1)?.filter((segment) => segment.command)).toHaveLength(6)
     expect(text).not.toContain('Marcus')
   })

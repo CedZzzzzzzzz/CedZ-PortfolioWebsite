@@ -1,6 +1,7 @@
 import type { Line } from '../../types/command'
 import type { VisitorInfo } from '../visitor'
 import { plainTextLine } from '../commands/line'
+import { createRandomIp } from '../randomIp'
 
 export const banner = ` ██████ ███████ ██████  ███████
 ██      ██      ██   ██    ███
@@ -20,7 +21,7 @@ export function createLanding(
       `visitor  guest · ${visitor.browser} on ${visitor.os} · ${visitor.screen}`,
       `session  started ${visitor.sessionTime} (your local time)`,
       `where    ${visitor.city} (based on your time zone)`,
-      'ip       127.0.0.1 (localhost)',
+      `ip       ${createRandomIp()}`,
     ].map((text) => plainTextLine(`[ ok ] ${text}`, 'ok')),
     plainTextLine('welcome. click a command, or type help:'),
     [
