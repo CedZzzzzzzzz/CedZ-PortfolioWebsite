@@ -81,6 +81,133 @@
   font-weight: 700;
   margin-bottom: 6px;
 }
+.about-terminal {
+  width: min(100%, 1120px);
+  margin-inline: auto;
+  padding: 12px 8px 32px;
+}
+.about-terminal-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding-bottom: 12px;
+}
+.about-terminal-header h3 {
+  margin: 0;
+  font-size: 22px;
+}
+.about-terminal-header > span {
+  color: var(--mut);
+  font-size: 11px;
+}
+.about-terminal-intro-block {
+  max-width: 980px;
+  padding: 20px 22px;
+  border-radius: 10px;
+  background: linear-gradient(
+    110deg,
+    color-mix(in srgb, var(--ac) 7%, var(--card)),
+    var(--card) 68%
+  );
+}
+.about-terminal-intro {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.75;
+}
+.about-terminal-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.about-terminal-fact,
+.about-terminal-project {
+  min-width: 0;
+  padding: 20px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--ac) 3%, var(--card));
+}
+.about-terminal-fact {
+  min-height: 136px;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+.about-terminal-fact:hover {
+  background: color-mix(in srgb, var(--ac) 7%, var(--card));
+  transform: translateY(-2px);
+}
+.about-terminal-fact p,
+.about-terminal-project p {
+  margin: 0;
+  line-height: 1.65;
+}
+.about-terminal-fact .about-terminal-label,
+.about-terminal-project .about-terminal-label {
+  margin-bottom: 8px;
+  color: var(--mut);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.about-terminal-label span {
+  color: var(--ac);
+}
+.about-terminal-project {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.32fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+}
+.about-terminal-project > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.about-terminal-project .about-terminal-label {
+  margin: 0;
+}
+.about-terminal-project a {
+  color: var(--ac);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.about-terminal-project-name {
+  width: fit-content;
+  font-size: 15px;
+  font-weight: 700;
+}
+.about-terminal-project a:hover {
+  color: var(--fg);
+}
+.about-terminal-shortcuts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--mut);
+  font-size: 12px;
+}
+.about-terminal-command {
+  color: var(--ac);
+}
+.about-terminal-link {
+  padding: 3px 0;
+  border: 0;
+  color: var(--fg);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+.about-terminal-link::before {
+  content: './';
+  color: var(--ac);
+}
+.about-terminal-link:hover {
+  color: var(--ac);
+}
 .view-actions,
 .tag-list {
   display: flex;
@@ -143,6 +270,9 @@
 .timeline li p + p {
   margin-top: 6px;
 }
+.experience-description {
+  text-align: justify;
+}
 .skill-tag {
   display: inline-block;
   border: 1px solid var(--bd-strong);
@@ -195,39 +325,142 @@ button.skill-tag:hover {
 .card-body > span:not(.tag-list) {
   color: var(--mut);
 }
+.project-view {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+}
+.project-heading {
+  margin-bottom: 20px;
+}
+.project-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  align-items: stretch;
+  gap: 24px;
+}
+.project-media-column {
+  display: flex;
+  min-height: 340px;
+}
+.project-media-column,
+.project-details {
+  min-width: 0;
+}
+.project-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.project-details p,
+.project-details h4 {
+  margin: 0;
+}
+.project-details .highlights {
+  margin: 8px 0 0;
+}
+.project-details .view-actions {
+  margin-top: 0;
+}
 .project-hero {
   position: relative;
+  display: block;
   width: 100%;
-  height: 170px;
-  flex: none;
+  height: 100%;
+  min-height: 0;
+  flex: 1;
+  margin: 0;
+  padding: 0;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--bd-strong);
+  background: var(--card);
   cursor: zoom-in;
 }
 .project-hero img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .highlights {
   list-style: disc;
   padding-left: 20px;
 }
-.project-pagination {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 8px;
+.resume-preview {
+  width: 100%;
+  height: min(72vh, 900px);
+  min-height: 480px;
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  background: var(--card);
 }
-.resume-sheet {
-  padding: 20px;
+.certification-list {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+.certification-file {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px 12px;
   border: 1px solid var(--bd);
   border-radius: 6px;
-  background: var(--bg);
+  text-align: left;
+  cursor: pointer;
+}
+.certification-file:hover {
+  border-color: var(--ac);
+}
+.certification-file-name {
+  color: var(--fg);
+  font-weight: 700;
+}
+.certification-file-description,
+.certification-meta dt {
+  color: var(--mut);
+  font-size: 12px;
+}
+.certification-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  margin: 0;
+}
+.certification-meta div {
+  display: grid;
+  gap: 3px;
+}
+.certification-meta dt {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.certification-meta dd {
+  margin: 0;
+}
+.certificate-pdf-preview {
+  width: 100%;
+  height: min(70vh, 860px);
+  min-height: 420px;
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  background: var(--card);
+}
+.certification-link-preview {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  background: var(--card);
+}
+.certification-link-preview p {
+  margin: 0;
 }
 .social-list {
   display: flex;
@@ -320,5 +553,28 @@ button.skill-tag:hover {
   }
   .editor-view {
     overflow: visible;
+  }
+  .about-terminal-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .about-terminal-fact {
+    min-height: 0;
+  }
+  .about-terminal-project {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .project-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .project-media-column {
+    min-height: 0;
+  }
+  .project-hero {
+    max-width: 640px;
+    height: auto;
+    flex: none;
+    aspect-ratio: 16 / 9;
+    margin: 0 auto 20px;
   }
 }

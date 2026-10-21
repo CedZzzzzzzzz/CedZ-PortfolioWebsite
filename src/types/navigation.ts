@@ -5,7 +5,9 @@ export type FileKind =
   | 'experience'
   | 'skills'
   | 'projects'
+  | 'certifications'
   | 'project'
+  | 'certification'
   | 'resume'
   | 'contact'
 

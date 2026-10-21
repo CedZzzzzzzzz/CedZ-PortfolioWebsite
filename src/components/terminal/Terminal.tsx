@@ -12,6 +12,7 @@ import { useTerminalScroll } from '../../hooks/useTerminalScroll'
 import { useMotionEnabled } from '../motion/useMotionEnabled'
 import { TerminalLine } from './TerminalLine'
 import { TerminalPrompt } from './TerminalPrompt'
+import { useTerminalSounds } from './useTerminalSounds'
 import { Icon } from '../ui/Icon'
 import './terminal.css'
 
@@ -19,6 +20,7 @@ export function Terminal({ registry }: { registry?: CommandRegistry }) {
   const terminal = useTerminal(registry)
   const animate = useMotionEnabled()
   const { focusTerminal } = useTerminalFocus()
+  const { playAction, playKey } = useTerminalSounds()
   const gathered = useRef(false)
   const seenEntries = useRef(new Set<number>())
   const [landing, setLanding] = useState<Line[]>([])
@@ -81,7 +83,12 @@ export function Terminal({ registry }: { registry?: CommandRegistry }) {
           const isNew = !seenEntries.current.has(entry.id)
           const content = (
             <>
-              {entry.input && <div className="tone-muted"><Icon name="prompt" />{entry.input}</div>}
+              {entry.input && (
+                <div className="tone-muted">
+                  <Icon name="prompt" />
+                  {entry.input}
+                </div>
+              )}
               {entry.result.lines.map((line, index) => (
                 <TerminalLine key={index} line={line} run={run} />
               ))}
@@ -104,7 +111,12 @@ export function Terminal({ registry }: { registry?: CommandRegistry }) {
           )
         })}
       </div>
-      <TerminalPrompt {...terminal} run={run} />
+      <TerminalPrompt
+        {...terminal}
+        run={run}
+        playAction={playAction}
+        playKey={playKey}
+      />
       <div className="terminal-chips" aria-label="Quick commands">
         {['help', 'ls', 'projects', 'keys'].map((command) => (
           <button key={command} onClick={() => run(command)}>

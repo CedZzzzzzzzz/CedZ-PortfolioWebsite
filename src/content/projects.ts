@@ -55,26 +55,6 @@ export const projects: Project[] = [
     links: [['Live project', 'https://quantis-f1.tech']],
   },
   {
-    id: 'crime-detection',
-    n: 'Crime Detection System',
-    d: 'An academic AI system for weapon detection and investigative support.',
-    img: '/projects/crime-detection.webp',
-    role: 'Academic project · AI/ML',
-    overview:
-      'This academic project analyzes crime scenes for weapons and threats with YOLOv8 object detection. A retrieval-augmented chatbot provides investigative assistance alongside the detections.',
-    highlights: [
-      'Detects weapons and threats with YOLOv8',
-      'Includes a retrieval-augmented chatbot for investigative assistance',
-    ],
-    t: ['React', 'Flask', 'YOLOv8', 'LangChain', 'FAISS', 'NumPy'],
-    links: [
-      [
-        'GitHub repository search',
-        'https://github.com/CedZzzzzzzzz?tab=repositories&q=crime-detection',
-      ],
-    ],
-  },
-  {
     id: 'budget-tracker',
     n: 'Budget Tracker',
     d: 'A personal expense tracker with AI-generated PDF insights.',

@@ -16,7 +16,7 @@ export function ExperienceView() {
               </p>
               <h4>{entry.t}</h4>
               <p className="view-accent">{entry.o}</p>
-              <p>{entry.d}</p>
+              <p className="experience-description">{entry.d}</p>
             </>
           )
           return animate ? (

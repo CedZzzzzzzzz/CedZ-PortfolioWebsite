@@ -44,6 +44,34 @@ const themeAliases = `
   --footer-bg: var(--bg);
 }
 
+:root[data-theme='scar'] {
+  --red: #E8002D;
+  --red-deep: #B8001E;
+  --red-glow: rgba(232, 0, 45, 0.25);
+  --bg-section: #110609;
+  --bg-section-alt: #140709;
+  --bg-card: #1E0C0E;
+  --bg-card-dark: #180A0C;
+  --text-head: hsl(30, 17%, 93%);
+  --text-body: #B0AAA5;
+  --text-muted: #6A6460;
+  --text-hero: #F5F2F0;
+  --text-hero-dim: rgba(245, 242, 240, 0.6);
+  --white: #F0EDEA;
+  --border-light: rgba(255, 255, 255, 0.07);
+  --border-red: rgba(var(--ac-rgb), 0.2);
+  --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.35);
+  --shadow-red: 0 0 30px rgba(var(--ac-rgb), 0.15);
+  --hero-card-bg: rgba(18, 5, 8, 0.78);
+  --hero-card-border: rgba(var(--ac-rgb), 0.22);
+  --hero-card-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
+  --about-photo-bg: #0A0406;
+  --project-card-bg: #2C2C2C;
+  --project-card-hover: #333333;
+  --sticky-nav-bg: rgba(13, 6, 8, 0.88);
+  --footer-bg: #080305;
+}
+
 .exp-date {
   color: var(--fg);
 }
@@ -177,7 +205,6 @@ const sectionLinks = [
 
 const projectOrder = [
   'budget-tracker',
-  'crime-detection',
   'ecobench',
   'portfolio-website',
   'quantis-f1',
@@ -450,42 +477,31 @@ export function PlainView() {
                 <br />
                 Engineer
               </h2>
-              <p>{about}</p>
+              <p>{about.intro}</p>
               <div className="about-cards" aria-label="About highlights">
                 <div className="about-card">
                   <span>Current focus</span>
-                  <strong>{profile.focus}</strong>
+                  <strong>{about.focus}</strong>
                 </div>
                 <div className="about-card">
                   <span>What I enjoy</span>
-                  <strong>
-                    Tech events, learning from other builders, and improving my
-                    work.
-                  </strong>
+                  <strong>{about.enjoy}</strong>
                 </div>
                 <div className="about-card">
                   <span>Goal</span>
-                  <strong>
-                    Build software that feels useful, reliable, and worth
-                    sharing.
-                  </strong>
+                  <strong>{about.goal}</strong>
                 </div>
               </div>
               <p>
-                I&apos;m also a big fan of technology and I like going to tech
-                events where I can meet new people and learn from what
-                they&apos;re building. Right now, I&apos;m focusing on building
-                my skills and portfolio so I can keep up with the software and
-                AI space. One project I&apos;m proud of is the{' '}
+                One project I&apos;m proud of is{' '}
                 <a
-                  href="https://quantis-f1.tech"
+                  href={about.featuredProjectUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Quantis-F1
+                  {about.featuredProjectName}
                 </a>{' '}
-                project, a real-time championship predictor for the 2026 Formula
-                1 regulation reset.
+                project. {about.featuredProject}
               </p>
               <div className="about-certs">
                 <button

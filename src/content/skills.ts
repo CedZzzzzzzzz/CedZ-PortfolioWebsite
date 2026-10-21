@@ -24,8 +24,6 @@ export const skills: SkillGroup[] = [
       'Framer Motion',
       'React Bits',
       'YOLOv8',
-      'LangChain',
-      'FAISS',
       'NumPy',
       'Pandas',
     ],

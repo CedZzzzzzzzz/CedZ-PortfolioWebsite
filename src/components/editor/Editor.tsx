@@ -9,6 +9,9 @@ import { ProjectsView } from './views/ProjectsView'
 import { ProjectView } from './views/ProjectView'
 import { ResumeView } from './views/ResumeView'
 import { ContactView } from './views/ContactView'
+import { CertificationsView } from './views/CertificationsView'
+import { CertificationView } from './views/CertificationView'
+import { certifications } from '../../content/certifications'
 import './editor.css'
 import { m } from 'framer-motion'
 import { useMotionEnabled } from '../motion/useMotionEnabled'
@@ -17,13 +20,20 @@ export function Editor() {
   const file = useActiveFile()
   const animate = useMotionEnabled()
   const project = projects.find((item) => item.id === file?.id)
+  const certification = certifications.find(
+    (item) => `certification-${item.id}` === file?.id,
+  )
   const view = file ? (
     <>
       {file.kind === 'about' && <AboutView />}
       {file.kind === 'experience' && <ExperienceView />}
       {file.kind === 'skills' && <SkillsView />}
       {file.kind === 'projects' && <ProjectsView />}
+      {file.kind === 'certifications' && <CertificationsView />}
       {file.kind === 'project' && project && <ProjectView project={project} />}
+      {file.kind === 'certification' && certification && (
+        <CertificationView certification={certification} />
+      )}
       {file.kind === 'resume' && <ResumeView />}
       {file.kind === 'contact' && <ContactView />}
     </>

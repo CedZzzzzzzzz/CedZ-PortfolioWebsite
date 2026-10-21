@@ -120,10 +120,33 @@ describe('explorer and editor', () => {
     expect(
       container.querySelector('[aria-current="page"]')?.textContent,
     ).toContain('projects/')
-    expect(container.querySelectorAll('.project-card')).toHaveLength(5)
+    expect(container.querySelectorAll('.project-card')).toHaveLength(4)
     expect(
       container.querySelector('#project-files')?.hasAttribute('hidden'),
     ).toBe(true)
+  })
+
+  it('opens certificate PDFs and verification links from the certifications folder', async () => {
+    await click(
+      container.querySelector<HTMLButtonElement>(
+        '[aria-label="Expand certifications"]',
+      )!,
+    )
+    expect(
+      container.querySelector('#certifications-files')?.hasAttribute('hidden'),
+    ).toBe(false)
+    await openFile('css-nc-ii.pdf')
+    expect(
+      container
+        .querySelector<HTMLIFrameElement>('.certificate-pdf-preview')
+        ?.getAttribute('src'),
+    ).toBe('/Certificates/CSS.pdf')
+    await openFile('python-programming.link')
+    expect(
+      container
+        .querySelector<HTMLAnchorElement>('.certification-view a.primary')
+        ?.getAttribute('href'),
+    ).toBe('https://coursera.org/share/fabf0c3097397127b88852553d8f4e47')
   })
 
   it('reuses tabs, supports keyboard selection, and closes to an empty editor', async () => {
@@ -180,7 +203,7 @@ describe('explorer and editor', () => {
     )
   })
 
-  it('renders project links, image dimensions, and previous/next navigation', async () => {
+  it('renders project links and an image without previous/next buttons', async () => {
     await openFile('ecobench.md')
     expect(container.textContent).not.toContain('Live demo')
     const link = container.querySelector<HTMLAnchorElement>('a.primary')!
@@ -193,25 +216,15 @@ describe('explorer and editor', () => {
     expect(image.height).toBe(650)
     expect(image.getAttribute('src')).toBe('/projects/ecobench.webp')
     expect(container.querySelector('input[type="file"]')).toBeNull()
-    const next = [
-      ...container.querySelectorAll<HTMLButtonElement>('button'),
-    ].find((item) => item.textContent?.includes('Quantis-F1'))!
-    await click(next)
-    expect(container.querySelector('[role="tabpanel"] h3')?.textContent).toBe(
-      'Quantis-F1',
-    )
-    const previous = [
-      ...container.querySelectorAll<HTMLButtonElement>('button'),
-    ].find((item) => item.textContent?.includes('EcoBench'))!
-    await click(previous)
-    expect(container.querySelector('[role="tabpanel"] h3')?.textContent).toBe(
-      'EcoBench',
-    )
+    expect(container.querySelector('[aria-label="Other projects"]')).toBeNull()
   })
 
   it('shows the attached resume and announces copied email', async () => {
     await openFile('resume.pdf')
     expect(container.textContent).not.toContain('no PDF attached yet')
+    expect(
+      container.querySelector<HTMLIFrameElement>('.resume-preview')?.src,
+    ).toBe(`http://localhost:3000${profile.resume}`)
     expect(container.querySelector('a[download]')?.getAttribute('href')).toBe(
       profile.resume,
     )

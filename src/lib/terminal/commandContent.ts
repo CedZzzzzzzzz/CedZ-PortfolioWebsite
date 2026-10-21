@@ -8,7 +8,7 @@ import { socials } from '../../content/socials'
 import type { CommandContent } from '../../types/command'
 
 export const commandContent: CommandContent = {
-  about,
+  about: about.intro,
   experience: portfolioExperience,
   files,
   profile,

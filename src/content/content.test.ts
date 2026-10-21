@@ -6,6 +6,7 @@ import { projects } from './projects'
 import { skills } from './skills'
 import { socials } from './socials'
 import { portfolioExperience } from './portfolioExperience'
+import { certifications } from './certifications'
 
 describe('content integrity', () => {
   it('has unique project and file IDs', () => {
@@ -21,9 +22,16 @@ describe('content integrity', () => {
     ).toEqual(projects.map(({ id }) => id))
     for (const file of files) {
       if (file.kind === 'project') expect(projectIds.has(file.id)).toBe(true)
-      else expect(file.id).toBe(file.kind)
+      else if (file.kind === 'certification') {
+        expect(file.id).toMatch(/^certification-/)
+      } else expect(file.id).toBe(file.kind)
       if (file.parentId) expect(fileIds.has(file.parentId)).toBe(true)
     }
+    expect(
+      files
+        .filter(({ kind }) => kind === 'certification')
+        .map(({ name }) => name),
+    ).toEqual(certifications.map(({ file }) => file))
   })
 
   it('uses only listed skill tags on projects', () => {
@@ -53,7 +61,6 @@ describe('content integrity', () => {
     expect(projects.map(({ id }) => id)).toEqual([
       'ecobench',
       'quantis-f1',
-      'crime-detection',
       'budget-tracker',
       'portfolio-website',
     ])

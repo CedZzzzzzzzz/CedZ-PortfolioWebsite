@@ -7,6 +7,8 @@ interface Props {
   run: (value: string) => void
   navigateHistory: (direction: -1 | 1) => void
   complete: () => void
+  playAction: () => void
+  playKey: () => void
 }
 export function TerminalPrompt({
   input,
@@ -14,6 +16,8 @@ export function TerminalPrompt({
   run,
   navigateHistory,
   complete,
+  playAction,
+  playKey,
 }: Props) {
   const { inputRef } = useTerminalFocus()
   return (
@@ -38,6 +42,15 @@ export function TerminalPrompt({
         spellCheck={false}
         onKeyDown={(event) => {
           if (event.nativeEvent.isComposing) return
+          if (event.key === 'Enter') playAction()
+          if (
+            !event.repeat &&
+            (event.key.length === 1 ||
+              event.key === 'Backspace' ||
+              event.key === 'Delete')
+          ) {
+            playKey()
+          }
           if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
             event.preventDefault()
             navigateHistory(event.key === 'ArrowUp' ? -1 : 1)

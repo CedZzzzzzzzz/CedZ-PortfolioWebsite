@@ -8,10 +8,12 @@ import { Explorer } from '../explorer/Explorer'
 import { Editor } from '../editor/Editor'
 import { Terminal } from '../terminal/Terminal'
 import { Profile } from '../profile/Profile'
+import { useTerminalSounds } from '../terminal/useTerminalSounds'
 import './layout.css'
 
 export function WorkspaceLayout() {
   const [activePane, setActivePane] = useState<string | null>(null)
+  const { playAction } = useTerminalSounds()
   const {
     sizes,
     gridRef,
@@ -27,7 +29,12 @@ export function WorkspaceLayout() {
     '--rn': sizes.rowRatio,
   } as CSSProperties
   return (
-    <div className="workspace-shell">
+    <div
+      className="workspace-shell"
+      onClickCapture={(event) => {
+        if ((event.target as HTMLElement).closest('button, a')) playAction()
+      }}
+    >
       <TopBar />
       <main className="workspace-area" aria-label="Portfolio workspace">
         <h1 className="visually-hidden">Marcus Cedric Pedrosa portfolio</h1>

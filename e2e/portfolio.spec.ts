@@ -40,9 +40,83 @@ test('landing renders and a terminal command opens a file', async ({
   await command.fill('open about')
   await command.press('Enter')
   await expect(page.getByRole('tab', { name: /about\.md/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /who_am_i/i })).toBeVisible()
   await expect(
-    page.getByRole('heading', { name: /hi, i build things end to end/i }),
+    page.getByText(/third-year computer engineering technology student/i),
   ).toBeVisible()
+  await expect(page.getByText(/machine learning/i).first()).toBeVisible()
+  await expect(
+    page.getByText(/build scalable software that feels useful/i),
+  ).toBeVisible()
+})
+
+test('opening resume displays the actual PDF in the editor', async ({
+  page,
+}) => {
+  await page.goto('/terminal')
+  const command = page.getByRole('textbox', { name: 'Terminal command' })
+  await command.fill('open resume')
+  await command.press('Enter')
+  const preview = page.getByTitle('Marcus Cedric S. Pedrosa resume PDF')
+  await expect(preview).toBeVisible()
+  await expect(preview).toHaveAttribute('src', '/CV/CV_PedrosaMarcus.pdf')
+  await expect(
+    page.getByRole('link', { name: 'Open or download resume.pdf' }),
+  ).toHaveAttribute('href', '/CV/CV_PedrosaMarcus.pdf')
+})
+
+test('certifications open PDFs and verification links inside the workspace', async ({
+  page,
+}) => {
+  await page.goto('/terminal')
+  await page.getByRole('button', { name: 'Expand certifications' }).click()
+  await page.getByRole('button', { name: /css-nc-ii\.pdf/i }).click()
+  const pdfPreview = page.getByTitle(
+    'Computer Systems Servicing NC II certificate PDF',
+  )
+  await expect(pdfPreview).toHaveAttribute('src', '/Certificates/CSS.pdf')
+  await page.getByRole('button', { name: /python-programming\.link/i }).click()
+  await expect(
+    page.getByRole('link', { name: 'Open verification page' }),
+  ).toHaveAttribute(
+    'href',
+    'https://coursera.org/share/fabf0c3097397127b88852553d8f4e47',
+  )
+})
+
+test('project preview stays contained and responsive', async ({ page }) => {
+  await page.goto('/terminal')
+  const command = page.getByRole('textbox', { name: 'Terminal command' })
+  await command.fill('open ecobench')
+  await command.press('Enter')
+  const preview = page.locator('.project-hero')
+  await expect(preview).toBeVisible()
+  await expect(preview.locator('img')).toHaveCSS('object-fit', 'contain')
+  const desktopBounds = await preview.boundingBox()
+  const desktopDetails = await page.locator('.project-details').boundingBox()
+  expect(desktopBounds).not.toBeNull()
+  expect(desktopDetails).not.toBeNull()
+  expect(
+    Math.abs(desktopBounds!.height - desktopDetails!.height),
+  ).toBeLessThanOrEqual(1)
+  expect(desktopDetails!.x).toBeGreaterThan(desktopBounds!.x)
+  await expect(
+    page.getByRole('navigation', { name: 'Other projects' }),
+  ).toHaveCount(0)
+  await page.setViewportSize({ width: 360, height: 800 })
+  const mobileBounds = await preview.boundingBox()
+  const mobileDetails = await page.locator('.project-details').boundingBox()
+  expect(mobileBounds).not.toBeNull()
+  expect(mobileDetails).not.toBeNull()
+  expect(mobileDetails!.y).toBeGreaterThan(mobileBounds!.y)
+  await expect(preview).toHaveCSS('aspect-ratio', '16 / 9')
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () => document.documentElement.scrollWidth - window.innerWidth,
+      ),
+    )
+    .toBeLessThanOrEqual(0)
 })
 
 test('launcher opens a page and restores focus to its opener', async ({
@@ -57,9 +131,7 @@ test('launcher opens a page and restores focus to its opener', async ({
   const search = page.getByRole('combobox', { name: 'Search launcher' })
   await search.fill('about')
   await search.press('Enter')
-  await expect(
-    page.getByRole('heading', { name: /hi, i build things end to end/i }),
-  ).toBeVisible()
+  await expect(page.getByRole('heading', { name: /who_am_i/i })).toBeVisible()
   await expect(launcherButton).toBeFocused()
 })
 
@@ -162,9 +234,7 @@ test('mobile layout stacks panes and opens a page without horizontal overflow', 
   await command.fill('open about')
   await command.press('Enter')
   await expect(page.getByRole('tab', { name: /about\.md/i })).toBeVisible()
-  await expect(
-    page.getByRole('heading', { name: /hi, i build things end to end/i }),
-  ).toBeVisible()
+  await expect(page.getByRole('heading', { name: /who_am_i/i })).toBeVisible()
 
   const widths = await page.evaluate(() => ({
     document: document.documentElement.scrollWidth,

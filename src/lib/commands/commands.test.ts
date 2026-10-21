@@ -11,7 +11,15 @@ import { createCommandRegistry, commandRegistry } from './registry'
 import { parseCommand } from './parseCommand'
 
 const context = {
-  content: { about, experience, files, profile, projects, skills, socials },
+  content: {
+    about: about.intro,
+    experience,
+    files,
+    profile,
+    projects,
+    skills,
+    socials,
+  },
   themes: ['dark', 'blue', 'tokyo', 'fire', 'scar'] as const,
   activeFileId: null,
 }

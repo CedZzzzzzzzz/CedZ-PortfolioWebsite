@@ -85,18 +85,18 @@
 }
 
 :root[data-theme='scar'] {
-  --bg: #0d0508;
-  --fg: #f2e8ea;
-  --mut: #a88d92;
+  --bg: #0d0608;
+  --fg: #f5f2f0;
+  --mut: #b0aaa5;
   --ac: #ff3158;
   --ac-rgb: 255, 49, 88;
-  --ac2: #ff6b81;
-  --ac2-rgb: 255, 107, 129;
-  --bd: #45101a;
+  --ac2: #d00028;
+  --ac2-rgb: 208, 0, 40;
+  --bd: #21191b;
   --bd-strong: #c22e4d;
-  --card: #16090c;
-  --ok: #ff9b9b;
-  --warn: #ffc1a8;
+  --card: #1e0c0e;
+  --ok: #8be28b;
+  --warn: #f5c542;
 }
 
 html,
