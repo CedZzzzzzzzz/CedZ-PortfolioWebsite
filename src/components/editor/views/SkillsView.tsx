@@ -13,7 +13,10 @@ export function SkillsView() {
   )
   return (
     <article className="content-view">
-      <h3>skills</h3>
+      <header className="content-view-header">
+        <h3>skills</h3>
+        <span>~/cedz-portfolio/skills.json</span>
+      </header>
       {skills.map((group) => (
         <section key={group.name}>
           <h4>{group.name}</h4>

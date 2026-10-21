@@ -108,6 +108,45 @@ it('applies effects at arrival exactly once, then honors minimum thinking time u
   ])
   expect(backend.reply).toHaveBeenCalledTimes(1)
 })
+it('shows streamed text as it arrives and waits for the final reply before effects', async () => {
+  let sendText: ((text: string) => void) | undefined
+  let finish: ((reply: ChatReply) => void) | undefined
+  backend = {
+    reply: (_question, _context, onText) => {
+      sendText = onText
+      return new Promise((resolve) => {
+        finish = resolve
+      })
+    },
+  }
+  await render()
+  await submit('Tell me about Marcus')
+  await act(async () => sendText?.('Marcus is a computer engineering'))
+  await advance(650)
+
+  expect(chat.current).toMatchObject({
+    phase: 'typing',
+    streamed: true,
+    receiving: true,
+    reply: { text: 'Marcus is a computer engineering' },
+  })
+  expect(effects).not.toHaveBeenCalled()
+
+  await act(async () =>
+    finish?.({
+      text: 'Marcus is a computer engineering student.',
+      openFile: 'about',
+    }),
+  )
+  expect(chat.current).toMatchObject({
+    streamed: true,
+    receiving: false,
+    reply: { text: 'Marcus is a computer engineering student.' },
+  })
+  expect(effects).toHaveBeenCalledExactlyOnceWith([
+    { kind: 'open', fileId: 'about' },
+  ])
+})
 it('waits for a slow backend beyond the minimum and produces friendly timeout and error replies', async () => {
   await render()
   await submit('slow')
@@ -117,6 +156,8 @@ it('waits for a slow backend beyond the minimum and produces friendly timeout an
   expect(chat.current?.phase).toBe('typing')
   await submit('timeout')
   await advance(10000)
+  expect(chat.current?.reply).toBeNull()
+  await advance(15000)
   expect(chat.current?.reply?.text).toContain('too long')
   await reply('timeout', { text: 'late', openFile: 'contact' })
   expect(chat.current?.reply?.text).not.toBe('late')
@@ -191,13 +232,57 @@ it('trims and caps input, ignores empties, and snapshots the active file', async
   await submit('  this page  ')
   settings.activeFileId = 'projects'
   await render()
-  expect(backend.reply).toHaveBeenCalledWith('this page', {
-    activeFileId: 'about',
-  })
+  expect(backend.reply).toHaveBeenCalledWith(
+    'this page',
+    {
+      activeFileId: 'about',
+      history: [],
+    },
+    expect.any(Function),
+  )
   await submit('  ' + 'x'.repeat(220) + '  ')
-  expect(backend.reply).toHaveBeenLastCalledWith('x'.repeat(200), {
-    activeFileId: 'projects',
-  })
+  expect(backend.reply).toHaveBeenLastCalledWith(
+    'x'.repeat(200),
+    {
+      activeFileId: 'projects',
+      history: [],
+    },
+    expect.any(Function),
+  )
+})
+it('keeps recent replies while Byte closes and resets them after unmount', async () => {
+  await render()
+  await submit('first question')
+  await reply('first question', { text: 'first answer' })
+  await advance(650)
+
+  settings.open = false
+  await render()
+  settings.open = true
+  await render()
+  await submit('follow-up')
+
+  expect(backend.reply).toHaveBeenLastCalledWith(
+    'follow-up',
+    {
+      activeFileId: 'about',
+      history: [{ question: 'first question', answer: 'first answer' }],
+    },
+    expect.any(Function),
+  )
+
+  await act(async () => root.unmount())
+  root = createRoot(container)
+  await render()
+  await submit('new visit')
+  expect(backend.reply).toHaveBeenLastCalledWith(
+    'new visit',
+    {
+      activeFileId: 'about',
+      history: [],
+    },
+    expect.any(Function),
+  )
 })
 it('removes artificial delay under reduced motion and pauses timers while hidden', async () => {
   settings.reducedMotion = true
@@ -211,7 +296,7 @@ it('removes artificial delay under reduced motion and pauses timers while hidden
   settings.visible = false
   await render()
   expect(vi.getTimerCount()).toBe(0)
-  await advance(11000)
+  await advance(26000)
   settings.visible = true
   await render()
   expect(chat.current?.reply?.text).toContain('too long')

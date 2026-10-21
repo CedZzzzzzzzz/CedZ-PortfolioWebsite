@@ -16,19 +16,19 @@ import { usePausableTimeout } from '../hooks/usePausableTimeout'
 import { useByteChat } from '../hooks/useByteChat'
 import { useNavigation } from '../hooks/useNavigation'
 import { executeEffects } from '../lib/effects/executeEffects'
-import { keywordBackend } from '../lib/chat/keywordBackend'
+import { byteBackend } from '../lib/chat/byteBackend'
 import type { ChatBackend } from '../types/chat'
 
 const quips = [
-  'you cannot catch me 🥷',
-  'shh… stealth mode',
-  '*tiny puff of smoke* 💨',
+  'the frost sparkles!',
+  'a tiny ice dragon says hello',
+  '*puff of icy mist*',
   'ask me something!',
 ]
 
 export function ByteProvider({
   children,
-  backend = keywordBackend,
+  backend = byteBackend,
 }: {
   children: ReactNode
   backend?: ChatBackend
@@ -144,7 +144,7 @@ export function ByteProvider({
           ? quips[Math.floor(Math.random() * quips.length)]
           : action === 'feed'
             ? 'nom nom 🍙'
-            : 'hiyah! '
+            : 'Whoosh!'
       setMessage((previous) => ({ id: previous.id + 1, text }))
     }
     send({ type: action })

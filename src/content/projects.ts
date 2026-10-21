@@ -6,7 +6,7 @@ export const projects: Project[] = [
     n: 'EcoBench',
     d: 'A solar-powered public charging station with human-powered backup.',
     img: '/projects/ecobench.webp',
-    role: 'Embedded systems + full-stack',
+    role: 'Embedded systems + backend',
     overview:
       'EcoBench is an ergonomic solar-powered charging station with a hand crank that converts human kinetic energy into stored electricity. It combines an ESP32-monitored 1280Wh LiFePO4 battery with a 300W solar array for mobile charging in public spaces.',
     highlights: [
@@ -31,7 +31,6 @@ export const projects: Project[] = [
     n: 'Quantis-F1',
     d: 'A real-time Formula 1 championship predictor with telemetry and ML.',
     img: '/projects/quantis-f1.webp',
-    year: '2026',
     role: 'Full-stack + machine learning',
     overview:
       'Quantis-F1 predicts the 2026 Formula 1 championship using live telemetry, race simulations, and machine learning. Its data pipeline connects OpenF1, Redis, WebSockets, and a React dashboard, with lap-time predictions trained on FastF1 historical data.',
@@ -76,10 +75,10 @@ export const projects: Project[] = [
     img: '/projects/portfolio-website.webp',
     role: 'Personal project',
     overview:
-      'A React and TypeScript portfolio with two ways to explore: a custom-designed website and a VS Code-inspired terminal workspace. Byte helps visitors navigate the portfolio with keyword-based replies.',
+      'A React and TypeScript portfolio with two ways to explore: a custom-designed website and a VS Code-inspired terminal workspace. Byte uses Gemini to answer questions from the portfolio and resume.',
     highlights: [
       'Custom portfolio view paired with an interactive terminal workspace',
-      'Byte answers common portfolio questions with keyword-based replies',
+      'Byte answers portfolio questions using Gemini and approved portfolio facts',
     ],
     t: [
       'React',
@@ -87,7 +86,7 @@ export const projects: Project[] = [
       'Vite',
       'Tailwind CSS',
       'Framer Motion',
-      'React Bits',
+      'Gemini API',
     ],
     links: [['Live project', 'https://marcuscedricpedrosa.dev']],
   },

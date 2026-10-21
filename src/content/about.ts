@@ -1,6 +1,6 @@
 export const about = {
   intro:
-    'I am a fourth-year Bachelor of Science Computer Engineeringstudent. I am passionate about creating useful digital solutions and solving real-world problems.',
+    'I am a fourth-year Bachelor of Science Computer Engineering student. I am passionate about creating useful digital solutions and solving real-world problems.',
   focus: 'Software development, AI concepts, and side projects.',
   enjoy:
     'Tech events, learning from other builders, and improving my own work.',

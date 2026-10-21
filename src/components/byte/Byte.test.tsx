@@ -155,6 +155,27 @@ it('opens from the handle and profile action, focuses input, and restores each o
   await click('Close Byte')
   expect(document.activeElement).toBe(button('profile opener'))
 })
+it('renders the icy popup header, pixel sprite room, suggestion chips, and chat input', async () => {
+  await mount()
+  await click('Open Byte')
+  expect(container.querySelector('#byte-heading')?.textContent).toContain(
+    '~/byte',
+  )
+  expect(container.querySelector('#byte-heading')?.textContent).toContain('pet')
+  expect(container.querySelector('.byte-gem')).not.toBeNull()
+  expect(container.querySelector('.byte-room')).not.toBeNull()
+  expect(
+    container.querySelectorAll('.byte-sprite rect').length,
+  ).toBeGreaterThan(20)
+  expect(
+    [...container.querySelectorAll('.byte-chips button')].map((chip) =>
+      chip.textContent?.trim(),
+    ),
+  ).toEqual(['about', 'projects', 'experience', 'resume', 'contact'])
+  expect(
+    container.querySelector('#byte-input')?.getAttribute('placeholder'),
+  ).toBe('ask Byte…')
+})
 it('wires terminal byte/feed/play to the real pet and supports poke particles and timed cheer', async () => {
   await mount()
   await click('byte')
@@ -163,7 +184,9 @@ it('wires terminal byte/feed/play to the real pet and supports poke particles an
   expect(container.querySelector('output')!.textContent).toContain(
     '"mode":"eating"',
   )
-  expect(container.querySelector('.byte-sprite')!.textContent).toContain('(@)')
+  expect(
+    container.querySelector('.byte-sprite')!.getAttribute('data-frame'),
+  ).toBe('eating')
   await advance(1100)
   await click('play')
   expect(container.querySelector('.byte-flip')).not.toBeNull()
@@ -206,7 +229,7 @@ it('shows text at once with reduced motion, without blink, wandering or particle
   media.matches = true
   await mount()
   await click('Open Byte')
-  expect(container.querySelector('.byte-bubble p')!.textContent).toContain(
+  expect(container.querySelector('.byte-response')!.textContent).toContain(
     'Hi, I’m Byte',
   )
   expect(vi.getTimerCount()).toBe(0)
@@ -283,19 +306,24 @@ it('applies reply effects before typing, preserves an answer during pet gestures
   await mount(backend)
   await click('Open Byte')
   await ask('  projects  ')
-  expect(backend.reply).toHaveBeenCalledExactlyOnceWith('projects', {
-    activeFileId: null,
-  })
+  expect(backend.reply).toHaveBeenCalledExactlyOnceWith(
+    'projects',
+    {
+      activeFileId: null,
+      history: [],
+    },
+    expect.any(Function),
+  )
   expect(container.querySelector('output')!.textContent).toContain(
     '"activeFileId":"projects"',
   )
-  expect(container.querySelector('.byte-bubble p')!.textContent).toBe('...')
+  expect(container.querySelector('.byte-thinking')).not.toBeNull()
   expect(button('Send').disabled).toBe(false)
   expect(button('projects').disabled).toBe(false)
   expect(container.querySelector('.byte-chat-card')).toBeNull()
   await advance(650)
   await advance(24)
-  expect(container.querySelector('.byte-bubble p')!.textContent).toBe(
+  expect(container.querySelector('.byte-response')!.textContent).toBe(
     answer.slice(0, 2),
   )
   expect(container.querySelector('[aria-live="polite"]')!.textContent).toBe('')
@@ -305,11 +333,11 @@ it('applies reply effects before typing, preserves an answer during pet gestures
   expect(container.querySelector('output')!.textContent).toContain(
     '"mode":"talking"',
   )
-  expect(container.querySelector('.byte-bubble p')!.textContent).toBe(
+  expect(container.querySelector('.byte-response')!.textContent).toBe(
     answer.slice(0, 2),
   )
   await advance(2000)
-  expect(container.querySelector('.byte-bubble p')!.textContent).toBe(answer)
+  expect(container.querySelector('.byte-response')!.textContent).toBe(answer)
   expect(container.querySelector('[aria-live="polite"]')!.textContent).toBe(
     answer,
   )
@@ -336,7 +364,7 @@ it('applies reply effects before typing, preserves an answer during pet gestures
   expect(localStorage.length).toBe(0)
   await ask('same answer')
   await advance(650)
-  expect(container.querySelector('.byte-bubble p')!.textContent).toBe('\u00a0')
+  expect(container.querySelector('.byte-response')!.textContent).toBe('\u00a0')
 })
 
 it('lets chips replace questions and ignores a stale response, including after closing', async () => {
@@ -359,7 +387,7 @@ it('lets chips replace questions and ignores a stale response, including after c
   )
   await advance(650)
   await advance(48)
-  expect(container.querySelector('.byte-bubble p')!.textContent).toBe('new')
+  expect(container.querySelector('.byte-response')!.textContent).toBe('new')
   await ask('close')
   await act(async () => {
     document.dispatchEvent(
@@ -395,11 +423,11 @@ it('uses a static pending indicator and shows a reduced-motion reply immediately
   })
   await click('Open Byte')
   await ask('simple')
-  expect(container.querySelector('.byte-bubble p')!.textContent).toBe('...')
+  expect(container.querySelector('.byte-thinking')).not.toBeNull()
   await act(async () =>
     resolve({ text: 'Here is the answer', switchToPlain: true }),
   )
-  expect(container.querySelector('.byte-bubble p')!.textContent).toBe(
+  expect(container.querySelector('.byte-response')!.textContent).toBe(
     'Here is the answer',
   )
   expect(container.querySelector('[aria-live="polite"]')!.textContent).toBe(

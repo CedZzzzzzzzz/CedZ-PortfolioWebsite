@@ -6,6 +6,9 @@
 [context.dev]
   command = "npm run build:dev"
 
+[context.dev.environment]
+  LOCAL_ORIGIN = "http://localhost:5173"
+
 [[redirects]]
   from = "/api/chat"
   to = "/.netlify/functions/chat"

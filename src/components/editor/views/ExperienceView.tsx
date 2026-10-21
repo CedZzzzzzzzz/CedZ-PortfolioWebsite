@@ -6,7 +6,10 @@ export function ExperienceView() {
   const animate = useMotionEnabled()
   return (
     <article className="content-view">
-      <h3>experience</h3>
+      <header className="content-view-header">
+        <h3>experience</h3>
+        <span>~/cedz-portfolio/experience.md</span>
+      </header>
       <ol className="timeline">
         {portfolioExperience.map((entry, index) => {
           const content = (

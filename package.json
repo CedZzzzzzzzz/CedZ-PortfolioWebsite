@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "netlify dev --offline --no-open --port 5173 --target-port 5174 --command \"npm run dev:vite\"",
+    "dev:vite": "vite --port 5174 --strictPort",
     "build": "npm run typecheck && vite build",
     "build:dev": "npm run build && node scripts/write-dev-headers.mjs",
     "preview": "vite preview",

@@ -1,43 +1,46 @@
 import { expect, it } from 'vitest'
-import { spriteFrame, type SpriteState } from './sprite'
+import { spriteFrame, spritePalette, type SpriteFrameName } from './sprite'
 import { initialPetState, petReducer } from './petReducer'
 
-it('preserves the exact neutral ASCII art with consistent padded widths', () => {
-  const lines = spriteFrame({ eyes: 'open', mouth: 'neutral' }).map((line) =>
-    line.map((part) => part.text).join(''),
-  )
-  expect(lines.map((line) => line.length)).toEqual(Array(8).fill(17))
-  expect(lines.map((line) => line.trimEnd())).toEqual([
-    '  ^    ^    ^',
-    ' /\\         /\\',
-    '/  \\_______/  \\',
-    '[=====[X]=====]~~',
-    '|   O     O   |',
-    '|    \\_v_/    |',
-    ' \\___________/',
-    '  (_)_______(_)~',
-  ])
+it('builds every pixel dragon frame on the same 24 by 22 grid', () => {
+  const names: SpriteFrameName[] = [
+    'idle',
+    'blink',
+    'happy',
+    'thinking',
+    'talk-a',
+    'talk-b',
+    'eating',
+  ]
+
+  for (const name of names) {
+    const frame = spriteFrame(name)
+    expect(frame).toHaveLength(22)
+    expect(frame.every((row) => row.length === 24)).toBe(true)
+    expect(frame.flat()).toContain('.')
+    expect(frame.flat().some((pixel) => pixel !== '.')).toBe(true)
+  }
 })
-it('renders each eye and mouth without changing widths or theme tone assignments', () => {
-  const eyes = { open: 'O', blink: '-', happy: '^' } as const
-  const mouths = {
-    neutral: '\\_v_/',
-    happy: '\\_____/',
-    'talk-open': '(O)',
-    'talk-closed': '(o)',
-    eating: '(@)',
-  } as const
-  for (const eye of Object.keys(eyes) as SpriteState['eyes'][])
-    for (const mouth of Object.keys(mouths) as SpriteState['mouth'][]) {
-      const frame = spriteFrame({ eyes: eye, mouth })
-      const lines = frame.map((line) => line.map((part) => part.text).join(''))
-      expect(lines.every((line) => line.length === 17)).toBe(true)
-      expect(lines[4]).toContain(`|   ${eyes[eye]}     ${eyes[eye]}   |`)
-      expect(lines[5]).toContain(mouths[mouth])
-      expect(frame[4][1].tone).toBe('foreground')
-      expect(frame[3][1]).toMatchObject({ tone: 'accent', scarf: true })
-      expect(frame[6][0].tone).toBe('outline')
-    }
+it('uses the mockup icy palette and gives each expression its own frame', () => {
+  expect(spritePalette).toMatchObject({
+    W: '#EAF2FA',
+    I: '#A9E8FF',
+    V: '#AFAED1',
+    F: '#344357',
+    N: '#101522',
+  })
+
+  const names: SpriteFrameName[] = [
+    'blink',
+    'happy',
+    'thinking',
+    'talk-a',
+    'talk-b',
+    'eating',
+  ]
+  for (const name of names)
+    expect(spriteFrame(name)).not.toEqual(spriteFrame('idle'))
+  expect(spriteFrame('talk-a')).not.toEqual(spriteFrame('talk-b'))
 })
 it('transitions through pet modes and ends cheer and gestures independently', () => {
   const initial = Object.freeze({ ...initialPetState })

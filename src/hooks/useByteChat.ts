@@ -14,6 +14,8 @@ export interface ByteConversation {
   question: string
   reply: ChatReply | null
   phase: 'thinking' | 'typing' | 'complete'
+  streamed: boolean
+  receiving: boolean
 }
 export interface ByteHistoryEntry {
   id: number
@@ -33,14 +35,18 @@ interface Request {
   question: string
   started: number
   reply?: ChatReply
+  streamedText: string
   presented: boolean
   complete: boolean
   timer?: ReturnType<typeof setTimeout>
 }
-const errorReply = { text: 'Sorry, I couldn’t answer that. Please try again.' }
+const errorReply = {
+  text: 'Byte AI is unavailable right now. Please try again in a moment.',
+}
 const timeoutReply = {
   text: 'That took a little too long. Please try asking again.',
 }
+const requestTimeoutMs = 25000
 
 function clearTimer(item: Request) {
   if (item.timer !== undefined) {
@@ -68,33 +74,53 @@ export function useByteChat(options: Options) {
     clearTimer(item)
     if (!valid(item) || item.complete || !latest.current.visible) return
     const elapsed = Date.now() - item.started
+    if (!item.reply && elapsed >= requestTimeoutMs) {
+      accept(item, timeoutReply)
+      return
+    }
     if (!item.reply) {
-      if (elapsed >= 10000) {
-        accept(item, timeoutReply)
+      item.timer = setTimeout(() => present(item), requestTimeoutMs - elapsed)
+    }
+    if (!item.reply && !item.streamedText) return
+    if (!item.presented) {
+      const remaining = (latest.current.reducedMotion ? 0 : 650) - elapsed
+      if (remaining > 0) {
+        clearTimer(item)
+        item.timer = setTimeout(() => present(item), remaining)
         return
       }
-      item.timer = setTimeout(() => present(item), 10000 - elapsed)
-      return
-    }
-    const remaining = (latest.current.reducedMotion ? 0 : 650) - elapsed
-    if (remaining > 0) {
-      item.timer = setTimeout(() => present(item), remaining)
-      return
-    }
-    if (!item.presented) {
       item.presented = true
-      setCurrent({
+    }
+    setCurrent((previous) => {
+      if (previous?.id !== item.id) return previous
+      return {
         id: item.id,
         question: item.question,
-        reply: item.reply,
+        reply: item.reply ?? { text: item.streamedText },
         phase: 'typing',
-      })
+        streamed: Boolean(item.streamedText),
+        receiving: !item.reply && Boolean(item.streamedText),
+      }
+    })
+  }
+  function receiveText(item: Request, text: string) {
+    if (!valid(item) || item.reply || !text) return
+    item.streamedText = text
+    if (!item.presented) {
+      present(item)
+      return
     }
+    setCurrent((previous) =>
+      previous?.id === item.id
+        ? { ...previous, reply: { text }, streamed: true, receiving: true }
+        : previous,
+    )
   }
   function accept(item: Request, reply: ChatReply) {
     if (!valid(item) || item.reply) return
     clearTimer(item)
-    item.reply = Date.now() - item.started >= 10000 ? timeoutReply : reply
+    item.reply =
+      Date.now() - item.started >= requestTimeoutMs ? timeoutReply : reply
     // Acceptance is recorded before effects so callbacks cannot apply them twice.
     latest.current.applyEffects(replyEffects(item.reply))
     if (!valid(item)) return
@@ -112,17 +138,33 @@ export function useByteChat(options: Options) {
       id: ++nextId.current,
       question,
       started: Date.now(),
+      streamedText: '',
       presented: false,
       complete: false,
     }
     request.current = item
     setAnnouncement('')
-    setCurrent({ id: item.id, question, reply: null, phase: 'thinking' })
+    setCurrent({
+      id: item.id,
+      question,
+      reply: null,
+      phase: 'thinking',
+      streamed: false,
+      receiving: false,
+    })
     present(item)
     try {
-      const result = latest.current.backend.reply(question, {
-        activeFileId: latest.current.activeFileId,
-      })
+      const result = latest.current.backend.reply(
+        question,
+        {
+          activeFileId: latest.current.activeFileId,
+          history: history.slice(-8).map(({ question, answer }) => ({
+            question,
+            answer,
+          })),
+        },
+        (text) => receiveText(item, text),
+      )
       void result.then(
         (reply) => accept(item, reply),
         () => accept(item, errorReply),
@@ -149,6 +191,8 @@ export function useByteChat(options: Options) {
       question: item.question,
       reply: item.reply,
       phase: 'complete',
+      streamed: Boolean(item.streamedText),
+      receiving: false,
     })
     setAnnouncement(item.reply.text)
   }

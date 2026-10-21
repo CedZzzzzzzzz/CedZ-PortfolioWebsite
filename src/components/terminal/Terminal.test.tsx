@@ -115,7 +115,7 @@ it('captures visitor information once even in Strict Mode, renders landing, and 
   expect(log().querySelector('.terminal-banner')?.textContent).toContain(
     '██████',
   )
-  expect(log().textContent).toContain('4 projects · 5 skill groups · 5 themes')
+  expect(log().textContent).toContain('4 projects · 4 skill groups · 5 themes')
   await act(async () =>
     container
       .querySelector<HTMLButtonElement>('[aria-label="Focus terminal"]')!
@@ -266,10 +266,23 @@ it('renders safe links and text for rejected hrefs', async () => {
   expect(container.textContent).toContain('bad')
 })
 
-it('runs the keyword backend and current Byte and plain-view seams', async () => {
+it('routes natural questions to Gemini and keeps explicit terminal actions local', async () => {
+  const fetchMock = vi.fn().mockResolvedValue(
+    new Response(
+      JSON.stringify({
+        text: 'Here are the projects.',
+        openFile: 'projects',
+        cards: [],
+      }),
+      { status: 200 },
+    ),
+  )
+  vi.stubGlobal('fetch', fetchMock)
   await mount()
   await run('ask projects')
   expect(log().textContent).toContain('Here are the projects')
+  expect(fetchMock).toHaveBeenCalledOnce()
+  expect(fetchMock.mock.calls[0][0]).toBe('/api/chat')
   expect(container.querySelector('[data-state]')!.textContent).toContain(
     '"activeFileId":"projects"',
   )
@@ -279,7 +292,7 @@ it('runs the keyword backend and current Byte and plain-view seams', async () =>
     '"byteOpen":true',
   )
   await run('play')
-  expect(log().textContent).toContain('hiyah!')
+  expect(log().textContent).toContain('Whoosh!')
   await run('byte')
   expect(container.querySelector('[data-state]')!.textContent).toContain(
     '"byteOpen":true',

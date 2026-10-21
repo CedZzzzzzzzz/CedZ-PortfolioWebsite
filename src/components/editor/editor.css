@@ -81,6 +81,20 @@
   font-weight: 700;
   margin-bottom: 6px;
 }
+.content-view-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.content-view-header h3 {
+  margin: 0;
+}
+.content-view-header span {
+  color: var(--mut);
+  font-size: 11px;
+}
 .about-terminal {
   width: min(100%, 1120px);
   margin-inline: auto;
@@ -215,13 +229,16 @@
   gap: 8px;
 }
 .view-button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   width: fit-content;
   padding: 5px 10px;
   border: 1px solid var(--bd-strong);
   border-radius: 5px;
   color: var(--fg);
   cursor: pointer;
+  white-space: nowrap;
 }
 .view-button:hover {
   border-color: var(--ac);
@@ -547,7 +564,7 @@ button.skill-tag:hover {
     opacity: 1;
   }
 }
-@media (width < 760px) {
+@media (width < 820px) {
   .pane-editor > .pane-content {
     overflow: visible;
   }

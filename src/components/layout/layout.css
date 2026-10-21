@@ -163,7 +163,7 @@
     border-color: var(--ac);
   }
 }
-@media (width < 760px) {
+@media (width < 820px) {
   .workspace-shell {
     height: auto;
     min-height: 100vh;
