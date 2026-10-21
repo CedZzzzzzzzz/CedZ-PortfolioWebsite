@@ -40,7 +40,8 @@ export function WorkspaceProvider({
 
   useEffect(() => {
     document.documentElement.dataset.theme = state.theme
-    document.documentElement.style.colorScheme = 'dark'
+    document.documentElement.style.colorScheme =
+      state.theme === 'light' ? 'light' : 'dark'
     const color = getComputedStyle(document.documentElement)
       .getPropertyValue('--bg')
       .trim()

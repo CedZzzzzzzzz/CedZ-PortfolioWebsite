@@ -6,6 +6,7 @@ import { projects } from '../../content/projects'
 import { skills } from '../../content/skills'
 import { socials } from '../../content/socials'
 import { certifications } from '../../content/certifications'
+import type { ProjectCategory } from '../../types/content'
 import { useWorkspaceState } from '../../state/useWorkspaceState'
 import { useWorkspaceDispatch } from '../../state/useWorkspaceDispatch'
 import { useNavigation } from '../../hooks/useNavigation'
@@ -303,6 +304,9 @@ export function PlainView() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [failedPhoto, setFailedPhoto] = useState('')
   const [certificatesOpen, setCertificatesOpen] = useState(false)
+  const [projectFilter, setProjectFilter] = useState<ProjectCategory | 'All'>(
+    'All',
+  )
   useDeployedStyles()
 
   const photoSrc = profileImage || profile.photo
@@ -337,6 +341,17 @@ export function PlainView() {
   const orderedProjects = projectOrder
     .map((id) => projects.find((project) => project.id === id))
     .filter((project) => project !== undefined)
+  const projectFilters: Array<ProjectCategory | 'All'> = [
+    'All',
+    'Academic',
+    'Ongoing',
+    'Personal',
+    'Completed',
+  ]
+  const filteredProjects = orderedProjects.filter(
+    (project) =>
+      projectFilter === 'All' || project.categories.includes(projectFilter),
+  )
 
   return (
     <div className="plain-page" id="plain-home">
@@ -636,8 +651,21 @@ export function PlainView() {
         <section id="plain-projects" className="projects" tabIndex={-1}>
           <div className="container">
             <h2 className="section-title">Featured Projects</h2>
+            <div className="projects-filter" aria-label="Filter projects">
+              {projectFilters.map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  className={`filter-btn${projectFilter === filter ? ' active' : ''}`}
+                  aria-pressed={projectFilter === filter}
+                  onClick={() => setProjectFilter(filter)}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
             <div className="masonry-grid">
-              {orderedProjects.map((project) => (
+              {filteredProjects.map((project) => (
                 <article className="project-card" key={project.id}>
                   <figure className="project-media">
                     <picture>
@@ -659,7 +687,13 @@ export function PlainView() {
                       />
                     </picture>
                   </figure>
-                  <span className="project-badge">{project.role}</span>
+                  <div className="project-categories" aria-label="Project categories">
+                    {project.categories[0] && (
+                      <span className="project-badge">
+                        {project.categories[0]}
+                      </span>
+                    )}
+                  </div>
                   <h3>{project.n}</h3>
                   <p>{project.overview}</p>
                   <div className="project-tags">

@@ -1,4 +1,4 @@
-export type ThemeName = 'dark' | 'blue' | 'tokyo' | 'fire' | 'scar'
+export type ThemeName = 'light' | 'dark' | 'blue' | 'tokyo' | 'fire' | 'scar'
 
 export type FileKind =
   | 'about'

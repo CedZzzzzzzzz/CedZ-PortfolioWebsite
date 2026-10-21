@@ -75,13 +75,13 @@ describe('terminal pure helpers', () => {
         city: 'Manila',
         sessionTime: '09:30',
       },
-      { projects: 8, skills: 5, themes: 5 },
+      { projects: 8, skills: 5, themes: 6 },
     )
     const text = lines
       .flat()
       .map((segment) => segment.text)
       .join('\n')
-    expect(text).toContain('8 projects · 5 skill groups · 5 themes')
+    expect(text).toContain('8 projects · 5 skill groups · 6 themes')
     expect(text).toContain('Firefox on Linux · 800×600')
     expect(text).toContain('09:30')
     expect(text).toContain('Manila')

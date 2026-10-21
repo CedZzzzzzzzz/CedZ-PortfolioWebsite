@@ -20,7 +20,7 @@ const context = {
     skills,
     socials,
   },
-  themes: ['dark', 'blue', 'tokyo', 'fire', 'scar'] as const,
+  themes: ['light', 'dark', 'blue', 'tokyo', 'fire', 'scar'] as const,
   activeFileId: null,
 }
 

@@ -39,6 +39,22 @@
   --warn: #f5c542;
 }
 
+:root[data-theme='light'] {
+  --bg: #f5f6f8;
+  --fg: #1f2937;
+  color-scheme: light;
+  --mut: #596579;
+  --ac: #111827;
+  --ac-rgb: 17, 24, 39;
+  --ac2: #374151;
+  --ac2-rgb: 55, 65, 81;
+  --bd: #858e9c;
+  --bd-strong: #697586;
+  --card: #ffffff;
+  --ok: #166534;
+  --warn: #92400e;
+}
+
 :root[data-theme='blue'] {
   --bg: #070d1f;
   --fg: #d4e4ff;

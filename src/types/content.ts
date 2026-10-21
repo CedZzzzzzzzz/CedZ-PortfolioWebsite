@@ -13,12 +13,15 @@ export interface Project {
   d: string
   img: string
   year?: string
+  categories: ProjectCategory[]
   role: string
   overview: string
   highlights: string[]
   t: string[]
   links: [label: string, url: string][]
 }
+
+export type ProjectCategory = 'Academic' | 'Ongoing' | 'Personal' | 'Completed'
 
 export interface Experience {
   k: string

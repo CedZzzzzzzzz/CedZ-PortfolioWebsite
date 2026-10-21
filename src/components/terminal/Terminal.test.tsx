@@ -115,7 +115,7 @@ it('captures visitor information once even in Strict Mode, renders landing, and 
   expect(log().querySelector('.terminal-banner')?.textContent).toContain(
     '██████',
   )
-  expect(log().textContent).toContain('4 projects · 4 skill groups · 5 themes')
+  expect(log().textContent).toContain('4 projects · 4 skill groups · 6 themes')
   await act(async () =>
     container
       .querySelector<HTMLButtonElement>('[aria-label="Focus terminal"]')!
