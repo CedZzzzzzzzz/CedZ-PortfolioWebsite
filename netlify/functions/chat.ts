@@ -10,10 +10,41 @@ const ALLOWED_ORIGINS = [
   process.env.LOCAL_ORIGIN ?? '',
 ].filter(Boolean)
 
-function getCorsHeaders(origin: string | undefined): Record<string, string> {
-  const allowedOrigin = ALLOWED_ORIGINS.includes(origin ?? '')
-    ? (origin as string)
-    : ALLOWED_ORIGINS[0] ?? ''
+function getRequestOrigin(
+  headers: Record<string, string | undefined>,
+): string | undefined {
+  const host = headers.host ?? headers['x-forwarded-host']
+  if (!host) return undefined
+
+  const normalizedHost = host.split(',')[0].trim()
+  const protocol =
+    headers['x-forwarded-proto'] ??
+    (normalizedHost.startsWith('localhost:') ||
+    normalizedHost.startsWith('127.0.0.1:')
+      ? 'http'
+      : 'https')
+  return `${protocol}://${normalizedHost}`
+}
+
+function isAllowedOrigin(
+  origin: string | undefined,
+  requestOrigin: string | undefined,
+): boolean {
+  return (
+    !origin ||
+    ALLOWED_ORIGINS.includes(origin) ||
+    origin === requestOrigin
+  )
+}
+
+function getCorsHeaders(
+  origin: string | undefined,
+  requestOrigin: string | undefined,
+): Record<string, string> {
+  const allowedOrigin =
+    origin && isAllowedOrigin(origin, requestOrigin)
+      ? origin
+      : ALLOWED_ORIGINS[0] ?? ''
 
   return {
     'Access-Control-Allow-Origin': allowedOrigin,
@@ -43,12 +74,13 @@ export const config: Config = {
 
 export const handler = stream(async (event) => {
   const origin = event.headers.origin
-  const corsHeaders = getCorsHeaders(origin)
+  const requestOrigin = getRequestOrigin(event.headers)
+  const corsHeaders = getCorsHeaders(origin, requestOrigin)
 
   if (event.httpMethod === 'OPTIONS')
     return { statusCode: 204, headers: corsHeaders, body: '' }
 
-  if (origin && !ALLOWED_ORIGINS.includes(origin))
+  if (!isAllowedOrigin(origin, requestOrigin))
     return jsonResponse(403, { error: 'Forbidden' }, corsHeaders)
 
   if (event.httpMethod !== 'POST')
