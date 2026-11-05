@@ -249,6 +249,7 @@ const sectionLinks = [
 ] as const
 
 const projectOrder = [
+  'hackathons-ph',
   'budget-tracker',
   'ecobench',
   'portfolio-website',
@@ -642,9 +643,6 @@ export function PlainView() {
                       </span>
                     </div>
                     <p className="exp-desc">{entry.d}</p>
-                    <div className="exp-tags">
-                      <span className="exp-tag">{entry.k}</span>
-                    </div>
                   </article>
                 </div>
               ))}

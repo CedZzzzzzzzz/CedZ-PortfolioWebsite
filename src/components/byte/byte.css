@@ -9,6 +9,23 @@
   --byte-bubble: var(--card, #161d30);
 }
 
+:root[data-theme='light'] .byte-panel,
+:root[data-theme='light'] .byte-handle {
+  --byte-ink: var(--fg);
+  --byte-ice: #0369a1;
+  --byte-violet: var(--mut);
+  --byte-frost: var(--bd);
+  --byte-control: var(--bd-strong);
+}
+
+:root[data-theme='light'] .byte-panel {
+  box-shadow: 0 12px 40px #1f293726;
+}
+
+:root[data-theme='light'] .byte-input input:focus-visible {
+  box-shadow: 0 0 0 2px var(--byte-ice);
+}
+
 .byte-panel {
   position: fixed;
   z-index: 20;

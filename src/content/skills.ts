@@ -18,6 +18,8 @@ export const skills: SkillGroup[] = [
   {
     name: 'Frameworks & Libraries',
     tags: [
+      'Next.js',
+      'Zod',
       'Flask',
       'FastAPI',
       'Framer Motion',
@@ -42,6 +44,12 @@ export const skills: SkillGroup[] = [
       'Resend',
       'Gemini API',
       'Netlify Functions',
+      'Vercel',
+      'Cloudflare R2',
+      'n8n',
+      'Vitest',
+      'GitHub Actions',
+      'Claude Code',
       'Docker',
       'Git',
       'GitHub',

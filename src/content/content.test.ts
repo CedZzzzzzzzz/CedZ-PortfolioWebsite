@@ -61,6 +61,7 @@ describe('content integrity', () => {
     expect(projects.map(({ id }) => id)).toEqual([
       'ecobench',
       'quantis-f1',
+      'hackathons-ph',
       'budget-tracker',
       'portfolio-website',
     ])

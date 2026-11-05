@@ -120,7 +120,7 @@ describe('explorer and editor', () => {
     expect(
       container.querySelector('[aria-current="page"]')?.textContent,
     ).toContain('projects/')
-    expect(container.querySelectorAll('.project-card')).toHaveLength(4)
+    expect(container.querySelectorAll('.project-card')).toHaveLength(5)
     expect(
       container.querySelector('#project-files')?.hasAttribute('hidden'),
     ).toBe(true)

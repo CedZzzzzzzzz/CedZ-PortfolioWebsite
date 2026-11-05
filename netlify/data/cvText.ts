@@ -6,8 +6,8 @@ GitHub: github.com/CedZzzzzzzzz
 
 Education
 Polytechnic University of the Philippines, Sta. Mesa, Manila
-Diploma in Computer Engineering Technology, specializing in Machine Learning
-2023–Present
+Diploma in Computer Engineering Technology, specializing in Machine Learning, 2023–2026
+Bachelor of Science in Computer Engineering, 2026–Present
 Relevant coursework: Operating Systems, Software Development, Artificial Intelligence
 
 Experience
@@ -38,7 +38,7 @@ Budget Tracker Website
 Technical skills listed on the resume
 Frontend: HTML, Tailwind CSS, JavaScript, React, TypeScript
 Backend and database: Next.js, Python, Java, NumPy, Pandas, PostgreSQL, Flask, FastAPI, REST API, OpenAI API, Gemini API
-Tools: Git, GitHub, Docker, Postman, n8n
+Tools: Git, GitHub, Docker, Postman, n8n, Resend, Claude Code, Vercel, Fly.io
 
 Certifications
 Computer Systems Servicing NC II — TESDA, September 2024

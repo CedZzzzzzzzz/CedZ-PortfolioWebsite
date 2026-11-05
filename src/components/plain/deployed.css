@@ -1114,7 +1114,7 @@ body {
 .filter-btn.active {
     background: var(--red);
     border-color: var(--red);
-    color: #fff;
+    color: var(--bg);
     box-shadow: 0 0 16px var(--red-glow);
 }
 
@@ -1451,7 +1451,7 @@ body {
 .footer-socials .social-btn:hover {
     background: var(--red);
     border-color: var(--red);
-    color: #fff;
+    color: var(--bg);
     box-shadow: 0 0 14px var(--red-glow);
 }
 
@@ -1540,7 +1540,7 @@ body {
 
 .sticky-nav-link.active {
     background: var(--red);
-    color: #fff;
+    color: var(--bg);
     box-shadow: 0 0 12px var(--red-glow);
 }
 
