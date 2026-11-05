@@ -51,4 +51,4 @@ Opening `index.html` directly also works for basic viewing, but a local server i
 
 ## Deployment
 
-This is a static site and can be deployed to Netlify, Vercel, GitHub Pages, or any static hosting provider. Publish the repository root as the site directory; no build command is needed. Before choosing a production domain, update canonical/SEO metadata, `robots.txt`, and `sitemap.xml` when those features are added.
+This is a static site and can be deployed to Netlify, Vercel, GitHub Pages, or any static hosting provider. Publish the repository root as the site directory; no build command is needed. Before choosing a production domain, update canonical/SEO metadata, `robots.txt`, and `sitemap.xml` when those features are added..

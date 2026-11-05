@@ -1,0 +1,55 @@
+.explorer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tree-root {
+  color: var(--fg);
+}
+.tree-root .portfolio-icon {
+  vertical-align: -3px;
+}
+.file-tree,
+.file-tree ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.file-tree ul {
+  padding-left: 18px;
+}
+.file-row {
+  display: flex;
+  align-items: center;
+}
+.file-button {
+  text-align: left;
+  width: 100%;
+  padding: 5px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.file-button .portfolio-icon {
+  vertical-align: -3px;
+  color: var(--mut);
+}
+.file-button:hover,
+.file-button[aria-current='page'] {
+  background: var(--bg);
+  background: color-mix(in srgb, var(--ac) 12%, transparent);
+  color: var(--ac);
+}
+.folder-arrow {
+  flex: none;
+  width: 20px;
+  cursor: pointer;
+}
+.folder-arrow .portfolio-icon {
+  vertical-align: -3px;
+}
+.explorer-hint {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--mut);
+}

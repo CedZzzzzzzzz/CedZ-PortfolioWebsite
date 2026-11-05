@@ -1,8 +1,25 @@
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
   functions = "netlify/functions"
+
+[context.dev]
+  command = "npm run build:dev"
+
+[context.dev.environment]
+  LOCAL_ORIGIN = "http://localhost:5173"
 
 [[redirects]]
   from = "/api/chat"
   to = "/.netlify/functions/chat"
   status = 200
+
+[[redirects]]
+  from = "/terminal"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
