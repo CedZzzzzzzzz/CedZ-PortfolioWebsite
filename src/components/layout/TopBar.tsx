@@ -40,7 +40,8 @@ export function TopBar() {
           className="file-path"
           title={`~/cedz-portfolio/${file?.name ?? ''}`}
         >
-          ~/cedz-portfolio/{file?.name ?? ''}
+          <span className="desktop-label">~/cedz-portfolio/</span>
+          {file?.name ?? ''}
         </span>
       </div>
       <time dateTime={now.toISOString()}>
@@ -50,12 +51,15 @@ export function TopBar() {
         <button
           type="button"
           aria-pressed={plainView}
+          aria-label={plainView ? 'Terminal view' : 'Portfolio view'}
           onClick={() =>
             dispatch({ type: 'set-plain-view', enabled: !plainView })
           }
         >
-          <Icon name={plainView ? 'return' : 'menu'} />{' '}
-          {plainView ? 'Terminal' : 'Portfolio view'}
+          <Icon name={plainView ? 'return' : 'menu'} />
+          <span className="bar-label">
+            {plainView ? 'Terminal' : 'Portfolio view'}
+          </span>
         </button>
         <span className="desktop-label">{themeNames[theme]}</span>
         <span className="desktop-label shortcut-hint">

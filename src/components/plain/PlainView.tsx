@@ -1,7 +1,6 @@
 import { useEffect, useState, type MouseEvent } from 'react'
 import { profile } from '../../content/profile'
 import { about } from '../../content/about'
-import { portfolioExperience } from '../../content/portfolioExperience'
 import { projects } from '../../content/projects'
 import { skills } from '../../content/skills'
 import { socials } from '../../content/socials'
@@ -11,6 +10,15 @@ import { useWorkspaceState } from '../../state/useWorkspaceState'
 import { useWorkspaceDispatch } from '../../state/useWorkspaceDispatch'
 import { useNavigation } from '../../hooks/useNavigation'
 import { ThemeModal } from './ThemeModal'
+import { socialIcons } from './socialIcons'
+import { PlainFooter } from './PlainFooter'
+import { CertificationGrid } from './CertificationGrid'
+import { ExperienceTimeline } from './ExperienceTimeline'
+import { MobileHero } from './mobile/MobileHero'
+import { MobileSectionNav } from './mobile/MobileSectionNav'
+import { MobileProjects } from './mobile/MobileProjects'
+import { MobileSkills } from './mobile/MobileSkills'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { Icon } from '../ui/Icon'
 import { resolveProjectImage } from '../../lib/projectImage'
 import { gmailComposeUrl } from '../../lib/gmail'
@@ -115,10 +123,6 @@ const themeAliases = `
   --project-card-hover: #333333;
   --sticky-nav-bg: rgba(13, 6, 8, 0.88);
   --footer-bg: #080305;
-}
-
-.exp-date {
-  color: var(--fg);
 }
 
 .plain-page .plain-interactive-toggle {
@@ -256,13 +260,6 @@ const projectOrder = [
   'quantis-f1',
 ]
 
-const socialIcons: Record<string, string> = {
-  GitHub: 'fab fa-github',
-  LinkedIn: 'fab fa-linkedin-in',
-  Facebook: 'fab fa-facebook-f',
-  Instagram: 'fab fa-instagram',
-}
-
 function useDeployedStyles() {
   useEffect(() => {
     const style = document.createElement('style')
@@ -310,6 +307,7 @@ export function PlainView() {
   const [projectFilter, setProjectFilter] = useState<ProjectCategory | 'All'>(
     'All',
   )
+  const isMobile = useMediaQuery('(max-width: 768px)')
   useDeployedStyles()
 
   const photoSrc = profileImage || profile.photo
@@ -357,179 +355,195 @@ export function PlainView() {
   )
 
   return (
-    <div className="plain-page" id="plain-home">
-      <nav
-        className={`sticky-nav${showStickyNav ? ' visible' : ''}`}
-        aria-label="Section navigation"
-      >
-        {[
-          ['home', 'Home'],
-          ...sectionLinks.filter(([id]) => id !== 'contact'),
-        ].map(([id, label]) => (
-          <a
-            key={id}
-            href={`#${id === 'home' ? 'plain-home' : `plain-${id}`}`}
-            className="sticky-nav-link"
-            onClick={(event) => openSection(event, id)}
+    <div
+      className={`plain-page${isMobile ? ' is-mobile' : ''}`}
+      id="plain-home"
+    >
+      {isMobile ? (
+        <MobileHero />
+      ) : (
+        <>
+          <nav
+            className={`sticky-nav${showStickyNav ? ' visible' : ''}`}
+            aria-label="Section navigation"
           >
-            {label}
-          </a>
-        ))}
-      </nav>
-
-      <section className="hero">
-        <div className="hero-card">
-          <nav className="nav-bar" aria-label="Primary">
-            <button
-              className="hamburger"
-              type="button"
-              aria-label="Toggle menu"
-              aria-controls="plain-nav-menu"
-              aria-expanded={mobileMenuOpen}
-              onClick={() => setMobileMenuOpen((open) => !open)}
-            >
-              <span />
-              <span />
-              <span />
-            </button>
-            <ul
-              className={`nav-menu${mobileMenuOpen ? ' active' : ''}`}
-              id="plain-nav-menu"
-            >
-              {[
-                ['home', 'Home'],
-                ...sectionLinks.filter(([id]) => id !== 'contact'),
-              ].map(([id, label]) => (
-                <li key={id}>
-                  <a
-                    href={`#${id === 'home' ? 'plain-home' : `plain-${id}`}`}
-                    className="nav-link"
-                    onClick={(event) => openSection(event, id)}
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <div className="contact">
+            {[
+              ['home', 'Home'],
+              ...sectionLinks.filter(([id]) => id !== 'contact'),
+            ].map(([id, label]) => (
               <a
-                href={emailUrl ? gmailComposeUrl(emailUrl) : undefined}
-                className="btn-resume"
-                aria-label="Email (opens Gmail in a new tab)"
-                target="_blank"
-                rel="noopener noreferrer"
+                key={id}
+                href={`#${id === 'home' ? 'plain-home' : `plain-${id}`}`}
+                className="sticky-nav-link"
+                onClick={(event) => openSection(event, id)}
               >
-                <i className="fas fa-envelope" aria-hidden="true" />
+                {label}
               </a>
-              <a
-                href={resumeUrl || profile.resume}
-                target={resumeUrl || profile.resume ? '_blank' : undefined}
-                rel={
-                  resumeUrl || profile.resume
-                    ? 'noopener noreferrer'
-                    : undefined
-                }
-                className="btn-resume"
-                aria-label="View CV PDF"
-              >
-                <i className="fas fa-file-alt" aria-hidden="true" />
-              </a>
-              <ThemeModal />
-              <button
-                className="btn-resume plain-interactive-toggle"
-                type="button"
-                aria-label="Back to terminal view"
-                title="Back to terminal view"
-                onClick={() =>
-                  dispatch({ type: 'set-plain-view', enabled: false })
-                }
-              >
-                <i className="fas fa-terminal" aria-hidden="true" />
-                <span className="plain-control-label">Terminal</span>
-              </button>
-            </div>
+            ))}
           </nav>
 
-          <div className="hero-inner">
-            <div className="hero-copy">
-              <p className="hero-eyebrow">Hi, I&apos;m</p>
-              <h1 className="hero-title">
-                <span className="hero-name">{profile.name}</span>
-              </h1>
-              <p className="hero-subtitle">
-                I am a <span className="hero-highlight">{profile.role}</span>
-              </p>
-              <div className="social-row" aria-label="Social links">
-                {socials
-                  .filter(
-                    (social) => social.label !== 'Email' && social.url.trim(),
-                  )
-                  .map((social) => (
-                    <a
-                      key={social.label}
-                      href={social.url}
-                      className="social-btn"
-                      aria-label={social.label}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i
-                        className={socialIcons[social.label] || 'fas fa-link'}
-                        aria-hidden="true"
-                      />
-                      <span className="visually-hidden">{social.label}</span>
-                    </a>
+          <section className="hero">
+            <div className="hero-card">
+              <nav className="nav-bar" aria-label="Primary">
+                <button
+                  className="hamburger"
+                  type="button"
+                  aria-label="Toggle menu"
+                  aria-controls="plain-nav-menu"
+                  aria-expanded={mobileMenuOpen}
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                >
+                  <span />
+                  <span />
+                  <span />
+                </button>
+                <ul
+                  className={`nav-menu${mobileMenuOpen ? ' active' : ''}`}
+                  id="plain-nav-menu"
+                >
+                  {[
+                    ['home', 'Home'],
+                    ...sectionLinks.filter(([id]) => id !== 'contact'),
+                  ].map(([id, label]) => (
+                    <li key={id}>
+                      <a
+                        href={`#${id === 'home' ? 'plain-home' : `plain-${id}`}`}
+                        className="nav-link"
+                        onClick={(event) => openSection(event, id)}
+                      >
+                        {label}
+                      </a>
+                    </li>
                   ))}
-              </div>
-            </div>
-
-            <div className="hero-visual">
-              <div className="hero-photo-wrap">
-                <div className="hero-photo-inner">
-                  <picture>
-                    {!profileImage && (
-                      <>
-                        <source
-                          type="image/avif"
-                          srcSet="/Myself_Pics/marcus-pedrosa-portrait-480.avif 480w, /Myself_Pics/marcus-pedrosa-portrait-960.avif 960w"
-                          sizes="(max-width: 480px) 240px, (max-width: 1024px) 280px, 300px"
-                        />
-                        <source
-                          type="image/webp"
-                          srcSet="/Myself_Pics/marcus-pedrosa-portrait-480.webp 480w, /Myself_Pics/marcus-pedrosa-portrait-960.webp 960w"
-                          sizes="(max-width: 480px) 240px, (max-width: 1024px) 280px, 300px"
-                        />
-                      </>
-                    )}
-                    <img
-                      src={photoSrc}
-                      alt={profile.name}
-                      className="hero-photo"
-                      width="960"
-                      height="1080"
-                      decoding="async"
-                      fetchPriority="high"
-                      style={{
-                        display: failedPhoto === photoSrc ? 'none' : undefined,
-                      }}
-                      onError={() => setFailedPhoto(photoSrc)}
-                    />
-                  </picture>
-                  <div
-                    className="hero-photo-placeholder"
-                    aria-hidden="true"
-                    style={{
-                      display: failedPhoto === photoSrc ? 'flex' : 'none',
-                    }}
+                </ul>
+                <div className="contact">
+                  <a
+                    href={emailUrl ? gmailComposeUrl(emailUrl) : undefined}
+                    className="btn-resume"
+                    aria-label="Email (opens Gmail in a new tab)"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    MP
+                    <i className="fas fa-envelope" aria-hidden="true" />
+                  </a>
+                  <a
+                    href={resumeUrl || profile.resume}
+                    target={resumeUrl || profile.resume ? '_blank' : undefined}
+                    rel={
+                      resumeUrl || profile.resume
+                        ? 'noopener noreferrer'
+                        : undefined
+                    }
+                    className="btn-resume"
+                    aria-label="View CV PDF"
+                  >
+                    <i className="fas fa-file-alt" aria-hidden="true" />
+                  </a>
+                  <ThemeModal />
+                  <button
+                    className="btn-resume plain-interactive-toggle"
+                    type="button"
+                    aria-label="Back to terminal view"
+                    title="Back to terminal view"
+                    onClick={() =>
+                      dispatch({ type: 'set-plain-view', enabled: false })
+                    }
+                  >
+                    <i className="fas fa-terminal" aria-hidden="true" />
+                    <span className="plain-control-label">Terminal</span>
+                  </button>
+                </div>
+              </nav>
+
+              <div className="hero-inner">
+                <div className="hero-copy">
+                  <p className="hero-eyebrow">Hi, I&apos;m</p>
+                  <h1 className="hero-title">
+                    <span className="hero-name">{profile.name}</span>
+                  </h1>
+                  <p className="hero-subtitle">
+                    I am a{' '}
+                    <span className="hero-highlight">{profile.role}</span>
+                  </p>
+                  <div className="social-row" aria-label="Social links">
+                    {socials
+                      .filter(
+                        (social) =>
+                          social.label !== 'Email' && social.url.trim(),
+                      )
+                      .map((social) => (
+                        <a
+                          key={social.label}
+                          href={social.url}
+                          className="social-btn"
+                          aria-label={social.label}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <i
+                            className={
+                              socialIcons[social.label] || 'fas fa-link'
+                            }
+                            aria-hidden="true"
+                          />
+                          <span className="visually-hidden">
+                            {social.label}
+                          </span>
+                        </a>
+                      ))}
+                  </div>
+                </div>
+
+                <div className="hero-visual">
+                  <div className="hero-photo-wrap">
+                    <div className="hero-photo-inner">
+                      <picture>
+                        {!profileImage && (
+                          <>
+                            <source
+                              type="image/avif"
+                              srcSet="/Myself_Pics/marcus-pedrosa-portrait-480.avif 480w, /Myself_Pics/marcus-pedrosa-portrait-960.avif 960w"
+                              sizes="(max-width: 480px) 240px, (max-width: 1024px) 280px, 300px"
+                            />
+                            <source
+                              type="image/webp"
+                              srcSet="/Myself_Pics/marcus-pedrosa-portrait-480.webp 480w, /Myself_Pics/marcus-pedrosa-portrait-960.webp 960w"
+                              sizes="(max-width: 480px) 240px, (max-width: 1024px) 280px, 300px"
+                            />
+                          </>
+                        )}
+                        <img
+                          src={photoSrc}
+                          alt={profile.name}
+                          className="hero-photo"
+                          width="960"
+                          height="1080"
+                          decoding="async"
+                          fetchPriority="high"
+                          style={{
+                            display:
+                              failedPhoto === photoSrc ? 'none' : undefined,
+                          }}
+                          onError={() => setFailedPhoto(photoSrc)}
+                        />
+                      </picture>
+                      <div
+                        className="hero-photo-placeholder"
+                        aria-hidden="true"
+                        style={{
+                          display: failedPhoto === photoSrc ? 'flex' : 'none',
+                        }}
+                      >
+                        MP
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        </>
+      )}
 
       <main id="plain-main">
         <section id="plain-about" className="about" tabIndex={-1}>
@@ -574,7 +588,10 @@ export function PlainView() {
                   aria-controls="plain-certifications"
                   onClick={() => setCertificatesOpen((open) => !open)}
                 >
-                  <span>Certifications</span>
+                  <span>
+                    Certifications{' '}
+                    <span className="cert-count">{certifications.length}</span>
+                  </span>
                   <i
                     className="fas fa-chevron-down certs-chevron"
                     aria-hidden="true"
@@ -585,32 +602,7 @@ export function PlainView() {
                   id="plain-certifications"
                   hidden={!certificatesOpen}
                 >
-                  <div className="cert-list-scroll">
-                    {certifications.map((certification) => (
-                      <article className="cert-item" key={certification.name}>
-                        <p className="cert-name">
-                          <a
-                            href={certification.url}
-                            target={
-                              certification.url.startsWith('http')
-                                ? '_blank'
-                                : undefined
-                            }
-                            rel={
-                              certification.url.startsWith('http')
-                                ? 'noopener noreferrer'
-                                : undefined
-                            }
-                          >
-                            {certification.name}
-                          </a>
-                        </p>
-                        <p className="cert-issuer">
-                          {certification.issuer} · {certification.date}
-                        </p>
-                      </article>
-                    ))}
-                  </div>
+                  <CertificationGrid />
                 </div>
               </div>
             </div>
@@ -618,170 +610,123 @@ export function PlainView() {
           <div className="about-bottom-lines" />
         </section>
 
-        <section id="plain-experience" className="experience" tabIndex={-1}>
-          <div className="container">
-            <h2 className="section-title">Experience</h2>
-            <div className="exp-timeline">
-              {portfolioExperience.map((entry, index) => (
-                <div className="exp-item" key={`${entry.t}-${entry.o}`}>
-                  <div className="exp-marker" aria-hidden="true">
-                    <div className="exp-dot" />
-                    {index < portfolioExperience.length - 1 && (
-                      <div className="exp-line" />
-                    )}
-                  </div>
-                  <article className="exp-card">
-                    <div className="exp-header">
-                      <div>
-                        <h3 className="exp-role">
-                          <em>{entry.t}</em>
-                        </h3>
-                        <p className="exp-company">{entry.o}</p>
-                      </div>
-                      <span className="exp-date" style={{ color: 'var(--fg)' }}>
-                        {entry.w}
-                      </span>
-                    </div>
-                    <p className="exp-desc">{entry.d}</p>
-                  </article>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ExperienceTimeline />
 
-        <section id="plain-projects" className="projects" tabIndex={-1}>
-          <div className="container">
-            <h2 className="section-title">Featured Projects</h2>
-            <div className="projects-filter" aria-label="Filter projects">
-              {projectFilters.map((filter) => (
-                <button
-                  key={filter}
-                  type="button"
-                  className={`filter-btn${projectFilter === filter ? ' active' : ''}`}
-                  aria-pressed={projectFilter === filter}
-                  onClick={() => setProjectFilter(filter)}
-                >
-                  {filter}
-                </button>
-              ))}
-            </div>
-            <div className="masonry-grid">
-              {filteredProjects.map((project) => (
-                <article className="project-card" key={project.id}>
-                  <figure className="project-media">
-                    <picture>
-                      <source
-                        type="image/avif"
-                        srcSet={`/projects/${project.id}.avif`}
-                      />
-                      <img
-                        src={resolveProjectImage(
-                          project,
-                          projectImages[project.id],
-                        )}
-                        alt={`${project.n} project preview`}
-                        className="project-screenshot"
-                        width="1200"
-                        height="600"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
-                  </figure>
-                  <div className="project-categories" aria-label="Project categories">
-                    {project.categories[0] && (
-                      <span className="project-badge">
-                        {project.categories[0]}
-                      </span>
-                    )}
-                  </div>
-                  <h3>{project.n}</h3>
-                  <p>{project.overview}</p>
-                  <div className="project-tags">
-                    {project.t.map((tag) => (
-                      <span className="tag" key={tag}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  {project.links
-                    .filter(([, url]) => url.trim())
-                    .map(([label, url]) => (
-                      <a
-                        key={label}
-                        href={url}
-                        className="project-link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {label} <Icon name="external" />
-                        <span className="visually-hidden">
-                          {' '}
-                          (opens in a new tab)
+        {isMobile ? (
+          <MobileProjects projects={orderedProjects} filters={projectFilters} />
+        ) : (
+          <section id="plain-projects" className="projects" tabIndex={-1}>
+            <div className="container">
+              <h2 className="section-title">Featured Projects</h2>
+              <div className="projects-filter" aria-label="Filter projects">
+                {projectFilters.map((filter) => (
+                  <button
+                    key={filter}
+                    type="button"
+                    className={`filter-btn${projectFilter === filter ? ' active' : ''}`}
+                    aria-pressed={projectFilter === filter}
+                    onClick={() => setProjectFilter(filter)}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
+              <div className="masonry-grid">
+                {filteredProjects.map((project) => (
+                  <article className="project-card" key={project.id}>
+                    <figure className="project-media">
+                      <picture>
+                        <source
+                          type="image/avif"
+                          srcSet={`/projects/${project.id}.avif`}
+                        />
+                        <img
+                          src={resolveProjectImage(
+                            project,
+                            projectImages[project.id],
+                          )}
+                          alt={`${project.n} project preview`}
+                          className="project-screenshot"
+                          width="1200"
+                          height="600"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </figure>
+                    <div
+                      className="project-categories"
+                      aria-label="Project categories"
+                    >
+                      {project.categories[0] && (
+                        <span className="project-badge">
+                          {project.categories[0]}
                         </span>
-                      </a>
-                    ))}
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="plain-skills" className="skills" tabIndex={-1}>
-          <div className="container">
-            <h2 className="section-title">Skills</h2>
-            <div className="skills-wrap">
-              <p className="skills-wrap-title">Tech Stack</p>
-              <div className="skills-grid">
-                {skills.map((group) => (
-                  <div className="skill-category" key={group.name}>
-                    <h3>{group.name}</h3>
-                    <div className="skill-list">
-                      {group.tags.map((tag) => (
-                        <span className="skill-badge" key={tag}>
+                      )}
+                    </div>
+                    <h3>{project.n}</h3>
+                    <p>{project.overview}</p>
+                    <div className="project-tags">
+                      {project.t.map((tag) => (
+                        <span className="tag" key={tag}>
                           {tag}
                         </span>
                       ))}
                     </div>
-                  </div>
+                    {project.links
+                      .filter(([, url]) => url.trim())
+                      .map(([label, url]) => (
+                        <a
+                          key={label}
+                          href={url}
+                          className="project-link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {label} <Icon name="external" />
+                          <span className="visually-hidden">
+                            {' '}
+                            (opens in a new tab)
+                          </span>
+                        </a>
+                      ))}
+                  </article>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
+
+        {isMobile ? (
+          <MobileSkills />
+        ) : (
+          <section id="plain-skills" className="skills" tabIndex={-1}>
+            <div className="container">
+              <h2 className="section-title">Skills</h2>
+              <div className="skills-wrap">
+                <p className="skills-wrap-title">Tech Stack</p>
+                <div className="skills-grid">
+                  {skills.map((group) => (
+                    <div className="skill-category" key={group.name}>
+                      <h3>{group.name}</h3>
+                      <div className="skill-list">
+                        {group.tags.map((tag) => (
+                          <span className="skill-badge" key={tag}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
       </main>
 
-      <footer id="plain-contact" className="footer" tabIndex={-1}>
-        <div className="container">
-          <h2 className="visually-hidden">Contact</h2>
-          <div className="footer-socials">
-            {socials
-              .filter((social) => social.url.trim())
-              .map((social) => (
-                <a
-                  key={social.label}
-                  href={
-                    social.url.startsWith('mailto:')
-                      ? gmailComposeUrl(social.url)
-                      : social.url
-                  }
-                  className="social-btn"
-                  aria-label={`${social.label} (opens in a new tab)`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i
-                    className={socialIcons[social.label] || 'fas fa-envelope'}
-                    aria-hidden="true"
-                  />
-                  <span className="visually-hidden">{social.label}</span>
-                </a>
-              ))}
-          </div>
-          <p>&copy; {profile.name}</p>
-        </div>
-      </footer>
+      <PlainFooter />
+      {isMobile && <MobileSectionNav />}
     </div>
   )
 }

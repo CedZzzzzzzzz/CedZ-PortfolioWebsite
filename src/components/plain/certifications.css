@@ -1,0 +1,97 @@
+/* Certifications badge grid (inside the About section's collapsible). */
+.cert-list > .cert-grid {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 2px;
+  list-style: none;
+}
+
+.cert-grid .cert-badge {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  color: var(--fg);
+  background: var(--card);
+  text-align: left;
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cert-badge:hover {
+  border-color: rgba(var(--ac-rgb), 0.5);
+  transform: translateY(-2px);
+}
+
+.cert-badge-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.cert-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--ac);
+  background: rgba(var(--ac-rgb), 0.12);
+  font-size: 1rem;
+}
+
+.cert-badge-top .fa-arrow-up-right-from-square {
+  color: var(--mut);
+  font-size: 0.7rem;
+}
+
+.cert-badge-name {
+  font:
+    600 14px / 1.35 'DM Sans',
+    sans-serif;
+}
+
+.cert-badge-meta {
+  margin-top: auto;
+  color: var(--mut);
+  font:
+    500 12px 'DM Sans',
+    sans-serif;
+}
+
+.cert-badge:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+.cert-count {
+  min-width: 22px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fg) 10%, transparent);
+  font-size: 0.7rem;
+  letter-spacing: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-badge {
+    transition: none;
+  }
+}
