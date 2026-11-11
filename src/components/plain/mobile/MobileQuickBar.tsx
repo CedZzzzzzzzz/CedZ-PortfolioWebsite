@@ -5,8 +5,15 @@ import { useNavigation } from '../../../hooks/useNavigation'
 import { useWorkspaceDispatch } from '../../../state/useWorkspaceDispatch'
 import { useWorkspaceState } from '../../../state/useWorkspaceState'
 
-export function MobileQuickBar() {
-  const [open, setOpen] = useState(false)
+interface MobileQuickBarProps {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}
+
+export function MobileQuickBar({
+  open,
+  onOpenChange: setOpen,
+}: MobileQuickBarProps) {
   const [notice, setNotice] = useState<{ id: number; text: string } | null>(
     null,
   )
@@ -87,7 +94,7 @@ export function MobileQuickBar() {
           type="button"
           aria-label={open ? 'Close quick actions' : 'Open quick actions'}
           aria-expanded={open}
-          onClick={() => setOpen((value) => !value)}
+          onClick={() => setOpen(!open)}
         >
           <span />
           <span />

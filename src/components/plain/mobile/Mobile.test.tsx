@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { act } from 'react'
+import { act, useState } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { WorkspaceProvider } from '../../../state/WorkspaceProvider'
@@ -10,6 +10,11 @@ import { MobileSectionNav } from './MobileSectionNav'
 let container: HTMLDivElement
 let root: Root
 let observed: IntersectionObserverCallback | null
+
+function QuickBarHarness() {
+  const [open, setOpen] = useState(false)
+  return <MobileQuickBar open={open} onOpenChange={setOpen} />
+}
 
 function ThemeProbe() {
   return <output>{useWorkspaceState().theme}</output>
@@ -53,7 +58,7 @@ afterEach(async () => {
 it('expands the quick bar, keeps hidden actions out of tab order, and cycles the theme', async () => {
   await mount(
     <>
-      <MobileQuickBar />
+      <QuickBarHarness />
       <ThemeProbe />
     </>,
   )
@@ -90,7 +95,7 @@ it('expands the quick bar, keeps hidden actions out of tab order, and cycles the
 })
 
 it('slides the section indicator to the section in view', async () => {
-  await mount(<MobileSectionNav />)
+  await mount(<MobileSectionNav id="m-sections" open />)
   expect(byLabel('Home').getAttribute('aria-current')).toBe('location')
 
   const target = document.createElement('section')
@@ -109,13 +114,14 @@ it('slides the section indicator to the section in view', async () => {
   expect(byLabel('Projects').getAttribute('aria-current')).toBe('location')
   expect(byLabel('Home').hasAttribute('aria-current')).toBe(false)
   expect(
-    container.querySelector<HTMLElement>('.m-section-indicator')!.style
-      .transform,
-  ).toBe('translateX(186px)')
+    container
+      .querySelector<HTMLElement>('.m-section-indicator')!
+      .style.getPropertyValue('--i'),
+  ).toBe('3')
 })
 
 it('holds the indicator on a tapped section until the scroll ends', async () => {
-  await mount(<MobileSectionNav />)
+  await mount(<MobileSectionNav id="m-sections" open />)
   await act(async () => byLabel('Skills').click())
   expect(byLabel('Skills').getAttribute('aria-current')).toBe('location')
 

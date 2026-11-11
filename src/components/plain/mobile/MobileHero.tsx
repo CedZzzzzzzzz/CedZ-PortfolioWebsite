@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { profile } from '../../../content/profile'
 import { socials } from '../../../content/socials'
 import { useWorkspaceState } from '../../../state/useWorkspaceState'
 import { socialIcons } from '../socialIcons'
 import { MobileQuickBar } from './MobileQuickBar'
+import { MobileSectionNav } from './MobileSectionNav'
 import './mobile.css'
 
 const nameWords = profile.name.split(' ')
@@ -11,6 +13,8 @@ const nameSecondLine = nameWords.slice(2).join(' ')
 
 export function MobileHero() {
   const { profileImage } = useWorkspaceState()
+  // The section nav and the quick actions share the bar, so one closes the other.
+  const [menu, setMenu] = useState<'sections' | 'actions' | null>(null)
 
   return (
     <section className="m-hero" id="plain-top" tabIndex={-1}>
@@ -35,10 +39,21 @@ export function MobileHero() {
       </div>
 
       <header className="m-hero-bar">
-        <a className="m-logo" href="#plain-top" aria-label="Back to top">
+        <button
+          type="button"
+          className="m-logo"
+          aria-label={menu === 'sections' ? 'Hide sections' : 'Show sections'}
+          aria-expanded={menu === 'sections'}
+          aria-controls="m-sections"
+          onClick={() => setMenu(menu === 'sections' ? null : 'sections')}
+        >
           <img src="/Logo/Logo.png" alt="" width="64" height="64" />
-        </a>
-        <MobileQuickBar />
+        </button>
+        <MobileSectionNav id="m-sections" open={menu === 'sections'} />
+        <MobileQuickBar
+          open={menu === 'actions'}
+          onOpenChange={(open) => setMenu(open ? 'actions' : null)}
+        />
       </header>
 
       <div className="m-hero-body">
