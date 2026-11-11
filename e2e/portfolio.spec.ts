@@ -23,7 +23,7 @@ test('plain view uses / and interactive view uses /terminal', async ({
 }) => {
   await page.goto('/')
   await expect(page.locator('.plain-page')).toBeVisible()
-  await page.getByRole('button', { name: 'Back to interactive view' }).click()
+  await page.getByRole('button', { name: 'Terminal view' }).click()
   await expect(page).toHaveURL(/\/terminal$/)
   await expect(page.locator('.plain-page')).toHaveCount(0)
   await page.goBack()
@@ -147,62 +147,63 @@ test('theme switching and plain view toggle work', async ({ page }) => {
   await expect(
     page.getByRole('heading', { name: 'Marcus Cedric S. Pedrosa' }),
   ).toBeVisible()
-  const portrait = page.locator('.hero-photo')
+  const portrait = page.locator('.dp-hero-photo')
   await expect(portrait).toBeVisible()
   await expect
     .poll(() =>
       portrait.evaluate((image) => (image as HTMLImageElement).naturalWidth),
     )
     .toBeGreaterThan(0)
-  const portraitSize = await portrait.evaluate((image) => {
-    const photo = image as HTMLImageElement
-    return { width: photo.naturalWidth, height: photo.naturalHeight }
-  })
-  expect(portraitSize.width / portraitSize.height).toBeCloseTo(8 / 9, 2)
-  await page.getByRole('button', { name: 'Choose theme' }).click()
-  const themeDialog = page.getByRole('dialog', { name: 'Choose a theme' })
-  await expect(themeDialog).toBeVisible()
-  const dialogBounds = await themeDialog.boundingBox()
-  expect(dialogBounds).not.toBeNull()
-  expect(
-    Math.abs(
-      dialogBounds!.x +
-        dialogBounds!.width / 2 -
-        (await page.evaluate(() => innerWidth / 2)),
-    ),
-  ).toBeLessThanOrEqual(1)
-  expect(
-    Math.abs(
-      dialogBounds!.y +
-        dialogBounds!.height / 2 -
-        (await page.evaluate(() => innerHeight / 2)),
-    ),
-  ).toBeLessThanOrEqual(1)
-  await themeDialog.getByRole('radio', { name: 'Fire' }).click()
+  const themeTrigger = page.getByRole('button', { name: 'Theme: Night Blue' })
+  await themeTrigger.click()
+  const themeMenu = page.getByRole('dialog', { name: 'Color theme' })
+  await expect(themeMenu).toBeVisible()
+  await themeMenu.getByRole('radio', { name: 'Fire' }).click()
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'fire')
-  await themeDialog.getByRole('button', { name: 'Close theme picker' }).click()
+  await page.keyboard.press('Escape')
+  await expect(themeMenu).toHaveCount(0)
+  await expect(page.getByRole('button', { name: 'Theme: Fire' })).toBeFocused()
   await expect(
-    page.getByRole('heading', { name: 'Featured Projects' }),
+    page.getByRole('heading', { name: "Things I've built" }),
   ).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Skills' })).toBeVisible()
-  await expect(page.getByText('Frameworks & Libraries')).toBeVisible()
-  const controls = page.locator(
-    '.hero-card .contact > a, .hero-card .contact > .plain-theme-trigger, .hero-card .contact > .plain-interactive-toggle',
+  await page.getByRole('tab', { name: 'ecobench.md' }).click()
+  await expect(page.getByRole('heading', { name: 'EcoBench' })).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'What I work with' }),
+  ).toBeVisible()
+  await page.getByRole('button', { name: /frameworks-libraries/ }).click()
+  await expect(
+    page.getByRole('heading', { name: 'Frameworks & Libraries' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'Certifications' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'Awards & leadership' }),
+  ).toBeVisible()
+  const award = page.getByRole('button', { name: /Bobathon/ })
+  await award.click()
+  const awardDialog = page.getByRole('dialog', { name: 'ICS x IBM Bobathon' })
+  await expect(awardDialog).toBeVisible()
+  await awardDialog
+    .getByRole('button', { name: 'Show Holding the trophy' })
+    .click()
+  await expect(awardDialog.getByText('2 / 3')).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(awardDialog).toBeHidden()
+  await expect(award).toBeFocused()
+  await page.getByRole('button', { name: 'Collapse navigation' }).click()
+  await expect(page.getByRole('navigation', { name: 'Sections' })).toHaveCount(
+    0,
   )
-  await expect(controls).toHaveCount(4)
-  await expect(controls.nth(0)).toHaveAttribute('aria-label', 'Email')
-  await expect(controls.nth(1)).toHaveAttribute('aria-label', 'View CV PDF')
-  await expect(controls.nth(2)).toHaveAttribute('aria-label', 'Choose theme')
-  const interactiveToggle = page.getByRole('button', {
-    name: 'Back to interactive view',
-  })
+  await page.getByRole('button', { name: 'Open navigation' }).click()
+  await page.getByRole('button', { name: 'Ask Byte' }).click()
+  await expect(page.locator('#byte-panel')).toBeVisible()
+  await page.getByRole('button', { name: 'Close Byte' }).click()
+  const interactiveToggle = page.getByRole('button', { name: 'Terminal view' })
   await expect(interactiveToggle).toBeVisible()
   await interactiveToggle.hover()
-  await expect(interactiveToggle.getByText('Interactive view')).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Resume' })).toHaveCount(0)
-  await expect(
-    page.getByText('Focused on Software Development & Artificial Intelligence'),
-  ).toHaveCount(0)
+  await expect(interactiveToggle.getByText('Terminal view')).toBeVisible()
   await interactiveToggle.click()
   await expect(page.locator('.plain-page')).toHaveCount(0)
   await expect(page.getByRole('banner')).toBeVisible()
@@ -305,7 +306,7 @@ test('axe finds no serious or critical violations on each theme and plain view',
     .getByRole('banner')
     .getByRole('button', { name: /plain view/i })
     .click()
-  await expect(page.locator('.hero-copy')).toHaveCSS('opacity', '1')
+  await expect(page.locator('.dp-hero-body')).toBeVisible()
   const plainResults = await new AxeBuilder({ page }).analyze()
   expect(
     plainResults.violations.filter((violation) =>

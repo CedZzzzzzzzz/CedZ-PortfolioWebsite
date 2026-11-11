@@ -41,3 +41,29 @@ export interface Social {
   url: string
   display: string
 }
+
+export type AwardKind = 'Award' | 'Leadership'
+
+export interface AwardPhoto {
+  label: string
+  /** Image path under /public; the card shows a placeholder until one is set. */
+  src?: string
+}
+
+export interface Award {
+  id: string
+  kind: AwardKind
+  category: string
+  badge: string
+  t: string
+  role: string
+  w?: string
+  d?: string
+  photos: AwardPhoto[]
+}
+
+export interface IssuerLogo {
+  src: string
+  /** Tile color behind the logo; the theme background when omitted. */
+  tile?: string
+}

@@ -1,6 +1,6 @@
 /* Mobile portfolio view (design G). Rendered only under 768px by PlainView. */
 .plain-page.is-mobile {
-  padding-bottom: calc(104px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .m-hero {
@@ -70,7 +70,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
+}
+
+/* Open: accent ring and a spin, like the desktop logo. */
+.m-logo[aria-expanded='true'] {
+  background: rgba(var(--ac-rgb), 0.14);
+  box-shadow: 0 0 0 2px var(--ac);
+}
+
+.m-logo img {
+  transition: transform 0.64s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.m-logo[aria-expanded='true'] img {
+  transform: rotate(-360deg);
 }
 
 /* Logo.png has wide transparent padding: oversize and clip to the mark. */
@@ -272,53 +293,70 @@
 }
 
 .m-section-nav {
-  position: fixed;
-  left: 50%;
-  bottom: calc(18px + env(safe-area-inset-bottom));
-  z-index: 1000;
-  height: 52px;
+  /* Icon width that fits seven icons between the logo and the menu button. */
+  --btn: min(36px, calc((100vw - 156px) / 7));
+  position: absolute;
+  top: calc(8px + env(safe-area-inset-top));
+  left: 62px;
+  height: 44px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   padding: 0 3px;
   border: 1px solid rgba(var(--ac-rgb), 0.22);
-  border-radius: 26px;
+  border-radius: 22px;
   background: color-mix(in srgb, var(--card) 88%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow:
     0 14px 36px rgba(0, 0, 0, 0.55),
     0 0 24px rgba(var(--ac-rgb), 0.12);
-  transform: translateX(-50%);
+  animation: m-nav-in 0.44s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.m-section-nav[hidden] {
+  display: none;
+}
+
+@keyframes m-nav-in {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .m-section-indicator {
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 58px;
-  height: 44px;
-  border-radius: 22px;
+  width: var(--btn);
+  height: 36px;
+  border-radius: 18px;
   background: var(--ac);
   box-shadow: 0 0 14px rgba(var(--ac-rgb), 0.45);
+  transform: translateX(calc(var(--i, 0) * (var(--btn) + 2px)));
   transition: transform 0.55s cubic-bezier(0.32, 0.72, 0, 1);
   will-change: transform;
 }
 
-.m-section-btn {
+/* Two classes so the global 44px touch-target rule doesn't stretch the pill. */
+.m-section-nav .m-section-btn {
   position: relative;
-  width: 58px;
-  height: 44px;
+  width: var(--btn);
+  height: 36px;
+  min-height: 36px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
   padding: 0;
   border: 0;
-  border-radius: 22px;
-  color: color-mix(in srgb, var(--fg) 55%, transparent);
+  border-radius: 18px;
+  color: color-mix(in srgb, var(--fg) 60%, transparent);
   background: transparent;
   font-size: 0.85rem;
   cursor: pointer;
@@ -327,14 +365,6 @@
 
 .m-section-btn.active {
   color: var(--bg);
-}
-
-.m-section-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 9.5px;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0.2px;
 }
 
 .m-hero :is(a, button):focus-visible,
@@ -348,8 +378,14 @@
   .m-quickbar-items,
   .m-quickbar-toggle span,
   .m-section-indicator,
-  .m-section-btn {
+  .m-section-btn,
+  .m-logo,
+  .m-logo img {
     transition: none;
+  }
+
+  .m-section-nav {
+    animation: none;
   }
 }
 
@@ -398,41 +434,6 @@
 .m-skills .section-title {
   margin-bottom: 1.5rem;
   font-size: 2rem;
-}
-
-.m-chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  padding: 0 20px;
-  margin-bottom: 18px;
-}
-
-.m-chip {
-  flex: 0 0 auto;
-  min-height: 36px;
-  padding: 0 14px;
-  border: 1px solid var(--bd);
-  border-radius: 999px;
-  color: var(--mut);
-  background: transparent;
-  font:
-    600 12px 'DM Sans',
-    sans-serif;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    color 0.25s,
-    background-color 0.25s,
-    border-color 0.25s;
-}
-
-.m-chip[aria-pressed='true'] {
-  border-color: var(--fg);
-  color: var(--bg);
-  background: var(--fg);
 }
 
 .m-carousel {
@@ -661,7 +662,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .m-chip,
   .m-dot::before,
   .m-accordion summary .fa-chevron-down {
     transition: none;

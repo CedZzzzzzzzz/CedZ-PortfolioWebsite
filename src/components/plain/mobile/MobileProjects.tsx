@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import type { Project, ProjectCategory } from '../../../types/content'
+import type { Project } from '../../../types/content'
 import { resolveProjectImage } from '../../../lib/projectImage'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { useWorkspaceState } from '../../../state/useWorkspaceState'
@@ -7,20 +7,15 @@ import { Icon } from '../../ui/Icon'
 
 interface MobileProjectsProps {
   projects: Project[]
-  filters: Array<ProjectCategory | 'All'>
 }
 
 const visibleTags = 4
 
-export function MobileProjects({ projects, filters }: MobileProjectsProps) {
+export function MobileProjects({ projects }: MobileProjectsProps) {
   const { projectImages } = useWorkspaceState()
   const reducedMotion = useReducedMotion()
   const track = useRef<HTMLDivElement>(null)
-  const [filter, setFilter] = useState<ProjectCategory | 'All'>('All')
   const [current, setCurrent] = useState(0)
-  const shown = projects.filter(
-    (project) => filter === 'All' || project.categories.includes(filter),
-  )
 
   function cardAt(index: number) {
     return track.current?.children[index] as HTMLElement | undefined
@@ -43,29 +38,9 @@ export function MobileProjects({ projects, filters }: MobileProjectsProps) {
     })
   }
 
-  function pickFilter(value: ProjectCategory | 'All') {
-    setFilter(value)
-    setCurrent(0)
-    track.current?.scrollTo({ left: 0 })
-  }
-
   return (
     <section id="plain-projects" className="projects m-projects" tabIndex={-1}>
-      <h2 className="section-title">Featured Projects</h2>
-      <div className="m-chip-row" role="group" aria-label="Filter projects">
-        {filters.map((value) => (
-          <button
-            key={value}
-            type="button"
-            className="m-chip"
-            aria-pressed={filter === value}
-            onClick={() => pickFilter(value)}
-          >
-            {value}
-          </button>
-        ))}
-      </div>
-
+      <h2 className="section-title">Things I&apos;ve built</h2>
       <div
         className="m-carousel"
         ref={track}
@@ -73,7 +48,7 @@ export function MobileProjects({ projects, filters }: MobileProjectsProps) {
         aria-label="Projects"
         aria-roledescription="carousel"
       >
-        {shown.map((project, index) => {
+        {projects.map((project, index) => {
           const link = project.links.find(([, url]) => url.trim())
           const extraTags = project.t.length - visibleTags
           return (
@@ -81,7 +56,7 @@ export function MobileProjects({ projects, filters }: MobileProjectsProps) {
               className="m-card"
               key={project.id}
               aria-roledescription="slide"
-              aria-label={`${index + 1} of ${shown.length}: ${project.n}`}
+              aria-label={`${index + 1} of ${projects.length}: ${project.n}`}
             >
               <picture>
                 <source
@@ -131,9 +106,9 @@ export function MobileProjects({ projects, filters }: MobileProjectsProps) {
         })}
       </div>
 
-      {shown.length > 1 && (
+      {projects.length > 1 && (
         <div className="m-dots">
-          {shown.map((project, index) => (
+          {projects.map((project, index) => (
             <button
               key={project.id}
               type="button"

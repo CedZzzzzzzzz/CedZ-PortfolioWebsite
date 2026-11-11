@@ -3,7 +3,7 @@ import { skills } from '../../../content/skills'
 export function MobileSkills() {
   return (
     <section id="plain-skills" className="skills m-skills" tabIndex={-1}>
-      <h2 className="section-title">Skills</h2>
+      <h2 className="section-title">What I work with</h2>
       <div className="m-accordion">
         {skills.map((group, index) => (
           <details key={group.name} open={index === 0}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { useActiveSection } from '../../../hooks/useActiveSection'
 import { useNavigation } from '../../../hooks/useNavigation'
 
@@ -8,13 +8,19 @@ const sections = [
   { id: 'plain-experience', label: 'Experience', icon: 'fa-briefcase' },
   { id: 'plain-projects', label: 'Projects', icon: 'fa-layer-group' },
   { id: 'plain-skills', label: 'Skills', icon: 'fa-code' },
+  { id: 'plain-certifications', label: 'Certifications', icon: 'fa-award' },
+  { id: 'plain-awards', label: 'Awards', icon: 'fa-trophy' },
 ] as const
 
 const sectionIds = sections.map((section) => section.id)
-/** Button width (58px) plus the 4px gap between buttons. */
-const step = 62
 
-export function MobileSectionNav() {
+interface MobileSectionNavProps {
+  id: string
+  open: boolean
+}
+
+/** Section icons that slide out of the logo in the top bar. */
+export function MobileSectionNav({ id, open }: MobileSectionNavProps) {
   const active = useActiveSection(sectionIds)
   const nav = useNavigation()
   // While a tapped section is scrolling into view, hold the indicator on it
@@ -41,11 +47,11 @@ export function MobileSectionNav() {
   )
 
   return (
-    <nav className="m-section-nav" aria-label="Sections">
+    <nav id={id} className="m-section-nav" aria-label="Sections" hidden={!open}>
       <span
         className="m-section-indicator"
         aria-hidden="true"
-        style={{ transform: `translateX(${index * step}px)` }}
+        style={{ '--i': index } as CSSProperties}
       />
       {sections.map((section, i) => (
         <button
@@ -60,9 +66,6 @@ export function MobileSectionNav() {
           }}
         >
           <i className={`fas ${section.icon}`} aria-hidden="true" />
-          <span className="m-section-label" aria-hidden="true">
-            {section.label}
-          </span>
         </button>
       ))}
     </nav>
