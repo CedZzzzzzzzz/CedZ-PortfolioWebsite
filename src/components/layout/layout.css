@@ -158,6 +158,11 @@
   outline: 2px solid var(--bd-strong);
   outline-offset: 2px;
 }
+@media (width < 480px) {
+  .bar-label {
+    display: none;
+  }
+}
 @media (hover: none) {
   .pane:active {
     border-color: var(--ac);
@@ -175,8 +180,12 @@
     height: auto;
     min-height: 44px;
     flex-basis: 44px;
-    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 6px;
+  }
+  .top-bar button {
+    min-width: 32px;
+    min-height: 32px;
+    justify-content: center;
   }
   .desktop-label {
     display: none;
