@@ -22,6 +22,7 @@ const context = {
   },
   themes: ['light', 'dark', 'blue', 'tokyo', 'fire', 'scar'] as const,
   activeFileId: null,
+  github: null,
 }
 
 describe('parseCommand', () => {

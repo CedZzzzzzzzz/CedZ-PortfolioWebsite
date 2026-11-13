@@ -7,9 +7,11 @@ const sections = [
   { id: 'plain-about', label: 'About', icon: 'fa-user' },
   { id: 'plain-experience', label: 'Experience', icon: 'fa-briefcase' },
   { id: 'plain-projects', label: 'Projects', icon: 'fa-layer-group' },
+  { id: 'plain-github', label: 'GitHub', icon: 'fa-code-branch' },
   { id: 'plain-skills', label: 'Skills', icon: 'fa-code' },
   { id: 'plain-certifications', label: 'Certifications', icon: 'fa-award' },
   { id: 'plain-awards', label: 'Awards', icon: 'fa-trophy' },
+  { id: 'plain-contact', label: 'Contact', icon: 'fa-envelope' },
 ] as const
 
 const sectionIds = sections.map((section) => section.id)
@@ -47,7 +49,13 @@ export function MobileSectionNav({ id, open }: MobileSectionNavProps) {
   )
 
   return (
-    <nav id={id} className="m-section-nav" aria-label="Sections" hidden={!open}>
+    <nav
+      id={id}
+      className="m-section-nav"
+      aria-label="Sections"
+      hidden={!open}
+      style={{ '--n': sections.length } as CSSProperties}
+    >
       <span
         className="m-section-indicator"
         aria-hidden="true"

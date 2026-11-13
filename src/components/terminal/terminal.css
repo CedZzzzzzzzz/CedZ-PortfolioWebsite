@@ -105,3 +105,38 @@
     height: 380px;
   }
 }
+
+/* Contribution graph drawn as text; dot weight follows GitHub's quartile level. */
+.terminal-graph {
+  margin: 4px 0 6px;
+  max-width: 100%;
+  /* overflow-x alone turns overflow-y to auto, and the glyphs' tall line boxes then show a vertical scrollbar. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-size: 12px;
+  line-height: 1.05;
+  white-space: pre;
+}
+.terminal-graph .l0,
+.terminal-graph-legend .l0 {
+  color: var(--bd);
+}
+.terminal-graph .l1,
+.terminal-graph-legend .l1 {
+  color: var(--mut);
+}
+.terminal-graph .l2,
+.terminal-graph-legend .l2 {
+  color: var(--ac2);
+}
+.terminal-graph .l3,
+.terminal-graph-legend .l3 {
+  color: var(--fg);
+}
+.terminal-graph .l4,
+.terminal-graph-legend .l4 {
+  color: var(--ac);
+}
+.terminal-line:empty {
+  display: none;
+}
