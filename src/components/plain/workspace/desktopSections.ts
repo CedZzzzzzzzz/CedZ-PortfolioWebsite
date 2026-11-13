@@ -37,7 +37,12 @@ export const desktopSections: readonly DesktopSection[] = [
     icon: 'award',
   },
   { id: 'plain-awards', label: 'Awards', file: 'awards.md', icon: 'trophy' },
-  { id: 'plain-contact', label: 'Contact', file: 'contact.txt' },
+  {
+    id: 'plain-contact',
+    label: 'Contact',
+    file: 'contact.txt',
+    icon: 'mail',
+  },
 ]
 
 export const desktopSectionIds = desktopSections.map((section) => section.id)
