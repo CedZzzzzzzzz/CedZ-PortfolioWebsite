@@ -23,6 +23,12 @@ export const desktopSections: readonly DesktopSection[] = [
     file: 'projects/',
     icon: 'projects',
   },
+  {
+    id: 'plain-github',
+    label: 'GitHub',
+    file: 'github/',
+    icon: 'GitHub',
+  },
   { id: 'plain-skills', label: 'Skills', file: 'skills.json', icon: 'skills' },
   {
     id: 'plain-certifications',
