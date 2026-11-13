@@ -5,6 +5,7 @@ import { WorkspaceAwards } from './WorkspaceAwards'
 import { WorkspaceCertifications } from './WorkspaceCertifications'
 import { WorkspaceContact } from './WorkspaceContact'
 import { WorkspaceExperience } from './WorkspaceExperience'
+import { WorkspaceGitHub } from './WorkspaceGitHub'
 import { DesktopHero } from './DesktopHero'
 import { DesktopNavBar } from './DesktopNavBar'
 import { WorkspaceProjects } from './WorkspaceProjects'
@@ -23,6 +24,7 @@ export function DesktopPlainView() {
         <WorkspaceAbout />
         <WorkspaceExperience />
         <WorkspaceProjects />
+        <WorkspaceGitHub />
         <DesktopSkills />
         <WorkspaceCertifications />
         <WorkspaceAwards />

@@ -7,6 +7,7 @@ const sections = [
   { id: 'plain-about', label: 'About', icon: 'fa-user' },
   { id: 'plain-experience', label: 'Experience', icon: 'fa-briefcase' },
   { id: 'plain-projects', label: 'Projects', icon: 'fa-layer-group' },
+  { id: 'plain-github', label: 'GitHub', icon: 'fa-code-branch' },
   { id: 'plain-skills', label: 'Skills', icon: 'fa-code' },
   { id: 'plain-certifications', label: 'Certifications', icon: 'fa-award' },
   { id: 'plain-awards', label: 'Awards', icon: 'fa-trophy' },
