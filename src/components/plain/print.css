@@ -1,0 +1,174 @@
+/* Printing the portfolio view (Ctrl+P): dark ink on white, every project
+   shown, and no navigation, buttons, or Byte. */
+.dp-print-skills {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  /* One light palette for every theme. Values match the light theme. */
+  html:root[data-theme] {
+    --bg: #fff;
+    --fg: #1f2937;
+    --mut: #596579;
+    --ac: #111827;
+    --ac-rgb: 17, 24, 39;
+    --ac2: #374151;
+    --ac2-rgb: 55, 65, 81;
+    --bd: #858e9c;
+    --bd-strong: #697586;
+    --card: #fff;
+    color-scheme: light;
+  }
+
+  html:root[data-theme] .dp {
+    --bg: #fff;
+    --bg-rgb: 255, 255, 255;
+    --fg: #1f2937;
+    --mut: #5b6472;
+    --soft: #374151;
+    --eye: #374151;
+    --ac: #111827;
+    --ac2: #6b7280;
+    --ac-rgb: 17, 24, 39;
+    --fill: #111827;
+    --bd: #d5d9e0;
+    --bd2: #111827;
+    --card: #fff;
+    --card-rgb: 255, 255, 255;
+    --glass-rgb: 255, 255, 255;
+    --dot: #c5cad3;
+    --cream: #111827;
+    --hi-rgb: 17, 24, 39;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  .plain-page *,
+  .plain-page *::before,
+  .plain-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .ide-shell,
+  .skip-link,
+  .byte-panel,
+  .launcher-backdrop,
+  .dp-bar-slot,
+  .dp-byte,
+  .dp-hero-fade,
+  .dp-tabs,
+  .dp-slide-status,
+  .dp-browser-bar,
+  .dp-xp-more,
+  .dp-cursor,
+  .dp-skills,
+  .dp-cream,
+  .m-hero-bar,
+  .m-dots,
+  .plain-page dialog {
+    display: none !important;
+  }
+
+  /* The hero fills a screen on the web; on paper it is a short header. */
+  .dp,
+  .dp-hero,
+  .m-hero {
+    min-height: 0;
+  }
+
+  .dp-hero-body {
+    padding: 0 0 24px;
+  }
+
+  .dp-hero-photo,
+  .m-hero-photo {
+    display: none;
+  }
+
+  .m-hero-body {
+    margin-top: 0;
+    padding: 0 0 24px;
+  }
+
+  .dp-section {
+    margin-top: 32px;
+    padding: 0;
+  }
+
+  .dp-pane,
+  .dp-track-clip {
+    overflow: visible;
+  }
+
+  /* Carousels show one project at a time; paper gets them all, stacked. */
+  .dp-track,
+  .m-carousel {
+    display: block;
+    overflow: visible;
+    transform: none !important;
+  }
+
+  .dp-slide,
+  .m-card,
+  .dp-card,
+  .dp-xp-item {
+    break-inside: avoid;
+  }
+
+  .m-card {
+    margin-bottom: 16px;
+  }
+
+  /* Interactive views show one skill group or a clamped description. */
+  .dp-print-skills {
+    display: grid;
+    gap: 10px;
+  }
+
+  .dp-print-skills dt {
+    font-weight: 700;
+  }
+
+  .dp-print-skills dd {
+    margin: 0;
+  }
+
+  .m-accordion details::details-content {
+    content-visibility: visible;
+  }
+
+  .dp-xp-desc:not(.expanded) {
+    display: block;
+    overflow: visible;
+  }
+
+  /* Browsers drop backgrounds when printing, so filled buttons become outlines. */
+  .dp .dp-btn,
+  .dp .dp-now,
+  .m-card-link {
+    border: 1px solid var(--fg);
+    background: none;
+    color: var(--fg);
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  /* A printed link is useless without its address. */
+  .dp-section a[href^='http']::after,
+  .m-card-link[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-weight: 400;
+    word-break: break-all;
+  }
+}

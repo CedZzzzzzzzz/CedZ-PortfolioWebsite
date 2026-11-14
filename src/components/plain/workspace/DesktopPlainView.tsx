@@ -20,7 +20,7 @@ export function DesktopPlainView() {
     <div className="plain-page dp" id="plain-home">
       <DesktopNavBar active={active} />
       <DesktopHero />
-      <main id="plain-main">
+      <main id="plain-main" tabIndex={-1}>
         <WorkspaceAbout />
         <WorkspaceExperience />
         <WorkspaceProjects />

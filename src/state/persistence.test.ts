@@ -37,7 +37,7 @@ describe('workspace persistence', () => {
   it('falls back for invalid theme, plain view, or malformed image shape', () => {
     const state = loadInitialState(
       memoryStorage({
-        'cedz-theme': '"light"',
+        'cedz-theme': '"neon"',
         'cedz-plain': '"true"',
         'cedz-imgs': JSON.stringify({ version: 2, projects: [], profile: 5 }),
       }),

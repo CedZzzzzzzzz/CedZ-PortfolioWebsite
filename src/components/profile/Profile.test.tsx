@@ -118,26 +118,34 @@ it('shares theme state with terminal, supports wrapping keyboard selection, and 
   const radios = [
     ...container.querySelectorAll<HTMLButtonElement>('[role="radio"]'),
   ]
-  expect(radios[0].getAttribute('aria-checked')).toBe('true')
+  const [light, dark, blue, , fire, scar] = radios
+  expect(dark.getAttribute('aria-checked')).toBe('true')
   await act(async () =>
-    radios[0].dispatchEvent(
+    dark.dispatchEvent(
       new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
     ),
   )
-  expect(document.activeElement).toBe(radios[4])
-  expect(radios[4].getAttribute('aria-checked')).toBe('true')
-  expect(meta.content).toBe('#0d0508')
+  expect(light.getAttribute('aria-checked')).toBe('true')
+  expect(document.documentElement.style.colorScheme).toBe('light')
+  await act(async () =>
+    light.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }),
+    ),
+  )
+  expect(document.activeElement).toBe(scar)
+  expect(scar.getAttribute('aria-checked')).toBe('true')
+  expect(meta.content).toBe('#0d0608')
   expect(document.documentElement.style.colorScheme).toBe('dark')
   await act(async () =>
-    radios[4].dispatchEvent(
+    scar.dispatchEvent(
       new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
     ),
   )
-  expect(radios[0].tabIndex).toBe(0)
-  await click(radios[1])
+  expect(light.tabIndex).toBe(0)
+  await click(blue)
   expect(meta.content).toBe('#070d1f')
   await click(button('terminal theme'))
-  expect(radios[3].getAttribute('aria-checked')).toBe('true')
+  expect(fire.getAttribute('aria-checked')).toBe('true')
   expect(container.textContent).toContain('Theme · Fire')
   expect(JSON.parse(localStorage.getItem('cedz-theme')!)).toBe('fire')
 })
