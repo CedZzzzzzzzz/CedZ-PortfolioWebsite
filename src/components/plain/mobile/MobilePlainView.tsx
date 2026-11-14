@@ -20,7 +20,7 @@ export function MobilePlainView() {
     <div className="plain-page is-mobile" id="plain-home">
       <MobileHero />
 
-      <main id="plain-main">
+      <main id="plain-main" tabIndex={-1}>
         <div className="dp dp-embed">
           <WorkspaceAbout />
           <WorkspaceExperience />

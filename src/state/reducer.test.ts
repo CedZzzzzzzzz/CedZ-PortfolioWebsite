@@ -87,7 +87,7 @@ describe('workspaceReducer', () => {
 
   it('accepts only defined themes', () => {
     const empty = createInitialState()
-    expect(workspaceReducer(empty, { type: 'set-theme', theme: 'light' })).toBe(
+    expect(workspaceReducer(empty, { type: 'set-theme', theme: 'neon' })).toBe(
       empty,
     )
     expect(

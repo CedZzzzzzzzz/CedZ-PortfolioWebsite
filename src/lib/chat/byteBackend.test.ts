@@ -32,4 +32,12 @@ describe('byteBackend', () => {
     ).resolves.toEqual({ text: 'Marcus studies computer engineering.' })
     expect(request).toHaveBeenCalledOnce()
   })
+
+  it('falls back to keyword replies when the API fails', async () => {
+    vi.spyOn(apiBackend, 'reply').mockRejectedValue(new Error('down'))
+
+    await expect(
+      byteBackend.reply('show me your projects', { activeFileId: null }),
+    ).resolves.toMatchObject({ openFile: 'projects' })
+  })
 })

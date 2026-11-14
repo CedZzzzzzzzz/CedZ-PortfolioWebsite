@@ -16,6 +16,15 @@ export function DesktopSkills() {
   return (
     <section id="plain-skills" className="dp-section" tabIndex={-1}>
       <SectionHead command="open skills.json" title="What I work with" />
+      {/* The explorer shows one group at a time; paper needs all of them. */}
+      <dl className="dp-print-skills">
+        {skills.map((item) => (
+          <div key={item.name}>
+            <dt>{item.name}</dt>
+            <dd>{item.tags.join(', ')}</dd>
+          </div>
+        ))}
+      </dl>
       <div className="dp-pane dp-skills">
         <div className="dp-explorer">
           <p className="dp-ptitle">Explorer</p>

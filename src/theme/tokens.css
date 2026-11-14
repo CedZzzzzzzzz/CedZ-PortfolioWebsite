@@ -200,3 +200,30 @@ input::placeholder {
   white-space: nowrap;
   border: 0;
 }
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  padding: 6px 10px;
+  border: 2px solid var(--ac);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+.load-error {
+  display: grid;
+  gap: 12px;
+  place-content: center;
+  justify-items: center;
+  min-height: 100vh;
+  padding: 16px;
+  text-align: center;
+}

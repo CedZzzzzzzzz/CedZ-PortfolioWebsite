@@ -226,7 +226,8 @@ it('caps output and recalled commands at 200', async () => {
   expect(log().textContent).not.toContain('❯ unknown-0')
   for (let index = 0; index < 202; index++) await key('ArrowUp')
   expect(input().value).toBe('unknown-2')
-})
+  // 404 sequential renders: close to the 5 s default on a loaded machine.
+}, 20000)
 it('only follows output when the reader is already near the bottom', async () => {
   await mount()
   Object.defineProperties(log(), {

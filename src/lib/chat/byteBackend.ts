@@ -1,5 +1,6 @@
 import type { ChatBackend, ChatReply } from '../../types/chat'
 import { apiBackend } from './apiBackend'
+import { keywordBackend } from './keywordBackend'
 
 function localAction(query: string): ChatReply | null {
   const normalized = query
@@ -20,6 +21,12 @@ function localAction(query: string): ChatReply | null {
 export const byteBackend: ChatBackend = {
   async reply(query, context, onText) {
     const action = localAction(query)
-    return action ?? apiBackend.reply(query, context, onText)
+    if (action) return action
+    try {
+      return await apiBackend.reply(query, context, onText)
+    } catch {
+      // Gemini is down or rate-limited: Byte still answers from keywords.
+      return keywordBackend.reply(query, context)
+    }
   },
 }

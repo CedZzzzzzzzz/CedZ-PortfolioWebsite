@@ -279,14 +279,14 @@ describe('explorer and editor', () => {
       })
       expect(
         container
-          .querySelector<HTMLAnchorElement>('a[download]')
-          ?.getAttribute('href'),
+          .querySelector<HTMLIFrameElement>('iframe.resume-preview')
+          ?.getAttribute('src'),
       ).toBe('blob:resume-demo')
       await click(button('Remove attached PDF'))
       expect(
         container
-          .querySelector<HTMLAnchorElement>('a[download]')
-          ?.getAttribute('href'),
+          .querySelector<HTMLIFrameElement>('iframe.resume-preview')
+          ?.getAttribute('src'),
       ).toBe(profile.resume)
       expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:resume-demo')
     } finally {

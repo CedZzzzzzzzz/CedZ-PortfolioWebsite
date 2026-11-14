@@ -5,10 +5,13 @@ import { themes } from '../theme/themes'
 
 function mixedColor(foreground: string, background: string, amount: number) {
   const channels = (hex: string) => {
-    const value = hex.length === 4
-      ? [...hex.slice(1)].map((char) => char + char).join('')
-      : hex.slice(1)
-    return [0, 2, 4].map((offset) => Number.parseInt(value.slice(offset, offset + 2), 16))
+    const value =
+      hex.length === 4
+        ? [...hex.slice(1)].map((char) => char + char).join('')
+        : hex.slice(1)
+    return [0, 2, 4].map((offset) =>
+      Number.parseInt(value.slice(offset, offset + 2), 16),
+    )
   }
   const foregroundChannels = channels(foreground)
   const backgroundChannels = channels(background)
