@@ -1,7 +1,9 @@
+import type { ReactNode } from 'react'
+
 interface SectionHeadProps {
   command: string
   title: string
-  summary?: string
+  summary?: ReactNode
   ruled?: boolean
 }
 

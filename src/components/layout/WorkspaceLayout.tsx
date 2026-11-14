@@ -9,6 +9,7 @@ import { Editor } from '../editor/Editor'
 import { Terminal } from '../terminal/Terminal'
 import { Profile } from '../profile/Profile'
 import { useTerminalSounds } from '../terminal/useTerminalSounds'
+import { SkipLink } from '../ui/SkipLink'
 import './layout.css'
 
 export function WorkspaceLayout() {
@@ -35,6 +36,7 @@ export function WorkspaceLayout() {
         if ((event.target as HTMLElement).closest('button, a')) playAction()
       }}
     >
+      <SkipLink targetId="editor" />
       <TopBar />
       <main className="workspace-area" aria-label="Portfolio workspace">
         <h1 className="visually-hidden">Marcus Cedric Pedrosa portfolio</h1>

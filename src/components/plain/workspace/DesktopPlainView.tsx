@@ -5,6 +5,7 @@ import { WorkspaceAwards } from './WorkspaceAwards'
 import { WorkspaceCertifications } from './WorkspaceCertifications'
 import { WorkspaceContact } from './WorkspaceContact'
 import { WorkspaceExperience } from './WorkspaceExperience'
+import { WorkspaceGitHub } from './WorkspaceGitHub'
 import { DesktopHero } from './DesktopHero'
 import { DesktopNavBar } from './DesktopNavBar'
 import { WorkspaceProjects } from './WorkspaceProjects'
@@ -19,10 +20,11 @@ export function DesktopPlainView() {
     <div className="plain-page dp" id="plain-home">
       <DesktopNavBar active={active} />
       <DesktopHero />
-      <main id="plain-main">
+      <main id="plain-main" tabIndex={-1}>
         <WorkspaceAbout />
         <WorkspaceExperience />
         <WorkspaceProjects />
+        <WorkspaceGitHub />
         <DesktopSkills />
         <WorkspaceCertifications />
         <WorkspaceAwards />

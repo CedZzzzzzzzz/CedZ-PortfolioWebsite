@@ -8,6 +8,7 @@ const context = {
   content: commandContent,
   themes,
   activeFileId: 'about',
+  github: null,
   commands: commandRegistry.commands,
 }
 describe('remaining commands', () => {
@@ -50,7 +51,6 @@ describe('remaining commands', () => {
       ['byte', { kind: 'byte', open: true }],
       ['feed', { kind: 'pet', action: 'feed' }],
       ['play', { kind: 'pet', action: 'play' }],
-      ['github', { kind: 'external', href: 'https://github.com/CedZzzzzzzzz' }],
     ] as const)
       expect((await commandRegistry.execute(input, context)).effects).toEqual([
         effect,
@@ -61,8 +61,10 @@ describe('remaining commands', () => {
       expect(
         (await commandRegistry.execute(input, context)).lines.length,
       ).toBeGreaterThan(0)
-    expect(JSON.stringify(await commandRegistry.execute('ip', context))).toMatch(
-      /(?:10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)/
+    expect(
+      JSON.stringify(await commandRegistry.execute('ip', context)),
+    ).toMatch(
+      /(?:10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)/,
     )
     expect(await commandRegistry.execute('neofetch', context)).toEqual(
       await commandRegistry.execute('fastfetch', context),

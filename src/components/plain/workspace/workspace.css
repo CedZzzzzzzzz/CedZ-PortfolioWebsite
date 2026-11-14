@@ -2433,3 +2433,402 @@ html:has(.dp) {
     animation: none !important;
   }
 }
+
+/* GitHub contribution graph: dot size and brightness follow GitHub's quartile level. */
+.dp-gh {
+  /* Cells grow with the viewport so a year fills the card on desktop. */
+  --cell: clamp(12px, 1.55vw, 20px);
+  padding: 22px 22px 16px;
+  border: 2px solid var(--bd);
+  border-radius: 10px;
+  background: var(--card);
+  transition: border-color 0.2s var(--ease-out);
+}
+
+.dp-gh:hover {
+  border-color: var(--bd2);
+}
+
+.dp-gh-scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.dp-gh-scroll:focus-visible,
+.dp-gh-link:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 3px;
+}
+
+.dp-gh-grid {
+  display: grid;
+  grid-auto-columns: var(--cell);
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, var(--cell));
+  width: max-content;
+  margin-inline: auto;
+}
+
+.dp-gh-dot {
+  --scale: 0.22;
+  --alpha: 0.25;
+  display: grid;
+  width: var(--cell);
+  height: var(--cell);
+  place-items: center;
+}
+
+.dp-gh-dot::before {
+  content: '';
+  width: calc(var(--cell) * var(--scale));
+  height: calc(var(--cell) * var(--scale));
+  border-radius: 50%;
+  background: var(--fg);
+  opacity: var(--alpha);
+  transition: transform 0.15s var(--ease-out);
+}
+
+.dp-gh-dot.is-void {
+  visibility: hidden;
+}
+
+.dp-gh-dot.l1 {
+  --scale: 0.36;
+  --alpha: 0.55;
+}
+
+.dp-gh-dot.l2 {
+  --scale: 0.5;
+  --alpha: 0.75;
+}
+
+.dp-gh-dot.l3 {
+  --scale: 0.64;
+  --alpha: 0.9;
+}
+
+.dp-gh-dot.l4 {
+  --scale: 0.8;
+  --alpha: 1;
+}
+
+.dp-gh-dot.l4::before {
+  background: var(--ac);
+}
+
+.dp-gh-grid .dp-gh-dot:hover::before {
+  transform: scale(1.5);
+}
+
+.dp-gh-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin-top: 14px;
+  color: var(--mut);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.dp-gh-tip {
+  min-height: 1.2em;
+  color: var(--fg);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.dp-gh-legend {
+  --cell: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dp-gh-link {
+  color: var(--fg);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+
+.dp-gh-link:hover {
+  color: var(--ac);
+}
+
+.dp-gh-empty {
+  color: var(--mut);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dp-gh,
+  .dp-gh-dot::before {
+    transition: none;
+  }
+}
+
+/* Contact dialog: the contact pane's frame around a short message form. */
+.dp-modal.dp-msg {
+  width: min(620px, calc(100vw - 32px));
+}
+
+.dp-msg-pane,
+.dp-msg-pane:hover {
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  border-color: transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(135deg, var(--ac), var(--ac2)) border-box;
+  box-shadow:
+    0 40px 120px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(var(--ac-rgb), 0.16);
+  animation: dp-modal-in 420ms var(--ease-out) both;
+}
+
+.dp-modal-close.dp-msg-close {
+  position: static;
+  /* Stays round when the mobile touch-target minimum makes it taller. */
+  flex: none;
+  width: auto;
+  height: 32px;
+  aspect-ratio: 1;
+  margin-right: 8px;
+}
+
+.dp-msg-body {
+  padding: 16px clamp(18px, 4vw, 30px) 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 1px solid var(--bd);
+}
+
+.dp-msg-body .dp-crumb {
+  color: var(--eye);
+}
+
+.dp-msg-title {
+  font-family: var(--display);
+  font-size: clamp(28px, 5vw, 38px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.dp-msg-sub {
+  color: var(--mut);
+  font-size: 15px;
+}
+
+.dp-msg-form {
+  margin-top: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 14px;
+}
+
+.dp-msg-field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dp-msg-field.wide,
+.dp-msg-foot {
+  grid-column: 1 / -1;
+}
+
+.dp-msg-field label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--eye);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.dp-msg-field small {
+  color: var(--mut);
+  font-size: 11px;
+}
+
+.dp-msg-field input,
+.dp-msg-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 15px;
+  line-height: 1.5;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.dp-msg-field textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+.dp-msg-field ::placeholder {
+  color: var(--mut);
+  opacity: 0.6;
+}
+
+.dp-msg-field input:focus,
+.dp-msg-field textarea:focus {
+  border-color: var(--bd2);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--ac-rgb), 0.18);
+}
+
+.dp-msg-field [aria-invalid='true'] {
+  border-color: var(--warn);
+}
+
+.dp-msg-error,
+.dp-msg-status.failed {
+  color: var(--warn);
+}
+
+.dp-msg-error {
+  font-size: 12px;
+}
+
+.dp-msg-hint {
+  color: var(--mut);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* Two classes so the global 44px touch-target rule doesn't stretch the line. */
+.dp-msg-field .dp-msg-hint button {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--warn);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.dp-msg-trap {
+  position: absolute;
+  left: -9999px;
+}
+
+.dp-msg-foot {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+}
+
+.dp-msg-status {
+  min-width: 0;
+  color: var(--mut);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.dp-msg-address {
+  color: var(--fg);
+  user-select: all;
+}
+
+.dp .dp-msg-foot .dp-cream {
+  /* Stays right even when the status line beside it is empty. */
+  margin-left: auto;
+}
+
+.dp .dp-msg .dp-cream {
+  margin-top: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.dp .dp-msg .dp-cream:disabled {
+  opacity: 0.7;
+  cursor: progress;
+  transform: none;
+}
+
+@keyframes dp-msg-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dp-msg-spin {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: dp-msg-spin 0.7s linear infinite;
+}
+
+.dp-msg-sent {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dp-msg-log {
+  color: var(--soft);
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.dp-msg-ok {
+  color: var(--ok);
+}
+
+.dp-msg-actions {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dp-msg-ghost {
+  min-height: 54px;
+  padding: 0 22px;
+  border: 1px solid var(--bd);
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dp-msg-ghost:hover {
+  border-color: var(--bd2);
+  background: rgba(var(--ac-rgb), 0.08);
+}
+
+@media (max-width: 560px) {
+  .dp-msg-form {
+    grid-template-columns: 1fr;
+  }
+
+  .dp .dp-msg-foot .dp-cream {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dp-msg-pane,
+  .dp-msg-spin {
+    animation: none;
+  }
+}

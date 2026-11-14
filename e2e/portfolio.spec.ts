@@ -42,9 +42,13 @@ test('landing renders and a terminal command opens a file', async ({
   await expect(page.getByRole('tab', { name: /about\.md/i })).toBeVisible()
   await expect(page.getByRole('heading', { name: /who_am_i/i })).toBeVisible()
   await expect(
-    page.getByText(/third-year computer engineering technology student/i),
+    page.getByText(
+      /fourth-year Bachelor of Science Computer Engineering student/i,
+    ),
   ).toBeVisible()
-  await expect(page.getByText(/machine learning/i).first()).toBeVisible()
+  await expect(
+    page.getByText(/Software development, AI concepts/i),
+  ).toBeVisible()
   await expect(
     page.getByText(/build scalable software that feels useful/i),
   ).toBeVisible()
@@ -141,7 +145,7 @@ test('theme switching and plain view toggle work', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'blue')
   await page
     .getByRole('banner')
-    .getByRole('button', { name: /plain view/i })
+    .getByRole('button', { name: 'Portfolio view' })
     .click()
   await expect(page.getByRole('main')).toBeVisible()
   await expect(
@@ -245,39 +249,39 @@ test('mobile layout stacks panes and opens a page without horizontal overflow', 
 
   await page
     .getByRole('banner')
-    .getByRole('button', { name: /plain view/i })
+    .getByRole('button', { name: 'Portfolio view' })
     .click()
-  const themeTrigger = page.getByRole('button', { name: 'Choose theme' })
-  await expect(themeTrigger).toBeVisible()
-  const interactiveToggle = page.getByRole('button', {
-    name: 'Back to interactive view',
-  })
-  await expect(interactiveToggle).toBeVisible()
-  await themeTrigger.click()
-  const themeDialog = page.getByRole('dialog', { name: 'Choose a theme' })
-  await themeDialog.getByRole('radio', { name: 'Scar' }).click()
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'scar')
-  await themeDialog.getByRole('button', { name: 'Close theme picker' }).click()
-  const controls = await page.locator('.hero-card .contact').boundingBox()
-  expect(controls).not.toBeNull()
-  expect(controls!.x + controls!.width).toBeLessThanOrEqual(320)
+  await expect(page.locator('.m-hero')).toBeVisible()
+  await page.getByRole('button', { name: 'Open quick actions' }).click()
+  await page.getByRole('button', { name: /^Theme / }).click()
+  await expect(page.locator('html')).not.toHaveAttribute('data-theme', 'dark')
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () => document.documentElement.scrollWidth - window.innerWidth,
+      ),
+    )
+    .toBeLessThanOrEqual(0)
+  await page.getByRole('button', { name: 'Terminal', exact: true }).click()
+  await expect(page.locator('.plain-page')).toHaveCount(0)
 })
 
-test('Byte opens and answers one question', async ({ page }) => {
+test('Byte opens and answers from keywords when the AI is unreachable', async ({
+  page,
+}) => {
+  await page.route('**/api/chat', (route) => route.abort())
   await page.goto('/terminal')
-  await page.getByRole('button', { name: 'Open Byte' }).click()
+  await page.getByRole('button', { name: 'ask Byte' }).click()
   const input = page.getByRole('textbox', { name: 'Ask Byte' })
   await expect(input).toBeFocused()
   await input.fill('projects')
   await page.getByRole('button', { name: 'Send' }).click()
   await expect(page.locator('.byte-bubble p[aria-hidden="true"]')).toHaveText(
-    'Here are the projects. Pick one to explore.',
+    /projects\. Pick one:/,
     { timeout: 5000 },
   )
   await expect(
-    page
-      .locator('[aria-live="polite"]')
-      .filter({ hasText: 'Here are the projects.' }),
+    page.locator('[aria-live="polite"]').filter({ hasText: 'Pick one:' }),
   ).toBeVisible()
 })
 
@@ -304,9 +308,11 @@ test('axe finds no serious or critical violations on each theme and plain view',
   }
   await page
     .getByRole('banner')
-    .getByRole('button', { name: /plain view/i })
+    .getByRole('button', { name: 'Portfolio view' })
     .click()
   await expect(page.locator('.dp-hero-body')).toBeVisible()
+  // Let the active nav item finish its colour transition; axe reads mid-fade colours otherwise.
+  await page.waitForTimeout(450)
   const plainResults = await new AxeBuilder({ page }).analyze()
   expect(
     plainResults.violations.filter((violation) =>
@@ -340,4 +346,49 @@ test('workspace remains readable when modern CSS declarations are ignored', asyn
     viewport: window.innerWidth,
   }))
   expect(widths.document).toBeLessThanOrEqual(widths.viewport)
+})
+
+test('a hash deep link opens that file and follows the active tab', async ({
+  page,
+}) => {
+  await page.goto('/terminal#ecobench')
+  await expect(page.getByRole('tab', { name: /ecobench\.md/ })).toBeVisible()
+  const command = page.getByRole('textbox', { name: 'Terminal command' })
+  await command.fill('open about')
+  await command.press('Enter')
+  await expect(page).toHaveURL(/\/terminal#about$/)
+})
+
+test('the skip link is the first tab stop in both views', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.locator('.plain-page')).toBeVisible()
+  await page.keyboard.press('Tab')
+  await expect(
+    page.getByRole('link', { name: 'Skip to content' }),
+  ).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('#plain-main')).toBeFocused()
+
+  await page.goto('/terminal')
+  await page.keyboard.press('Tab')
+  await expect(
+    page.getByRole('link', { name: 'Skip to content' }),
+  ).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('#editor')).toBeFocused()
+})
+
+test('printing the portfolio view hides navigation and shows every project and skill group', async ({
+  page,
+}) => {
+  await page.goto('/')
+  await expect(page.locator('.dp-hero-body')).toBeVisible()
+  await expect(page.locator('.dp-print-skills')).toBeHidden()
+  await page.emulateMedia({ media: 'print' })
+  await expect(page.locator('.dp-bar-slot')).toBeHidden()
+  await expect(page.locator('.dp-byte')).toBeHidden()
+  await expect(page.locator('.dp-track')).toHaveCSS('transform', 'none')
+  await expect(page.locator('.dp-track')).toHaveCSS('display', 'block')
+  await expect(page.locator('.dp-print-skills dt').first()).toBeVisible()
+  expect(await page.locator('.dp-print-skills dt').count()).toBeGreaterThan(1)
 })

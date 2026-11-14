@@ -14,7 +14,9 @@ export function MotionProvider({
   const enabled = animationsEnabled ?? !reducedMotion
   return (
     <LazyMotion features={domAnimation} strict>
-      <MotionContext.Provider value={enabled}>{children}</MotionContext.Provider>
+      <MotionContext.Provider value={enabled}>
+        {children}
+      </MotionContext.Provider>
     </LazyMotion>
   )
 }

@@ -5,11 +5,7 @@ export const plainCommand: Command = {
   name: 'plain',
   description: 'Enable portfolio view',
   run: () => ({
-    lines: [
-      plainTextLine(
-        'Portfolio view enabled.',
-      ),
-    ],
+    lines: [plainTextLine('Portfolio view enabled.')],
     effects: [{ kind: 'plain', enabled: true }],
   }),
 }

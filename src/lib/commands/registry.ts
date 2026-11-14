@@ -26,6 +26,7 @@ import { playCommand } from './play'
 import { byteCommand } from './byte'
 import { ipCommand } from './ip'
 import { githubCommand } from './github'
+import { huntCommand } from './hunt'
 import { keysCommand } from './keys'
 import { sudoCommand } from './sudo'
 
@@ -107,6 +108,7 @@ export const commandRegistry = createCommandRegistry([
   createAskCommand(byteBackend),
   ipCommand,
   githubCommand,
+  huntCommand,
   keysCommand,
   sudoCommand,
 ])

@@ -18,6 +18,14 @@ export function createLanding(
     ...[
       `${counts.projects} projects · ${counts.skills} skill groups · ${counts.themes} themes`,
       'Byte is awake (press b)',
+    ].map((text) => plainTextLine(`[ ok ] ${text}`, 'ok')),
+    [
+      {
+        text: 'contributions in the last 6 months',
+        graph: { weeks: 26, variant: 'boot' },
+      },
+    ],
+    ...[
       `visitor  guest · ${visitor.browser} on ${visitor.os} · ${visitor.screen}`,
       `session  started ${visitor.sessionTime} (your local time)`,
       `where    ${visitor.city} (based on your time zone)`,

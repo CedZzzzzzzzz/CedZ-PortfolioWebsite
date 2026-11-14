@@ -12,6 +12,7 @@ export const desktopIconPaths = {
   external: 'M7 17 17 7M8 7h9v9',
   lock: 'M7 11h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2zM8 11V7a4 4 0 0 1 8 0v4',
   mail: 'M3 6h18v12H3zM3 7l9 6 9-6',
+  send: 'M4 12 20 4l-5 16-3-7z',
   check: 'M5 12l5 5 9-10',
   prev: 'M15 5l-7 7 7 7',
   next: 'M9 5l7 7-7 7',

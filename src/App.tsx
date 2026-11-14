@@ -7,10 +7,12 @@ import { LauncherProvider } from './state/LauncherProvider'
 import { useLauncher } from './state/useLauncher'
 import { useShortcuts } from './hooks/useShortcuts'
 import { useSwipeNav } from './hooks/useSwipeNav'
+import { useHashSync } from './hooks/useHashSync'
 import { useTerminalFocus } from './hooks/useTerminalFocus'
 import { useByte } from './hooks/useByte'
 import { useWorkspaceDispatch } from './state/useWorkspaceDispatch'
 import { MotionProvider } from './components/motion/MotionProvider'
+import { ErrorBoundary } from './components/ui/ErrorBoundary'
 
 const BytePanel = lazy(() =>
   import('./components/byte/BytePanel').then((module) => ({
@@ -50,6 +52,8 @@ function Application() {
     window.addEventListener('popstate', syncViewFromPath)
     return () => window.removeEventListener('popstate', syncViewFromPath)
   }, [dispatch])
+  // After the path effect above: that pushState drops the hash, this restores it.
+  useHashSync('ide')
   useEffect(() => {
     const browser = window as Window & {
       requestIdleCallback?: (
@@ -110,14 +114,27 @@ function Application() {
         <WorkspaceLayout />
       </div>
       {plainView && (
-        <Suspense fallback={null}>
-          <PlainView />
-        </Suspense>
+        <ErrorBoundary
+          fallback={
+            <div className="load-error" role="alert">
+              <p>This page failed to load. A new version may be out.</p>
+              <button type="button" onClick={() => window.location.reload()}>
+                Reload
+              </button>
+            </div>
+          }
+        >
+          <Suspense fallback={null}>
+            <PlainView />
+          </Suspense>
+        </ErrorBoundary>
       )}
-      <Suspense fallback={null}>
-        <BytePanel />
-        <Launcher />
-      </Suspense>
+      <ErrorBoundary fallback={null}>
+        <Suspense fallback={null}>
+          <BytePanel />
+          <Launcher />
+        </Suspense>
+      </ErrorBoundary>
     </>
   )
 }

@@ -2,6 +2,7 @@ import type { Line } from '../../types/command'
 import { safeHref } from '../../lib/terminal/safeHref'
 import { useNavigation } from '../../hooks/useNavigation'
 import { DecryptedText } from '../ui/DecryptedText'
+import { TerminalGraph } from './TerminalGraph'
 
 export function TerminalLine({
   line,
@@ -16,6 +17,14 @@ export function TerminalLine({
   return (
     <div className="terminal-line">
       {line.map((segment, index) => {
+        if (segment.graph)
+          return (
+            <TerminalGraph
+              key={index}
+              spec={segment.graph}
+              label={segment.text}
+            />
+          )
         const className = `tone-${segment.tone ?? 'normal'}`
         if (segment.fileId)
           return (

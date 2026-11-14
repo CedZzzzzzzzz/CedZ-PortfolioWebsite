@@ -8,6 +8,7 @@ import { themes } from '../theme/themes'
 import { useWorkspaceState } from '../state/useWorkspaceState'
 import { useTerminalEffects } from './useTerminalEffects'
 import { useDocumentVisible } from './useDocumentVisible'
+import { useContributions } from './useContributions'
 
 interface Entry {
   id: number
@@ -23,6 +24,7 @@ interface PendingCommand {
 export function useTerminal(registry: CommandRegistry = commandRegistry) {
   const { activeFileId, plainView } = useWorkspaceState()
   const visible = useDocumentVisible()
+  const github = useContributions() ?? null
   const timersActive = visible && !plainView
   const executeEffects = useTerminalEffects()
   const [entries, setEntries] = useState<Entry[]>([])
@@ -86,6 +88,7 @@ export function useTerminal(registry: CommandRegistry = commandRegistry) {
         content: commandContent,
         themes,
         activeFileId,
+        github,
       })
     } catch {
       result = errorResult('Command failed. Please try again.')

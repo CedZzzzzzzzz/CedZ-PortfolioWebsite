@@ -17,7 +17,6 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@atlexus/sdk": "file:../admin-dashboard/packages/sdk",
     "@google/genai": "^2.13.0",
     "@netlify/functions": "^5.3.0",
     "detect-libc": "^2.1.2",

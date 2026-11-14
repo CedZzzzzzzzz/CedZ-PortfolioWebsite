@@ -5,16 +5,25 @@ import type {
   SkillGroup,
   Social,
 } from './content'
+import type { ContributionCalendar } from './github'
 import type { PortfolioFile, ThemeName } from './navigation'
 
 export type Tone = 'normal' | 'muted' | 'accent' | 'ok' | 'warn' | 'error'
 
+/** A contribution graph the terminal draws in place of the segment's text. */
+export interface GraphSpec {
+  weeks: number
+  variant: 'boot' | 'scan' | 'hunt'
+}
+
 export interface Segment {
+  /** For a graph segment, the label after the count, e.g. "contributions in the last year". */
   text: string
   tone?: Tone
   fileId?: string
   command?: string
   href?: string
+  graph?: GraphSpec
 }
 
 export type Line = Segment[]
@@ -53,6 +62,8 @@ export interface CommandContext {
   content: CommandContent
   themes: readonly ThemeName[]
   activeFileId: string | null
+  /** Null while loading or when GitHub is unavailable. */
+  github: ContributionCalendar | null
   commands: readonly CommandSummary[]
 }
 

@@ -293,8 +293,9 @@
 }
 
 .m-section-nav {
-  /* Icon width that fits seven icons between the logo and the menu button. */
-  --btn: min(36px, calc((100vw - 156px) / 7));
+  /* Icon width that fits all --n icons between the logo and the menu button:
+     144px covers the logo, this pill's padding, and the menu button; the rest is gaps. */
+  --btn: min(36px, calc((100vw - 144px - (var(--n) - 1) * 2px) / var(--n)));
   position: absolute;
   top: calc(8px + env(safe-area-inset-top));
   left: 62px;

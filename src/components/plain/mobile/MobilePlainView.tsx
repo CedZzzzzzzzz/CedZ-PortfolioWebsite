@@ -5,6 +5,7 @@ import { WorkspaceAwards } from '../workspace/WorkspaceAwards'
 import { WorkspaceCertifications } from '../workspace/WorkspaceCertifications'
 import { WorkspaceContact } from '../workspace/WorkspaceContact'
 import { WorkspaceExperience } from '../workspace/WorkspaceExperience'
+import { WorkspaceGitHub } from '../workspace/WorkspaceGitHub'
 import '../workspace/workspace.css'
 import { MobileHero } from './MobileHero'
 import { MobileProjects } from './MobileProjects'
@@ -19,12 +20,15 @@ export function MobilePlainView() {
     <div className="plain-page is-mobile" id="plain-home">
       <MobileHero />
 
-      <main id="plain-main">
+      <main id="plain-main" tabIndex={-1}>
         <div className="dp dp-embed">
           <WorkspaceAbout />
           <WorkspaceExperience />
         </div>
         <MobileProjects projects={orderedProjects} />
+        <div className="dp dp-embed">
+          <WorkspaceGitHub />
+        </div>
         <MobileSkills />
         <div className="dp dp-embed">
           <WorkspaceCertifications />

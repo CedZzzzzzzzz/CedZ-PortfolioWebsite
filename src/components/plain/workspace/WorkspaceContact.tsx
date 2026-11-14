@@ -1,11 +1,14 @@
+import { useState } from 'react'
 import { profile } from '../../../content/profile'
 import { socials } from '../../../content/socials'
-import { gmailComposeUrl } from '../../../lib/gmail'
+import { ContactDialog } from './ContactDialog'
 import { DesktopIcon } from './DesktopIcon'
 
 const email = socials.find((social) => social.label === 'Email')
 
 export function WorkspaceContact() {
+  const [composing, setComposing] = useState(false)
+
   return (
     <footer id="plain-contact" className="dp-section dp-contact" tabIndex={-1}>
       <div className="dp-pane dp-contact-pane">
@@ -20,19 +23,15 @@ export function WorkspaceContact() {
             </h2>
             <p>Have a project or opportunity in mind? Send me a message.</p>
             {email && (
-              <a
+              <button
+                type="button"
                 className="dp-cream"
-                href={gmailComposeUrl(email.url)}
-                target="_blank"
-                rel="noopener noreferrer"
+                aria-haspopup="dialog"
+                onClick={() => setComposing(true)}
               >
                 <DesktopIcon name="mail" size={18} strokeWidth={2} />
                 Email me
-                <span className="visually-hidden">
-                  {' '}
-                  (opens Gmail in a new tab)
-                </span>
-              </a>
+              </button>
             )}
           </div>
           {email && (
@@ -43,6 +42,13 @@ export function WorkspaceContact() {
           )}
         </div>
       </div>
+      {email && (
+        <ContactDialog
+          open={composing}
+          email={email.display}
+          onClose={() => setComposing(false)}
+        />
+      )}
       <p className="dp-copy">
         &copy; {new Date().getFullYear()} {profile.name}
       </p>
