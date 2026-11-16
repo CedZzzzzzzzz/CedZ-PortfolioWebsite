@@ -45,3 +45,19 @@ describe('sendContactMail', () => {
     )
   })
 })
+
+describe('contact mail html', () => {
+  it('escapes visitor input and keeps line breaks', async () => {
+    const fetchImpl = vi.fn(async () => Response.json({ id: '1' }))
+    await sendContactMail(
+      { ...message, name: '<b>x</b>', message: 'hi\n<script>alert(1)</script>' },
+      settings,
+      fetchImpl,
+    )
+    const [, init] = fetchImpl.mock.calls[0] as unknown as [string, RequestInit]
+    const { html } = JSON.parse(init.body as string)
+    expect(html).toContain('&lt;b&gt;x&lt;/b&gt;')
+    expect(html).toContain('hi<br>&lt;script&gt;')
+    expect(html).not.toContain('<script>')
+  })
+})

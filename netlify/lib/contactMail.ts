@@ -1,5 +1,7 @@
 import type { ContactMessage } from '../../src/lib/contact/contactMessage'
 
+import { contactMailHtml } from './contactMailHtml'
+
 const RESEND_URL = 'https://api.resend.com/emails'
 
 export interface MailSettings {
@@ -16,6 +18,7 @@ export async function sendContactMail(
   settings: MailSettings,
   fetchImpl: typeof fetch = fetch,
 ): Promise<void> {
+  const subject = `Portfolio message from ${message.name.replace(/\s+/g, ' ')}`
   const response = await fetchImpl(RESEND_URL, {
     method: 'POST',
     headers: {
@@ -26,13 +29,14 @@ export async function sendContactMail(
       from: settings.from,
       to: [settings.to],
       reply_to: message.email,
-      subject: `Portfolio message from ${message.name.replace(/\s+/g, ' ')}`,
+      subject,
       text: [
         `From: ${message.name} <${message.email}>`,
         ...(message.org ? [`Company or school: ${message.org}`] : []),
         '',
         message.message,
       ].join('\n'),
+      html: contactMailHtml(message, subject),
     }),
   })
   if (!response.ok) throw new Error(`Resend responded ${response.status}`)
