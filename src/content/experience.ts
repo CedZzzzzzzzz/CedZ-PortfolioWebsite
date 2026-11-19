@@ -3,7 +3,7 @@ import type { Experience } from '../types/content'
 export const experience: Experience[] = [
   {
     k: 'experience',
-    t: 'Tech Intern',
+    t: 'Software Engineer Intern',
     o: 'StellarPH',
     w: 'September 2026 – Present',
     d: 'Built HackathonsPH, a hackathons directory for the Philippines, with a small team working in Agile sprints. Owned the backend and database: Supabase (PostgreSQL, Auth, Row Level Security), SQL migrations, versioned REST API routes in Next.js, Zod validation, and Cloudflare R2 uploads. Built n8n automations for daily standup summaries and startup-news scraping. Working with the team on an n8n-automated Discord hackathon for a third-party company, aimed at reducing manual organizing. Developed with Claude Code as an AI pair programmer, reviewing and testing its output.',
